@@ -1,0 +1,60 @@
+﻿@model _3F.Web.Models.EventModels.EventInvitationsViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+
+@if (Model.IsOrganisator)
+{
+    @section Scripts {
+        <link rel="stylesheet" href="~/Content/Plugins/TokenInput/token-input.css" type="text/css" />
+        <link rel="stylesheet" href="~/Content/Plugins/TokenInput/token-input-facebook.css" type="text/css" />
+        <script type="text/javascript" src="~/Scripts/plugins/TokenInput/jquery.tokeninput.js"></script>
+
+        <script>
+            var recipients = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(@Model.Users));
+            $("#Invitations").tokenInput('@Url.Content("~/Api/User/Find")', {
+                theme: "facebook",
+                minChars: 2,
+                prePopulate: recipients
+            });
+
+            $("form").submit(function () {
+                ShowWaitDialog();
+            });
+        </script>
+    }
+
+    using (Html.BeginForm("Pozvat", "Akce", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.Label("Pozvaní:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.UserNames, new { id = "Invitations" })
+                    @Html.ValidationMessageFor(model => model.Users, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Uložit změny a poslat pozvánky" class="btn btn-default">
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="form-group">
+        @Html.Label("Pozvaní:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @string.Join(", ", Model.Users.Select(s => s.name))
+        </div>
+    </div>
+}

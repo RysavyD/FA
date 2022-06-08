@@ -1,0 +1,116 @@
+﻿@model _3F.Web.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "Registrace";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+<div class='middle-container contrast-background' style="background-color: #ececd8 !important">
+    <div class='middle-row'>
+        <div class='middle-wrapper'>
+            <div class='login-container-header'>
+                <div class='container'>
+                    <div class='row'>
+                        <div class='col-sm-12'>
+                            <div class='text-center'>
+                                <a href='@Url.Content("~/")'>
+                                    <img src="~/Images/logo/logo.png" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='login-container'>
+                <div class='container'>
+                    <div class='row'>
+                        <div class='col-sm-4 col-sm-offset-4'>
+                            <h1 class='text-center title'>
+                                Registrace
+                            </h1>
+
+                            
+                            @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <div class="controls with-icon-over-input">
+                                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Uživatelské jméno" })
+                                        <i class='icon-user text-muted'></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="controls with-icon-over-input">
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                                        <i class='icon-user text-muted'></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="controls with-icon-over-input">
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Heslo" })
+                                        <i class='icon-lock text-muted'></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="controls with-icon-over-input">
+                                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Kontrola hesla" })
+                                        <i class='icon-lock text-muted'></i>
+                                    </div>
+                                </div>
+                                <div class="checkbox">
+                                    <label for="agreement">
+                                        @Html.CheckBoxFor(m => m.Agreement)
+                                        Souhlasím s
+                                        <a class="text-contrast" href="@Url.Content("~/Info/Podminky")">podmínkami užití</a>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    Kde jste se o nás dozvěděl(a)?
+                                    <span style="float: right; width: 60%">
+                                        @Html.DropDownListFor(d=>d.KnowFromId, Model.KnowFroms, new { style="width:100%;" })
+                                    </span>
+                                </div>
+                                <button class='btn btn-block'>Zaregistrovat se</button>
+                            }
+                            <hr class='hr-normal'>
+                            @using (Html.BeginForm("ExternalLogin", "Account"))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button class="btn btn-block icon-facebook-sign" id="Facebook" name="provider" value="Facebook" title="Registrace pomocí Facebookového účtu"
+                                        style="width: 100%;color:#4e69a2;">
+                                    <b>REGISTROVAT SE PŘES FACEBOOK</b>
+                                </button>
+                                <button class="btn btn-block icon-google-plus-sign" id="Google" name="provider" value="Google" title="Registrace pomocí Google účtu"
+                                        style="width: 100%;color:red;">
+                                    <b>REGISTROVAT SE PŘES GOOGLE+</b>
+                                </button>
+                            }
+                            <div class='text-center'>
+                                <hr class='hr-normal'>
+                                <a href='@Url.Content("~/Account/Login")'>
+                                    <i class='icon-chevron-left'></i>
+                                    Na přihlašovací stránku
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='login-container-footer'>
+                <div class='container'>
+                    <div class='row'>
+                        <div class='col-sm-12'>
+                            <div class='text-center'>
+                                <a href='@Url.Content("~/Account/ForgotPassword")'>
+                                    <i class='icon-lock'></i>
+                                    Zapomněli jste své heslo?
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

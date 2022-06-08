@@ -1,0 +1,1463 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<body>
+  <template name="NewEvent">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Nová akce</title>
+    <style>
+        #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+        .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+        a img {border:none;}
+        .image_fix {display:block;}
+        Bring inline: Yes.
+        p {margin: 1em 0;}
+        h1, h2, h3, h4, h5, h6 {color: black !important;}
+        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+        h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+            color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+            color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        table td {border-collapse: collapse;}
+        table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        a {color: orange;}
+        a:link { color: orange; }
+        a:visited { color: blue; }
+        a:hover { color: green; }
+    </style>
+    </head>
+    <body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+      <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='center' valign='top'>
+                    #HASH_Logo
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                    <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h2>#HASH_EventName</h2>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h4><i>#HASH_EventPerex</i></h4>
+                        </td>
+                      </tr>
+                      <tr>
+                          <td align='center' style='border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;' valign='top'>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Začátek akce:</strong>
+                                  #HASH_EventStartTime
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Konec akce:</strong>
+                                  #HASH_EventStopTime
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Kapacita akce:</strong>
+                                  #HASH_EventCapacity
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Cena akce:</strong>
+                                  #HASH_EventPrice
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Místo akce:</strong>
+                                  #HASH_EventPlace
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Čas srazu:</strong>
+                                  #HASH_EventMeetTime
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Místo srazu:</strong>
+                                  #HASH_EventMeetPlace
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Organizátoři:</strong>
+                                  #HASH_Organisators
+                              </p>
+                          </td>
+                      </tr>
+                      <tr>
+                        <td align='center' bgcolor='#49bf67' valign='top'>
+                          <h3>
+                              <a href="#HASH_EventUrl" target="_blank" style="color: #ffffff !important">Pro detaily akce klikněte zde</a>
+                          </h3>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+      </table>
+      #HASH_Footer
+    </body>
+    </html>
+  ]]>
+  </template>
+  <template name="ConfirmNewUser">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Potvrzení registrace</title>
+    <style>
+        #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+        .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+        a img {border:none;}
+        .image_fix {display:block;}
+        Bring inline: Yes.
+        p {margin: 1em 0;}
+        h1, h2, h3, h4, h5, h6 {color: black !important;}
+        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+        h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+            color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+            color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        table td {border-collapse: collapse;}
+        table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        a {color: orange;}
+        a:link { color: orange; }
+        a:visited { color: blue; }
+        a:hover { color: green; }
+    </style>
+    </head>
+    <body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+      <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='center' valign='top'>
+                    #HASH_Logo
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                    <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h2>Dokončení registrace</h2>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h4 style='color: #49bf67 !important'>Informace o účtu</h4>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' style='border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;' valign='top'>
+                          <p style='margin: 1em 0;'>
+                            <strong>Uživatelské jméno:</strong>
+                            #HASH_UserName
+                          </p>
+                          <p style='margin: 1em 0;'>
+                            <strong>E-mail:</strong>
+                            <a href="mailto:#HASH_Email" style="color: #000000 !important;">#HASH_Email</a>
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' bgcolor='#49bf67' valign='top'>
+                          <h3>
+                            <a href="#HASH_RegistrationUrl" style="color: #ffffff !important">Pro aktivaci svého účtu prosím klikněte zde</a>
+                          </h3>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <p style='margin: 1em 0;'>
+                            <br>
+                              Jsme moc rádi, že jste se rozhodl(a) registrovat se na našem serveru.<br />
+                              U nás si můžete vybrat ze široké nabídky sportovních, společenských a turistických akcí všeho druhu
+                           </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+      </table>
+      #HASH_Footer
+    </body>
+    </html>
+    ]]>
+  </template>
+  <template name="ForgotPassword">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Zapomenuté heslo</title>
+    <style>
+        #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+        .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+        a img {border:none;}
+        .image_fix {display:block;}
+        Bring inline: Yes.
+        p {margin: 1em 0;}
+        h1, h2, h3, h4, h5, h6 {color: black !important;}
+        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+        h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+            color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+            color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        table td {border-collapse: collapse;}
+        table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        a {color: orange;}
+        a:link { color: orange; }
+        a:visited { color: blue; }
+        a:hover { color: green; }
+    </style>
+    </head>
+    <body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+      <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='center' valign='top'>
+                    #HASH_Logo
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                    <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h2>Zapomenuté heslo</h2>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h4 style='color: #49bf67 !important'>Informace o účtu</h4>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' style='border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;' valign='top'>
+                          <p style='margin: 1em 0;'>
+                            <strong>Uživatelské jméno:</strong>
+                            #HASH_UserName
+                          </p>
+                          <p style='margin: 1em 0;'>
+                            <strong>E-mail:</strong>
+                            <a href="mailto:#HASH_Email" style="color: #000000 !important;">#HASH_Email</a>
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' bgcolor='#49bf67' valign='top'>
+                          <h3>
+                            <a href="#HASH_CallbackUrl" style="color: #ffffff !important">Pro resetování hesla a nastavení nového klikněte zde</a>
+                          </h3>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+      </table>
+      #HASH_Footer
+    </body>
+    </html>
+  ]]>
+  </template>
+  <template name="NewMessage">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Nová zpráva</title>
+    <style>
+        #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+        .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+        a img {border:none;}
+        .image_fix {display:block;}
+        Bring inline: Yes.
+        p {margin: 1em 0;}
+        h1, h2, h3, h4, h5, h6 {color: black !important;}
+        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+        h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+            color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+            color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        table td {border-collapse: collapse;}
+        table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        a {color: orange;}
+        a:link { color: orange; }
+        a:visited { color: blue; }
+        a:hover { color: green; }
+    </style>
+    </head>
+    <body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+      <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='center' valign='top'>
+                    #HASH_Logo
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                    <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h2>Byla vám doručena nová zpráva</h2>
+                        </td>
+                      </tr>
+                      <tr>
+                          <td align='center' style='border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;' valign='top'>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Odesílatel:</strong>
+                                  #HASH_MessageSender
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Předmět:</strong>
+                                  #HASH_MessageSubject
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  #HASH_MessageText
+                              </p>
+                          </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+      </table>
+      #HASH_Footer
+    </body>
+    </html>
+  ]]>
+  </template>
+  <template name="FreePlaceOnEvent">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Volné místo na akci</title>
+    <style>
+        #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+        .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+        a img {border:none;}
+        .image_fix {display:block;}
+        Bring inline: Yes.
+        p {margin: 1em 0;}
+        h1, h2, h3, h4, h5, h6 {color: black !important;}
+        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+        h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+            color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+            color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        table td {border-collapse: collapse;}
+        table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        a {color: orange;}
+        a:link { color: orange; }
+        a:visited { color: blue; }
+        a:hover { color: green; }
+    </style>
+    </head>
+    <body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+      <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='center' valign='top'>
+                    #HASH_Logo
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                      <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                          <tr>
+                              <td align='center' valign='top'>
+                                  <h2>#HASH_EventName</h2>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td align='center' valign='top'>
+                                  <h4 style='color: #49bf67 !important'>
+                                      Na akci <b>#HASH_EventName</b> se uvolnilo místo.
+                                      <br />
+                                      Vaše rezervace je platná do #HASH_ReservationEndTime, poté bude místo k dispozici případným náhradníkům.
+                                  </h4>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td align='center' bgcolor='#49bf67' valign='top'>
+                                  <h3>
+                                      <a href="#HASH_EventUrl" style="color: #ffffff !important">Pro detaily akce klikněte zde</a>
+                                  </h3>
+                              </td>
+                          </tr>
+                      </table>
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+      </table>
+      #HASH_Footer
+    </body>
+    </html>
+  ]]>
+  </template>
+  <template name="PaymentInstructions">
+    <![CDATA[
+    <!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Nedostatek peněz na účtu</title>
+    <style>
+        #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+        .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+        a img {border:none;}
+        .image_fix {display:block;}
+        Bring inline: Yes.
+        p {margin: 1em 0;}
+        h1, h2, h3, h4, h5, h6 {color: black !important;}
+        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+        h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+            color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+            color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        table td {border-collapse: collapse;}
+        table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        a {color: orange;}
+        a:link { color: orange; }
+        a:visited { color: blue; }
+        a:hover { color: green; }
+    </style>
+    </head>
+    <body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+      <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='center' valign='top'>
+                    #HASH_Logo
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                      <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                          <tr>
+                              <td align='center' valign='top'>
+                                  <h2>Nedostatek peněz na účtu</h2>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td align='center' valign='top'>
+                                  <h4 style='color: #49bf67 !important'>Na vašem účtu je nedostatek peněz pro přihlášení na akci</h4>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td align='center' style='border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;' valign='top'>
+                                  <p style='margin: 1em 0;'>
+                                      <strong>Název akce:</strong>
+                                      #HASH_EventName
+                                  </p>
+                                  <p style='margin: 1em 0;'>
+                                      <strong>Cena akce:</strong>
+                                      #HASH_EventPrice
+                                  </p>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td align='center' style='border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;' valign='top'>
+                                  <p style='margin: 1em 0;'>
+                                      Pro přihlášení zašlete částku #HASH_EventPrice na účet #HASH_BankAccount s variabilním symbolem #HASH_UserVariableSymbol
+                                  </p>
+                              </td>
+                          </tr>
+                         <tr>
+                              <td align='center' style='border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;' valign='top'>
+                                  <p style='margin: 1em 0;'>
+                                      Vaše rezervace je platná do #HASH_ReservationEndTime, poté bude místo k dispozici případným náhradníkům.
+                                  </p>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td align='center' style='border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;' valign='top'>
+                                  <p style='margin: 1em 0;'>
+                                      <img alt="Embedded image" src="data:image/png;base64,#HASH_QRCode" />
+                                  </p>
+                              </td>
+                          </tr>
+                      </table>
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+      </table>
+      #HASH_Footer
+    </body>
+    </html>
+  ]]>
+  </template>
+  <template name="InfoAboutBreakReservation">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Rezervace vypršela</title>
+    <style>
+        #outlook a {
+            padding: 0;
+        }
+        /* Force Outlook to provide a "view in browser" menu link. */
+        body {
+            width: 100% !important;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ExternalClass {
+            width: 100%;
+        }
+            /* Force Hotmail to display emails at full width */
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+                line-height: 100%;
+            }
+        /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+            line-height: 100% !important;
+        }
+
+        img {
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        a img {
+            border: none;
+        }
+
+        .image_fix {
+            display: block;
+        }
+
+        Bring inline: Yes. p {
+            margin: 1em 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: black !important;
+        }
+
+            h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+                color: blue !important;
+            }
+
+                h1 a:active, h2 a:active, h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+                    color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+                }
+
+                h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+                    color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+                }
+
+        table td {
+            border-collapse: collapse;
+        }
+
+        table {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        a {
+            color: orange;
+        }
+
+            a:link {
+                color: orange;
+            }
+
+            a:visited {
+                color: blue;
+            }
+
+            a:hover {
+                color: green;
+            }
+    </style>
+</head>
+<body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+    <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+            <td align='center'>
+                <center>
+                    <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                        <tr>
+                            <td align='center' valign='top'>
+                                #HASH_Logo
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </td>
+        </tr>
+        <tr>
+            <td align='center'>
+                <center>
+                    <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                        <tr>
+                            <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                                <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                                    <tr>
+                                        <td align='center' valign='top'>
+                                            <h2>#HASH_EventName</h2>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align='center' valign='top'>
+                                            <h4 style='color: #49bf67 !important'>
+                                                Vaše rezervace u akce <b>#HASH_EventName</b> vypršela.
+                                                <br />
+                                                Pokud se chcete stále zúčastnit musíte se znovu přihlásit.
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align='center' bgcolor='#49bf67' valign='top'>
+                                            <h3>
+                                                <a href="#HASH_EventUrl" style="color: #ffffff !important">Pro detaily akce klikněte zde</a>
+                                            </h3>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </td>
+        </tr>
+    </table>
+    #HASH_Footer
+</body>
+</html>
+  ]]>
+  </template>
+  <template name="EventMayBeNotice">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Nová akce</title>
+    <style>
+        #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+        .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+        a img {border:none;}
+        .image_fix {display:block;}
+        Bring inline: Yes.
+        p {margin: 1em 0;}
+        h1, h2, h3, h4, h5, h6 {color: black !important;}
+        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+        h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+            color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+            color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        table td {border-collapse: collapse;}
+        table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        a {color: orange;}
+        a:link { color: orange; }
+        a:visited { color: blue; }
+        a:hover { color: green; }
+    </style>
+    </head>
+    <body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+      <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='center' valign='top'>
+                    #HASH_Logo
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                    <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <div>U akce <b>#HASH_EventName</b> jste přihlášení jako <b>'Možná'</b>.</div>
+                          <div>Akce začíná za dva dny, je nejvyšší čas se rozhodnout.</div>
+                          <br />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h2>#HASH_EventName</h2>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h4><i>#HASH_EventPerex</i></h4>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' bgcolor='#49bf67' valign='top'>
+                          <h3>
+                              <a href="#HASH_EventUrl" style="color: #ffffff !important">Pro detaily akce klikněte zde</a>
+                          </h3>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+      </table>
+      #HASH_Footer
+    </body>
+    </html>
+  ]]>
+  </template>
+  <template name="EventYesNotice">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Nová akce</title>
+    <style>
+        #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+        .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+        a img {border:none;}
+        .image_fix {display:block;}
+        Bring inline: Yes.
+        p {margin: 1em 0;}
+        h1, h2, h3, h4, h5, h6 {color: black !important;}
+        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+        h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+            color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+            color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        table td {border-collapse: collapse;}
+        table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        a {color: orange;}
+        a:link { color: orange; }
+        a:visited { color: blue; }
+        a:hover { color: green; }
+    </style>
+    </head>
+    <body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+      <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='center' valign='top'>
+                    #HASH_Logo
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                    <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <div>Jste přihlášeni na akci <b>#HASH_EventName</b>.</div>
+                          <div>Akce začíná za dva dny, nezapomeňte se zúčastnit.</div>
+                          <br />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h2>#HASH_EventName</h2>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h4><i>#HASH_EventPerex</i></h4>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' bgcolor='#49bf67' valign='top'>
+                          <h3>
+                              <a href="#HASH_EventUrl" style="color: #ffffff !important">Pro detaily akce klikněte zde</a>
+                          </h3>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+      </table>
+      #HASH_Footer
+    </body>
+    </html>
+  ]]>
+  </template>
+  <template name="NewPhotoAlbum">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Nové album u akce #HASH_EventName</title>
+    <style>
+        #outlook a {
+            padding: 0;
+        }
+        /* Force Outlook to provide a "view in browser" menu link. */
+        body {
+            width: 100% !important;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ExternalClass {
+            width: 100%;
+        }
+            /* Force Hotmail to display emails at full width */
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+                line-height: 100%;
+            }
+        /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+            line-height: 100% !important;
+        }
+
+        img {
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        a img {
+            border: none;
+        }
+
+        .image_fix {
+            display: block;
+        }
+
+        Bring inline: Yes. p {
+            margin: 1em 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: black !important;
+        }
+
+            h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+                color: blue !important;
+            }
+
+                h1 a:active, h2 a:active, h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+                    color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+                }
+
+                h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+                    color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+                }
+
+        table td {
+            border-collapse: collapse;
+        }
+
+        table {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        a {
+            color: orange;
+        }
+
+            a:link {
+                color: orange;
+            }
+
+            a:visited {
+                color: blue;
+            }
+
+            a:hover {
+                color: green;
+            }
+    </style>
+</head>
+<body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+    <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+            <td align='center'>
+                <center>
+                    <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                        <tr>
+                            <td align='center' valign='top'>
+                                #HASH_Logo
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </td>
+        </tr>
+        <tr>
+            <td align='center'>
+                <center>
+                    <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                        <tr>
+                            <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                                <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                                    <tr>
+                                        <td align='center' valign='top'>
+                                            <h4 style='color: #49bf67 !important'>
+                                                K akci <b>#HASH_EventName</b> bylo přidáno nové album.
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align='center' bgcolor='#49bf67' valign='top'>
+                                            <h3>
+                                                <a href="#HASH_PhotoAlbumUrl" style="color: #ffffff !important">Pro zobrazení alba klikněte zde</a>
+                                            </h3>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </td>
+        </tr>
+    </table>
+    #HASH_Footer
+</body>
+</html>
+  ]]>
+  </template>
+  <template name="NewEventSummary">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Nové zápisky u akce #HASH_EventName</title>
+    <style>
+        #outlook a {
+            padding: 0;
+        }
+        /* Force Outlook to provide a "view in browser" menu link. */
+        body {
+            width: 100% !important;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ExternalClass {
+            width: 100%;
+        }
+            /* Force Hotmail to display emails at full width */
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+                line-height: 100%;
+            }
+        /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+            line-height: 100% !important;
+        }
+
+        img {
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        a img {
+            border: none;
+        }
+
+        .image_fix {
+            display: block;
+        }
+
+        Bring inline: Yes. p {
+            margin: 1em 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: black !important;
+        }
+
+            h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+                color: blue !important;
+            }
+
+                h1 a:active, h2 a:active, h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+                    color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+                }
+
+                h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+                    color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+                }
+
+        table td {
+            border-collapse: collapse;
+        }
+
+        table {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        a {
+            color: orange;
+        }
+
+            a:link {
+                color: orange;
+            }
+
+            a:visited {
+                color: blue;
+            }
+
+            a:hover {
+                color: green;
+            }
+    </style>
+</head>
+<body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+    <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+            <td align='center'>
+                <center>
+                    <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                        <tr>
+                            <td align='center' valign='top'>
+                                #HASH_Logo
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </td>
+        </tr>
+        <tr>
+            <td align='center'>
+                <center>
+                    <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                        <tr>
+                            <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                                <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                                    <tr>
+                                        <td align='center' valign='top'>
+                                            <h4 style='color: #49bf67 !important'>
+                                                K akci <b>#HASH_EventName</b> byly přidány nové zápisky.
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align='center' bgcolor='#49bf67' valign='top'>
+                                            <h3>
+                                                <a href="#HASH_SummaryUrl" style="color: #ffffff !important">Pro zobrazení zápisku klikněte zde</a>
+                                            </h3>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </td>
+        </tr>
+    </table>
+    #HASH_Footer
+</body>
+</html>
+  ]]>
+  </template>
+  <template name="ThanksForFirstEvent">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Děkujeme za účast</title>
+    <style>
+        #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+        .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+        a img {border:none;}
+        .image_fix {display:block;}
+        Bring inline: Yes.
+        p {margin: 1em 0;}
+        h1, h2, h3, h4, h5, h6 {color: black !important;}
+        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+        h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+            color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+            color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        table td {border-collapse: collapse;}
+        table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        a {color: orange;}
+        a:link { color: orange; }
+        a:visited { color: blue; }
+        a:hover { color: green; }
+    </style>
+    </head>
+    <body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+      <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='center' valign='top'>
+                    #HASH_Logo
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                    <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h2>Děkujeme za účast</h2>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <p style='margin: 1em 0;'>
+                            <br>
+							              Děkujeme za účast na Vaší první akci. 
+							              <br>
+							              Věříme, že se Vám akce líbila.
+						              </p>
+						              <p>
+							              <br>
+							              Pokud jste tak již neučinili, nezapomeňte vyplnit svůj profil a nahrát svoji fotku.
+                         </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' bgcolor='#49bf67' valign='top'>
+                          <h3>
+                            <a href="http://www.fungujemeaktivne.cz/Profil/Nastaveni" style="color: #ffffff !important">Učinit tak můžete zde.</a>
+                          </h3>
+                        </td>
+                      </tr>					  
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+      </table>
+      #HASH_Footer
+    </body>
+    </html>
+    ]]>
+  </template>
+  <template name="NewSuggestedEvent">
+    <![CDATA[
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Nový nápad na akci</title>
+    <style>
+        #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+        .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+        #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+        a img {border:none;}
+        .image_fix {display:block;}
+        Bring inline: Yes.
+        p {margin: 1em 0;}
+        h1, h2, h3, h4, h5, h6 {color: black !important;}
+        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+        h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+            color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+            color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+        }
+        table td {border-collapse: collapse;}
+        table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        a {color: orange;}
+        a:link { color: orange; }
+        a:visited { color: blue; }
+        a:hover { color: green; }
+    </style>
+    </head>
+    <body style='background: #f4f7f9; font-family:Helvetica Neue, Helvetica, Arial;'>
+      <table align='center' bgcolor='#f4f7f9' border='0' cellpadding='0' cellspacing='0' id='backgroundTable' style='background: #f4f7f9;' width='100%'>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='0' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='center' valign='top'>
+                    #HASH_Logo
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td align='center'>
+            <center>
+              <table border='0' cellpadding='30' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
+                <tr>
+                  <td align='left' style='background: #ffffff; border: 1px solid #dce1e5;' valign='top' width=''>
+                    <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h2>#HASH_EventName</h2>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align='center' valign='top'>
+                          <h4><i>#HASH_EventPerex</i></h4>
+                        </td>
+                      </tr>
+                      <tr>
+                          <td align='center' style='border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;' valign='top'>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Začátek akce:</strong>
+                                  #HASH_EventStartTime
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Konec akce:</strong>
+                                  #HASH_EventStopTime
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Cena akce:</strong>
+                                  #HASH_EventPrice
+                              </p>
+                              <p style='margin: 1em 0;'>
+                                  <strong>Místo akce:</strong>
+                                  #HASH_EventPlace
+                              </p>
+                          </td>
+                      </tr>
+                      <tr>
+                        <td align='center' bgcolor='#49bf67' valign='top'>
+                          <h3>
+                              <a href="#HASH_EventUrl" target="_blank" style="color: #ffffff !important">Pro detaily akce klikněte zde</a>
+                          </h3>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
+      </table>
+      #HASH_Footer
+    </body>
+    </html>
+  ]]>
+  </template>  
+</body>

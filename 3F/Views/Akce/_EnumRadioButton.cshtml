@@ -1,0 +1,7 @@
+﻿@model System.Enum 
+
+@foreach(var value in Enum.GetValues(Model.GetType()))
+{
+    <input type="radio" name="@Model.GetType().Name" value="@value" @if (Model.Equals(value)) { <text>checked="checked"</text> } />
+    @( ((Enum)value).GetDescription() )
+}

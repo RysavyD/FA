@@ -1,0 +1,117 @@
+﻿@model _3F.Web.Models.Events.EventFinanceViewModel
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/Plugins/datatables/jquery.dataTables.min.css" />
+
+<div class="box-content">
+    <h2>Celkový přehled</h2>
+    <div>Celkem vybráno od uživatelů: @string.Format("{0:C}", Model.PaymentPaidSum)</div>
+    <div>Celkem ještě nezaplaceno od uživatelů: @string.Format("{0:C}", Model.PaymentActiveSum)</div>
+    @*<div>Celkem vyfakturováno od dodavatelů: @string.Format("{0:C}", Model.CostsSum)</div>*@
+    <div>Odhadované náklady na akci: @string.Format("{0:C}", Model.FirstCost)</div>
+</div>
+<div class="box-content">
+    <h2>Popis nákladů akce</h2>
+    <div>@Html.Raw(Model.EventCostsDescription)</div>
+</div>
+<div class="box-content">
+    <h2>Uživatelé, kteří zaplatili</h2>
+    <table class="table">
+        @foreach (var user in Model.Payments
+            .GroupBy(p => new { p.UserName, p.UserHtmlName })
+            .Where(s => s.Sum(r => r.Amount) > 0)
+            )
+        {
+            <tr>
+                <td>@user.Key.UserName</td>
+                <td>@user.Where(s=>s.Status == PaymentStatus.Paid).Sum(s => s.Amount).ToString("C")</td>
+                <td>
+                    <div class="btn btn-success roundCorners" 
+                         data-id="@user.Key.UserHtmlName" 
+                         data-sum="@user.Where(s=>s.Status == PaymentStatus.Paid).Sum(s => s.Amount)"
+                         data-event="@Model.HtmlName">
+                        Refundovat platbu
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="box-content">
+    <h2>Platby za akci</h2>
+    <div class="responsive-table">
+        <div class="scrollable-area">
+            <table id="payments" class="display" cellspacing="0"></table>
+        </div>
+    </div>
+</div>
+<div class="box-content">
+    <h2>Náklady na akci</h2>
+    <div class="responsive-table">
+        <div class="scrollable-area">
+            <table id="costs" class="display" cellspacing="0"></table>
+        </div>
+    </div>
+</div>
+
+@Html.RenderModalPlaceHolder()
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var oTable = $('#payments').dataTable({
+            "iDisplayLength": 25,
+            "columns": [
+                { "title": "Uživatel" },
+                { "title": "Datum vytvoření", "type": "cz_datetime" },
+                { "title": "Částka" },
+                { "title": "Datum zaplacení", "type": "cz_datetime" },
+                { "title": "Stav platby" },
+                { "title": "Poznámka" },
+            ],
+            "data" : @Html.Raw(Json.Encode(Model.PaymentItems)),
+        });
+
+        var oTable2 = $('#costs').dataTable({
+            "iDisplayLength": 25,
+            "columns": [
+                { "title": "Částka" },
+                { "title": "Poznámka" },
+            ],
+            "data" : @Html.Raw(Json.Encode(Model.CostsItems)),
+        });
+    });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".roundCorners").click(function () {
+                var $buttonClicked = $(this);
+                var url = '@Url.Content("~/Akce/FinanceRefundace/")';
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    data: { 
+                        "userHtml": $buttonClicked.attr('data-id'),
+                        "sum": $buttonClicked.attr('data-sum'),
+                        "eventHtml": $buttonClicked.attr('data-event')
+                    },
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+        });
+    </script>
+}

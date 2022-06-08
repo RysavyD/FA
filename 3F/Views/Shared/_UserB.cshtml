@@ -1,0 +1,14 @@
+﻿@model _3F.BusinessEntities.User
+
+<span>
+    @if (Model.LoginType == (int)LoginTypeEnum.Deleted)
+    {
+        <img src="@Url.Content("~/Images/Profile/" + Model.ProfilePhoto)" title="@Model.UserName" class="profilePhoto" />
+    }
+    else
+    {
+        <a href="@Url.Content("~/Profil/Detail/" + Model.HtmlName)" title="@Model.UserName" style="text-decoration: none;">
+            <img src="@Url.Content("~/Images/Profile/" + Model.ProfilePhoto)" alt="@Model.UserName" title="@Model.UserName" class="profilePhoto" />
+        </a>
+    }
+</span>

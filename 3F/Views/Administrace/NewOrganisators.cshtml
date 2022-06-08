@@ -1,0 +1,49 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<_3F.Web.Models.Administration.NewOrganisator>
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<table class="borderTable">
+    <thead>
+        <tr>
+            <th>Nick</th>
+            <th>Počet akcí za poslední rok</th>
+            <th>Má práva organizátora</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var org in Model.Entities.Where(o => !o.IsInRole && o.EventCount >= 5))
+        {
+            <tr>
+                <td>@Html.TextLinkToProfil(org.User)</td>
+                <td>@org.EventCount</td>
+                <td>@org.IsInRole</td>
+                <td>@Html.ActionLink("Přejít na administraci", "Uzivatel", new { id = org.User.htmlName })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<hr />
+<table class="borderTable">
+    <thead>
+        <tr>
+            <th>Nick</th>
+            <th>Počet akcí za poslední rok</th>
+            <th>Má práva organizátora</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var org in Model.Entities)
+        {
+            <tr>
+                <td>@Html.TextLinkToProfil(org.User)</td>
+                <td>@org.EventCount</td>
+                <td>@org.IsInRole</td>
+                <td>@Html.ActionLink("Přejít na administraci", "Uzivatel", new { id = org.User.htmlName })</td>
+            </tr>
+        }
+    </tbody>
+</table>

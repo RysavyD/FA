@@ -1,0 +1,175 @@
+﻿@model _3F.Web.Models.EmptyBaseViewModel
+
+@{
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+<div class="box-content">
+    <h3>Uživatelé</h3>
+
+    <a href="@Url.Content("~/Administrace/PrehledUzivatelu")">
+        <input type="button" class="btn btn-inverse" value="Přehled uživatelů" />
+    </a>
+    <a href="@Url.Content("~/Administrace/Uzivatele")">
+        <input type="button" class="btn btn-inverse" value="Nastavení rolí uživatelům" />
+    </a>
+    @if (ViewBag.IsAdmin)
+    {
+        <a href="@Url.Content("~/Administrace/SmazatUzivatele")">
+            <input type="button" class="btn btn-inverse" value="Smazat uživatele" />
+        </a>
+    }
+    <a href="@Url.Content("~/Administrace/PrehledRoli")">
+        <input type="button" class="btn btn-inverse" value="Přehled rolí" />
+    </a>
+    <a href="@Url.Content("~/Administrace/ZkontrolovatVS")">
+        <input type="button" class="btn btn-inverse" value="Zkontrolovat VS" />
+    </a>
+    <a href="@Url.Content("~/Administrace/NewOrganisators")">
+        <input type="button" class="btn btn-inverse" value="Nároky na tvorbu akcí" />
+    </a>
+    @if (ViewBag.IsAdmin)
+    {
+        <a href="@Url.Content("~/Administrace/PotvrzovaciEmail")">
+            <input type="button" class="btn btn-inverse" value="Poslat potvrzovací email" />
+        </a>
+    }
+</div>
+
+<div class="box-content box-statistic" style="margin-top: 5px;">
+    <h3>Aplikace</h3>
+    <a href="@Url.Content("~/Administrace/News")">
+        <input type="button" class="btn btn-inverse" value="Editace novinky" />
+    </a>
+    <a href="@Url.Content("~/Administrace/Help")">
+        <input type="button" class="btn btn-inverse" value="Nápověda" />
+    </a>
+    @if (ViewBag.IsAdmin)
+    {
+        <a href="@Url.Content("~/Administrace/AdminEmail")">
+            <input type="button" class="btn btn-inverse" value="Email od admina" />
+        </a>
+        <a href="@Url.Content("~/Administrace/KnowFrom")">
+            <input type="button" class="btn btn-inverse" value="Registrační položky" />
+        </a>
+    }
+</div>
+
+<div class="box-content box-statistic" style="margin-top: 5px;">
+    <h3>Články</h3>
+    <a href="@Url.Content("~/Administrace/Post")">
+        <input type="button" class="btn btn-inverse" value="Články" />
+    </a>
+    <a href="@Url.Content("~/Administrace/PostFileManager")">
+        <input type="button" class="btn btn-inverse" value="Správa souborů" />
+    </a>
+</div>
+
+@if (ViewBag.IsAdmin)
+{
+    <div class="box-content box-statistic">
+        <h3>Logy</h3>
+        <a href="@Url.Content("~/Administrace/Logy")">
+            <input type="button" class="btn btn-inverse" value="Logy" />
+        </a>
+        <a href="@Url.Content("~/Elmah")">
+            <input type="button" class="btn btn-inverse" value="Elmah" />
+        </a>
+    </div>
+}
+
+<div class="box-content box-statistic">
+    <h3>Akce</h3>
+    <a href="@Url.Content("~/Administrace/PrehledPravidelnychAkci")">
+        <input type="button" class="btn btn-inverse" value="Přehled pravidelných akcí" />
+    </a>
+    <a href="@Url.Content("~/Administrace/EventBalanceOverView")">
+        <input type="button" class="btn btn-inverse" value="Přehled bilance akcí" />
+    </a>
+    <a href="@Url.Content("~/Administrace/EventBalanceExtendedOverView")">
+        <input type="button" class="btn btn-inverse" value="Přehled bilance akcí 2" />
+    </a>
+    <a href="@Url.Content("~/Administrace/Rezervace")">
+        <input type="button" class="btn btn-inverse" value="Rezervace" />
+    </a>
+    <a href="@Url.Content("~/Administrace/Kategorie")">
+        <input type="button" class="btn btn-inverse" value="Kategorie" />
+    </a>
+    <a href="@Url.Content("~/Administrace/EventToConfirm")">
+        <input type="button" class="btn btn-inverse" value="Akce ke schválení" />
+    </a>
+    @if (ViewBag.IsAdmin)
+    {
+        <a href="@Url.Content("~/Administrace/PrehledAkci")">
+            <input type="button" class="btn btn-inverse" value="Přehled akcí" />
+        </a>
+        <a href="@Url.Content("~/Administrace/ChangeToPaidEvent")">
+            <input type="button" class="btn btn-inverse" value="Převést na placenou akci" />
+        </a>
+        <a href="@Url.Content("~/Administrace/PublishEvent")">
+            <input type="button" class="btn btn-inverse" value="Poslat info o nové akci" />
+        </a>
+    }
+</div>
+
+
+<div class="box-content box-statistic">
+    <h3>Platby</h3>
+    <a href="@Url.Content("~/Administrace/PrehledPlateb")">
+        <input type="button" class="btn btn-inverse" value="Přehled plateb" />
+    </a>
+    @if (ViewBag.IsAdmin)
+    {
+        <a href="@Url.Content("~/Administrace/NovaPlatba")">
+            <input type="button" class="btn btn-inverse" value="Přidat platbu" />
+        </a>
+        <a href="@Url.Content("~/Administrace/ZaplatitPlatbu")">
+            <input type="button" class="btn btn-inverse" value="Zaplatit platbu" />
+        </a>
+        <a href="@Url.Content("~/Administrace/Nezaplaceno")">
+            <input type="button" class="btn btn-inverse" value="Nezaplacené platby" />
+        </a>
+        <a href="@Url.Content("~/Administrace/PlatbyCekajici")">
+            <input type="button" class="btn btn-inverse" value="Čekající platby" />
+        </a>
+    }
+</div>
+
+<div class="box-content box-statistic">
+    <h3>Fotky</h3>
+    <a href="@Url.Content("~/Administrace/UpdatePhotoAlbum")">
+        <input type="button" class="btn btn-inverse" value="Updatovat fotoalbum" />
+    </a>
+    <a href="@Url.Content("~/Administrace/AddPhotoAlbum")">
+        <input type="button" class="btn btn-inverse" value="Přidat fotoalbum za uživatele" />
+    </a>
+</div>
+
+@if (ViewBag.IsAdmin)
+{
+    <div class="box-content box-statistic">
+        <h3>Testy</h3>
+        <a href="@Url.Content("~/Administrace/DownloadPage")">
+            <input type="button" class="btn btn-inverse" value="Stáhnutí stránky" />
+        </a>
+    </div>
+}
+
+@if (ViewBag.IsAdmin)
+{
+    <hr />
+    <div class="box-content box-statistic">
+        <iframe src="@Url.Content("~/Elmah")" style="width: 100%;" frameborder="0" scrolling="auto" onload="iframeLoaded()" id="elmahFrame"></iframe>
+        <div class="clearfix"></div>
+    </div>
+
+    <script>
+        function iframeLoaded() {
+            var iFrameID = document.getElementById('elmahFrame');
+            if (iFrameID) {
+                iFrameID.height = "";
+                iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + 50 + "px";
+            }
+        }
+    </script>
+}

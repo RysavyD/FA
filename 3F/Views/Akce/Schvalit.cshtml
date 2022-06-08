@@ -1,0 +1,37 @@
+﻿@model _3F.Web.Models.SimpleEventModel
+
+@{
+    ViewBag.Title = "Schválit akci " + Model.Name;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-nomargin">
+            <div class="box-header green-background">
+                <i class="icon-check"> </i>Schválení akce @Model.Name
+            </div>
+            <div class="box-content" style="background-color:#f4f4f4;">
+                <div class="box-content box-statistic">
+                    <h3>Chcete schválit nebo zamítnout akci <a href="@Url.Content("~/Akce/detail/"+Model.HtmlName)">@Model.Name</a>?</h3>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <br />
+                        <button class="btn btn-success" name="button" value="schvalit">
+                            <i class="icon-ok" style="font-size: 14px;"> </i>Schválit
+                        </button>
+
+                        <button class="btn btn-warning" name="button" value="schvalitKomercni" style="margin-left: 10px;">
+                            <i class="icon-ok" style="font-size: 14px;"> </i>Schválit a označit jako komerční akci
+                        </button>
+
+                        <button class="btn btn-danger" name="button" value="zamitnout" style="margin-left: 10px;">
+                            <i class="icon-remove" style="font-size: 14px;"> </i>Zamítnout
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,53 @@
+﻿@model _3F.Web.Models.Profil.TransakceViewModel
+
+<link rel="stylesheet" href="~/Content/Plugins/datatables/jquery.dataTables.min.css" />
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<table id="example" class="display" cellspacing="0"></table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var oTable = $('#example').dataTable({
+            "iDisplayLength": 25,
+            "data" : @Html.Raw(Json.Encode(Model.Data)),
+            "columns": [
+                { "title": "Poznámka" },
+                { "title": "Částka" },
+                { "title": "Vytvořeno", "type": "cz_datetime" },
+                { "title": "Zaplaceno", "type": "cz_datetime" },
+            ],
+            "order": [[ 3, "desc" ]],
+            "language": {
+                "sEmptyTable":     "Tabulka neobsahuje žádná data",
+                "sInfo":           "Zobrazuji _START_ až _END_ z celkem _TOTAL_ záznamů",
+                "sInfoEmpty":      "Zobrazuji 0 až 0 z 0 záznamů",
+                "sInfoFiltered":   "(filtrováno z celkem _MAX_ záznamů)",
+                "sInfoPostFix":    "",
+                "sInfoThousands":  " ",
+                "sLengthMenu":     "Zobraz záznamů _MENU_",
+                "sLoadingRecords": "Načítám...",
+                "sProcessing":     "Provádím...",
+                "sSearch":         "Hledat:",
+                "sZeroRecords":    "Žádné záznamy nebyly nalezeny",
+                "oPaginate": {
+                    "sFirst":    "První",
+                    "sLast":     "Poslední",
+                    "sNext":     "Další",
+                    "sPrevious": "Předchozí"
+                },
+                "oAria": {
+                    "sSortAscending":  ": aktivujte pro řazení sloupce vzestupně",
+                    "sSortDescending": ": aktivujte pro řazení sloupce sestupně"
+                }
+            },
+        });
+    });
+    </script>
+}
+

@@ -1,0 +1,146 @@
+﻿@model _3F.Web.Models.MainPageModel
+
+@{
+    ViewBag.Title = "Fungujeme Aktivně";
+}
+
+<div class="row">
+    <div class="col-md-9 col-sm-12">
+        @Html.Partial("~/Views/Home/_EventList.cshtml", Model)
+    </div>
+    <div class="col-md-3 col-sm-12">
+        @Html.Partial("~/Views/Home/_ActivityList.cshtml", Model.Activities)
+        @Html.Partial("~/Views/Home/_FB_Wall.cshtml")
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        var eventPageNumber = 1;
+
+        $(document).ready(function () {
+            GetEvents();
+        });
+
+        function GetEvents() {
+            $("#eventErrorMessage").hide();
+            $("#eventSpinner").show();
+            $("#eventLoadBox").show();
+            $("#eventList").empty();
+
+            $.getJSON('@Url.Content("~/Api/Event/Events/")', { page: 1, type: '@Model.EventType', filterName: '@Model.CategoryHtmlName' })
+                .done(function (data) {
+                    if (data.ShowPagination) {
+                        GeneratePagination('#eventPagination', LoadEventPage, data.TotalItems);
+                    }
+                    $("#eventLoadBox").hide();
+                    var templateWithData = Mustache.to_html($("#eventListTemplate").html(), { RootTag: data.Items });
+                    $("#eventList").empty().html(templateWithData);
+                })
+                .fail(function () {
+                    $("#eventSpinner").hide();
+                    $("#eventErrorMessage").show();
+                    $("#eventLoadBox").show();
+                });
+        };
+
+        function LoadEventPage(page) {
+            $("#eventErrorMessage").hide();
+            $("#eventSpinner").show();
+            $("#eventLoadBox").show();
+            $("#eventList").empty();
+
+            if (page != undefined)
+                eventPageNumber = page;
+
+            $.getJSON('@Url.Content("~/Api/Event/Events/")', { page: page, type: '@Model.EventType', filterName: '@Model.CategoryHtmlName' })
+                .done(function (data) {
+                    eventPageNumber = data.Page;
+                    $("#eventLoadBox").hide();
+                    var templateWithData = Mustache.to_html($("#eventListTemplate").html(), { RootTag: data.Items });
+                    $("#eventList").empty().html(templateWithData);
+                })
+                .fail(function () {
+                    $("#eventSpinner").hide();
+                    $("#eventErrorMessage").show();
+                    $("#eventLoadBox").show();
+                });
+        };
+    </script>
+    <script id="eventListTemplate" type="text/html">
+        {{#RootTag}}
+        <div class="box-content box-statistic" style="min-height: 120px;
+        {{#IsPrivated}}background-color:rgba(191, 171, 254, 0.58);{{/IsPrivated}}
+        {{#IsInWork}}background-color:rgba(247, 249, 146, 0.58);{{/IsInWork}}">
+            {{#ShowButtons}}
+            <div class="floatRight logButtons">
+                <div>
+                    <div class="btn btn-success" onclick="LoginToEvent('{{HtmlName}}', 'Prijdu', true)" colspan="2" style="width: 100%;margin-bottom: 4px;font-size: 16px;border-radius:10px !important;background-color:{{YesColor}};">
+                        <i class="icon-check" style="font-size: 16px;"> </i><span>Přijdu</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="btn btn-warning" onclick="LoginToEvent('{{HtmlName}}', 'Mozna')" data-html="{{HtmlName}}"
+                         style="font-size:12px;margin-right: 2px;background-color:{{MayBeColor}};border-radius:10px !important;{{^MayBeAllowed}}visibility:hidden;{{/MayBeAllowed}}">
+                        <i class="icon-check-minus" style="font-size:12px;"> </i><span>Možná</span>
+                    </div>
+                    <div class="btn btn-danger" onclick="LoginToEvent('{{HtmlName}}', 'Neprijdu')" data-html="{{HtmlName}}" style="font-size:12px;background-color:{{NoColor}};border-radius:10px !important;">
+                        <i class="icon-check-empty" style="font-size:12px;"> </i><span>Nepřijdu</span>
+                    </div>
+                </div>
+            </div>
+            {{/ShowButtons}}
+            <a href='@Url.Content("~/akce/detail")/{{HtmlName}}' style='text-decoration: none'>
+                {{#HasPhoto}}
+                <div><img class="eventPhoto" src="@Url.Content("~/Images/Events")/{{Photo}}" /></div>
+                {{/HasPhoto}}
+                {{^HasPhoto}}
+                <div style="width:100px;height:100px; float:left;"><i class="icon-star" style="font-size: 50px; padding-left: 25px;"></i></div>
+                {{/HasPhoto}}
+            </a>
+            <h3 class="title text-success" style="font-family: Helvetica, Arial, sans-serif;">
+                <a href='@Url.Content("~/akce/detail")/{{HtmlName}}' style='text-decoration: none'>{{Name}}</a>
+            </h3>
+            <small>{{Perex}}</small>
+            <div>Od: <b>{{Start}}</b> do: <b>{{Stop}}</b></div>
+            <div>
+                Vytíženost akce <i class="icon-user" style="font-size: 14px;"></i>{{YesParticipants}}({{MayBeParticipants}})/{{Capacity}}
+                <span style="color: green">{{Status}}</span>
+            </div>
+            {{#HasDiscussionItem}}
+            <div>Poslední příspěvek: <b>{{LastDiscussionItem}}</b></div>
+            {{/HasDiscussionItem}}
+        </div>
+        {{/RootTag}}
+    </script>
+    <script>
+        var eventLoginClick = true;
+
+        function LoginToEvent(htmlName, status, confirmNeeded) {
+            if (confirmNeeded != undefined && confirmNeeded == true) {
+                if (!confirm("Opravdu se chce přihlásit na akci?"))
+                    return;
+            }
+            ShowWaitDialog();
+            if (eventLoginClick) {
+                eventLoginClick = false;
+                var EventUserLog = { Status: status, EventName: htmlName }
+                MakePostCall('@Url.Content("~/Api/Event/Login")', EventUserLog, ReloadEvents);
+            }
+        }
+        function ReloadEvents() {
+            HideWaitDialog();
+            LoadEventPage(eventPageNumber);
+            eventLoginClick = true;
+        }
+
+        function ShowTitle(element) {
+            var text = element.children[0].title;
+            element.children[0].children[1].innerText = text;
+        }
+
+        function HideTitle(element) {
+            element.children[0].children[1].innerText = '';
+        }
+    </script>
+}

@@ -1,0 +1,458 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AABE317D-08AB-458C-93C9-1E0A9220349F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>_3F.Model</RootNamespace>
+    <AssemblyName>3F.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\Test\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.78\lib\net461\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.28.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.28\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.6\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accounting\AccountingWKasa.cs" />
+    <Compile Include="Accounting\AccountModels.cs" />
+    <Compile Include="Accounting\FakeAccounting.cs" />
+    <Compile Include="Accounting\IAccounting.cs" />
+    <Compile Include="Email\BaseEmailSender.cs" />
+    <Compile Include="Email\FileEmailSender.cs" />
+    <Compile Include="Email\IEmailSender.cs" />
+    <Compile Include="Email\Model\Models.cs" />
+    <Compile Include="Email\SmtpMailSender.cs" />
+    <Compile Include="Extensions\DateExtensions.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="Extensions\Discussion.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="IDownload.cs" />
+    <Compile Include="IHtmlName.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="Info.cs" />
+    <Compile Include="Initializer.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="IPrimaryKey.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="Migrations\201509072013550_InitialCreate.cs" />
+    <Compile Include="Migrations\201509072013550_InitialCreate.Designer.cs">
+      <DependentUpon>201509072013550_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509121423069_PaymentGuid.cs" />
+    <Compile Include="Migrations\201509121423069_PaymentGuid.Designer.cs">
+      <DependentUpon>201509121423069_PaymentGuid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509122115000_EventCostDescription.cs" />
+    <Compile Include="Migrations\201510171549225_ItemStatus.cs" />
+    <Compile Include="Migrations\201510171549225_ItemStatus.Designer.cs">
+      <DependentUpon>201510171549225_ItemStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601011529340_ProgramSetting.cs" />
+    <Compile Include="Migrations\201601011529340_ProgramSetting.Designer.cs">
+      <DependentUpon>201601011529340_ProgramSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602051519017_EventParticipantPaymentReference.cs" />
+    <Compile Include="Migrations\201602051519017_EventParticipantPaymentReference.Designer.cs">
+      <DependentUpon>201602051519017_EventParticipantPaymentReference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605092102363_EventInvitation.cs" />
+    <Compile Include="Migrations\201605092102363_EventInvitation.Designer.cs">
+      <DependentUpon>201605092102363_EventInvitation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608182037111_NewAlbumsAndSummaryNotice.cs" />
+    <Compile Include="Migrations\201608182037111_NewAlbumsAndSummaryNotice.Designer.cs">
+      <DependentUpon>201608182037111_NewAlbumsAndSummaryNotice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609111105230_RemoveUnnecessaryTables.cs" />
+    <Compile Include="Migrations\201609111105230_RemoveUnnecessaryTables.Designer.cs">
+      <DependentUpon>201609111105230_RemoveUnnecessaryTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609111351394_ParticipantIdInHistory.cs" />
+    <Compile Include="Migrations\201609111351394_ParticipantIdInHistory.Designer.cs">
+      <DependentUpon>201609111351394_ParticipantIdInHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609250844035_EventCategory.cs" />
+    <Compile Include="Migrations\201609250844035_EventCategory.Designer.cs">
+      <DependentUpon>201609250844035_EventCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281025028_TextPermissions.cs" />
+    <Compile Include="Migrations\201612281025028_TextPermissions.Designer.cs">
+      <DependentUpon>201612281025028_TextPermissions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703092106070_FA_O_Nas.cs" />
+    <Compile Include="Migrations\201703092106070_FA_O_Nas.Designer.cs">
+      <DependentUpon>201703092106070_FA_O_Nas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701032106070_DiscussionDateTimes.cs" />
+    <Compile Include="Migrations\201701032106070_DiscussionDateTimes.Designer.cs">
+      <DependentUpon>201701032106070_DiscussionDateTimes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703290844137_YearStatistics.cs" />
+    <Compile Include="Migrations\201703290844137_YearStatistics.Designer.cs">
+      <DependentUpon>201703290844137_YearStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703291156542_Chief.cs" />
+    <Compile Include="Migrations\201703291156542_Chief.Designer.cs">
+      <DependentUpon>201703291156542_Chief.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705231250392_HelpEntity.cs" />
+    <Compile Include="Migrations\201705231250392_HelpEntity.Designer.cs">
+      <DependentUpon>201705231250392_HelpEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705300806229_CategoryDescription.cs" />
+    <Compile Include="Migrations\201705300806229_CategoryDescription.Designer.cs">
+      <DependentUpon>201705300806229_CategoryDescription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707150832401_Posts.cs" />
+    <Compile Include="Migrations\201707150832401_Posts.Designer.cs">
+      <DependentUpon>201707150832401_Posts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707161324454_FileUploadInfo.cs" />
+    <Compile Include="Migrations\201707161324454_FileUploadInfo.Designer.cs">
+      <DependentUpon>201707161324454_FileUploadInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708030948329_HtmlNameIndex.cs" />
+    <Compile Include="Migrations\201708030948329_HtmlNameIndex.Designer.cs">
+      <DependentUpon>201708030948329_HtmlNameIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708080809043_EventConfirmator.cs" />
+    <Compile Include="Migrations\201708080809043_EventConfirmator.Designer.cs">
+      <DependentUpon>201708080809043_EventConfirmator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708150825205_KnowFrom.cs" />
+    <Compile Include="Migrations\201708150825205_KnowFrom.Designer.cs">
+      <DependentUpon>201708150825205_KnowFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709201333580_UnifyPostsAndFileDescription.cs" />
+    <Compile Include="Migrations\201709201333580_UnifyPostsAndFileDescription.Designer.cs">
+      <DependentUpon>201709201333580_UnifyPostsAndFileDescription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709201336050_RemoveTableText.cs" />
+    <Compile Include="Migrations\201709201336050_RemoveTableText.Designer.cs">
+      <DependentUpon>201709201336050_RemoveTableText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710051842041_MeetInformationNotRequired.cs" />
+    <Compile Include="Migrations\201710051842041_MeetInformationNotRequired.Designer.cs">
+      <DependentUpon>201710051842041_MeetInformationNotRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710081005253_SuggestedEventToMail.cs" />
+    <Compile Include="Migrations\201710081005253_SuggestedEventToMail.Designer.cs">
+      <DependentUpon>201710081005253_SuggestedEventToMail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806240943284_VopVersion.cs" />
+    <Compile Include="Migrations\201806240943284_VopVersion.Designer.cs">
+      <DependentUpon>201806240943284_VopVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812101212236_EventMainCategory.cs" />
+    <Compile Include="Migrations\201812101212236_EventMainCategory.Designer.cs">
+      <DependentUpon>201812101212236_EventMainCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812172245596_EventCategoryMainCategory.cs" />
+    <Compile Include="Migrations\201812172245596_EventCategoryMainCategory.Designer.cs">
+      <DependentUpon>201812172245596_EventCategoryMainCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902022154537_UserMainCategory.cs" />
+    <Compile Include="Migrations\201902022154537_UserMainCategory.Designer.cs">
+      <DependentUpon>201902022154537_UserMainCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\AspNetRoles.cs" />
+    <Compile Include="Model\AspNetUserClaims.cs" />
+    <Compile Include="Model\AspNetUserLogins.cs" />
+    <Compile Include="Model\AspNetUsers.cs" />
+    <Compile Include="Model\AspNetUsersMainCategory.cs" />
+    <Compile Include="Model\C__MigrationHistory.cs" />
+    <Compile Include="Model\Discussion.cs" />
+    <Compile Include="Model\DiscussionItem.cs" />
+    <Compile Include="Model\Entities.cs" />
+    <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\EventCategory.cs" />
+    <Compile Include="Model\EventOrganisator.cs" />
+    <Compile Include="Model\EventParticipant.cs" />
+    <Compile Include="Model\EventParticipantHistory.cs" />
+    <Compile Include="Model\EventSummary.cs" />
+    <Compile Include="Model\Extension\Event.cs" />
+    <Compile Include="Model\Extension\Payment.cs" />
+    <Compile Include="Model\KnowFrom.cs" />
+    <Compile Include="Model\Message.cs" />
+    <Compile Include="Model\MessageRecipient.cs" />
+    <Compile Include="Model\OldPassword.cs" />
+    <Compile Include="Model\Organisation.cs" />
+    <Compile Include="Model\OrganisationMember.cs" />
+    <Compile Include="Model\Payment.cs" />
+    <Compile Include="Model\PeriodicEvent.cs" />
+    <Compile Include="Model\PhotoAlbum.cs" />
+    <Compile Include="Model\FileUploadInfo.cs" />
+    <Compile Include="Model\Post.cs" />
+    <Compile Include="Model\Profiles.cs" />
+    <Compile Include="Model\ProgramSetting.cs" />
+    <Compile Include="Model\Help.cs" />
+    <Compile Include="Model\Text.cs" />
+    <Compile Include="Model\TouristCard.cs" />
+    <Compile Include="Model\EventInvitation.cs" />
+    <Compile Include="Model\TouristCardOwner.cs" />
+    <Compile Include="Model\TouristStamp.cs" />
+    <Compile Include="Model\TouristStampOwner.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Interface\IEntityRepository.cs" />
+    <Compile Include="Repositories\Interface\IEventCategoryRepository.cs" />
+    <Compile Include="Repositories\Interface\IEventRepository.cs" />
+    <Compile Include="Repositories\Interface\IFileUploadInfoRepository.cs" />
+    <Compile Include="Repositories\Interface\IKnowFromRepository.cs" />
+    <Compile Include="Repositories\Interface\IMessageRepository.cs" />
+    <Compile Include="Repositories\Interface\IOrganizationMembersRepository.cs" />
+    <Compile Include="Repositories\Interface\IPostRepository.cs" />
+    <Compile Include="Repositories\Interface\IUserRepository.cs" />
+    <Compile Include="Repositories\KnowFromRepository.cs" />
+    <Compile Include="Repositories\DiscussionRepository.cs" />
+    <Compile Include="Repositories\EventCategoryRepository.cs" />
+    <Compile Include="Repositories\EventRepository.cs" />
+    <Compile Include="Repositories\HelpRepository.cs" />
+    <Compile Include="Repositories\Interface\IDiscussionRepository.cs" />
+    <Compile Include="Repositories\FileUploadInfoRepository.cs" />
+    <Compile Include="Repositories\OrganizationMembersRepository.cs" />
+    <Compile Include="Repositories\PostRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="Repositories\Models\EventListModel.cs" />
+    <Compile Include="Service\ActivityListService.cs" />
+    <Compile Include="Service\MessageService.cs" />
+    <Compile Include="Service\Model\ActivityModel.cs" />
+    <Compile Include="Service\RajceService.cs" />
+    <Compile Include="Utils\About.cs" />
+    <Compile Include="Utils\Photos.cs" />
+    <Compile Include="Utils\Rajce.cs" />
+    <Compile Include="Utils\ResizeImage.cs" />
+    <Compile Include="Utils\Svatek.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Repositories\SQL queries.sql" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ChangeScripts\001.sql" />
+    <Content Include="ChangeScripts\002-Indexes.sql" />
+    <Content Include="Migrations\Notes.txt" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201509072013550_InitialCreate.resx">
+      <DependentUpon>201509072013550_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509121423069_PaymentGuid.resx">
+      <DependentUpon>201509121423069_PaymentGuid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510171549225_ItemStatus.resx">
+      <DependentUpon>201510171549225_ItemStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601011529340_ProgramSetting.resx">
+      <DependentUpon>201601011529340_ProgramSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602051519017_EventParticipantPaymentReference.resx">
+      <DependentUpon>201602051519017_EventParticipantPaymentReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605092102363_EventInvitation.resx">
+      <DependentUpon>201605092102363_EventInvitation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608182037111_NewAlbumsAndSummaryNotice.resx">
+      <DependentUpon>201608182037111_NewAlbumsAndSummaryNotice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609111105230_RemoveUnnecessaryTables.resx">
+      <DependentUpon>201609111105230_RemoveUnnecessaryTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609111351394_ParticipantIdInHistory.resx">
+      <DependentUpon>201609111351394_ParticipantIdInHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609250844035_EventCategory.resx">
+      <DependentUpon>201609250844035_EventCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281025028_TextPermissions.resx">
+      <DependentUpon>201612281025028_TextPermissions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703092106070_FA_O_Nas.resx">
+      <DependentUpon>201703092106070_FA_O_Nas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701032106070_DiscussionDateTimes.resx">
+      <DependentUpon>201701032106070_DiscussionDateTimes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703290844137_YearStatistics.resx">
+      <DependentUpon>201703290844137_YearStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703291156542_Chief.resx">
+      <DependentUpon>201703291156542_Chief.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705231250392_HelpEntity.resx">
+      <DependentUpon>201705231250392_HelpEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705300806229_CategoryDescription.resx">
+      <DependentUpon>201705300806229_CategoryDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707150832401_Posts.resx">
+      <DependentUpon>201707150832401_Posts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707161324454_FileUploadInfo.resx">
+      <DependentUpon>201707161324454_FileUploadInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708030948329_HtmlNameIndex.resx">
+      <DependentUpon>201708030948329_HtmlNameIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708080809043_EventConfirmator.resx">
+      <DependentUpon>201708080809043_EventConfirmator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708150825205_KnowFrom.resx">
+      <DependentUpon>201708150825205_KnowFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709201333580_UnifyPostsAndFileDescription.resx">
+      <DependentUpon>201709201333580_UnifyPostsAndFileDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709201336050_RemoveTableText.resx">
+      <DependentUpon>201709201336050_RemoveTableText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710051842041_MeetInformationNotRequired.resx">
+      <DependentUpon>201710051842041_MeetInformationNotRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710081005253_SuggestedEventToMail.resx">
+      <DependentUpon>201710081005253_SuggestedEventToMail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806240943284_VopVersion.resx">
+      <DependentUpon>201806240943284_VopVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812101212236_EventMainCategory.resx">
+      <DependentUpon>201812101212236_EventMainCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812172245596_EventCategoryMainCategory.resx">
+      <DependentUpon>201812172245596_EventCategoryMainCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902022154537_UserMainCategory.resx">
+      <DependentUpon>201902022154537_UserMainCategory.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\3F.BusinessEntities\3F.BusinessEntities.csproj">
+      <Project>{ec09f40d-1e00-44fe-a1f1-aa5a6990a55d}</Project>
+      <Name>3F.BusinessEntities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper">
+      <Version>2.0.78</Version>
+    </PackageReference>
+    <PackageReference Include="EntityFramework">
+      <Version>6.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="HtmlAgilityPack">
+      <Version>1.11.28</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="NLog.Config">
+      <Version>4.7.6</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.Caching">
+      <Version>5.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

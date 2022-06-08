@@ -1,0 +1,112 @@
+﻿@model _3F.Web.Models.EventModels.EventParticipantHistoryOverview
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm("AddUsers", "Akce", new { id = Model.HtmlName }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input id="Users" name="Users" type="text">
+    <input type="submit" value="Přidat účastníky" />
+}
+</div>
+<div class="box-content">
+    <table class="borderTable">
+        <tr>
+            <th>
+                Jméno
+            </th>
+            <th>
+                Stav přihlášení
+            </th>
+            <th>
+                Datum a čas
+            </th>
+            <th></th>
+            @if (Model.IsFinished)
+            {
+                <th></th>
+                <th></th>
+            }
+            <th></th>
+            @if (Model.IsAdministrator)
+            {
+                <th></th>
+            }
+        </tr>
+
+        @{
+            foreach (var item in Model.LoginParticipants)
+            {
+                <tr>
+                    <td>
+                        @item.User.name
+                    </td>
+                    <td>
+                        @item.LoginStatus.GetDescription()
+                    </td>
+                    <td>
+                        @item.Time.ToString("ddd dd.MM.yyyy HH:mm")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Odmítnout účastníka", "RefuseUser", new { id = item.Id })
+                    </td>
+                    @if (Model.IsFinished && item.LoginStatus == EventLoginEnum.Prijdu)
+                    {
+                        <td>@Html.ActionLink("Omluven", "ExcuseUser", new { id = item.Id }) </td>
+                        <td>@Html.ActionLink("NEomluven", "UnExcuseUser", new { id = item.Id }) </td>
+                    }
+
+                    <td>@item.Id</td>
+
+                    @if (Model.IsAdministrator)
+                    {
+                        <td>@Html.ActionLink("Upravit ručně", "ChangeEventParticipant", "Administrace", new { id = item.Id }, null) </td>
+                    }
+                </tr>
+            }
+        }
+    </table>
+</div>
+<div class="box-content">
+    <div class="box-content">
+        <h3>Historie přihlašování</h3>
+        <div class="responsive-table">
+            <div class="scrollable-area">
+                <table id="example" class="display" cellspacing="0"></table>
+            </div>
+        </div>
+    </div>
+
+@section Scripts {
+    <link rel="stylesheet" href="~/Content/Plugins/datatables/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="~/Content/Plugins/TokenInput/token-input.css" type="text/css" />
+    <link rel="stylesheet" href="~/Content/Plugins/TokenInput/token-input-facebook.css" type="text/css" />
+    <script type="text/javascript" src="~/Scripts/plugins/TokenInput/jquery.tokeninput.js"></script>
+
+    @Scripts.Render("~/bundles/datatables")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var oTable = $('#example').dataTable({
+                "iDisplayLength": 25,
+                "columns": [
+                    { "title": "Uživatel" },
+                    { "title": "Starý status" },
+                    { "title": "Nový status" },
+                    { "title": "Čas", "type": "cz_datetime" },
+                ],
+                "data" : @Html.Raw(Json.Encode(Model.ParticipantHistory)),
+                "order": [[ 3, "desc" ]]
+            });
+        });
+
+        var recipients = '';
+        $("#Users").tokenInput('@Url.Content("~/Api/User/Find")', {
+            theme: "facebook",
+            minChars: 2,
+            prePopulate: recipients
+        });
+    </script>
+}

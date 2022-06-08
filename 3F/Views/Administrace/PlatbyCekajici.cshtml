@@ -1,0 +1,35 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<string[]>
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/Plugins/datatables/jquery.dataTables.min.css" />
+
+<table id="example" class="display" cellspacing="0"></table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var oTable = $('#example').dataTable({
+            "iDisplayLength": 25,
+            "columns": [
+                { "title": "Id" },
+                { "title": "Uživatel" },
+                { "Title": "VS" },
+                { "title": "Status" },
+                { "title": "Částka" },
+                { "title": "Vytvořeno", "type": "cz_datetime" },
+                { "title": "Updatováno", "type": "cz_datetime" },
+                { "title": "Poznámka" },
+                { "title": "", "render": function ( data, type, full, meta ) {
+                    return '<a href=@Url.Content("~/Administrace/ChangePayment/")'+data+'>Upravit</a>'; }
+                },
+            ],
+            "data" : @Html.Raw(Json.Encode(Model.Entities)),
+        });
+    });
+    </script>
+}

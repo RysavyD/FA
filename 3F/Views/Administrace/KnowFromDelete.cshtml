@@ -1,0 +1,23 @@
+﻿@model _3F.BusinessEntities.Account.KnowFrom
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title" id="myModalLabel">Smazání položky</h4>
+</div>
+<div class="box-content">
+    <div class="box-content box-statistic">
+        <h3>Opravdu chcete smazat položku "@Model.Text"?</h3>
+        <div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <br />
+                <input type="submit" value="Smazat" class="btn btn-danger" style="margin-left:10px; margin-right:10px;" />
+                <button class="btn btn-success" data-dismiss="modal"  style="margin-left: 10px; margin-right: 10px;">Zpět</button>
+            }
+        </div>
+    </div>
+</div>
+
+@Html.FormSubmitWaitDialog()

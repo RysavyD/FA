@@ -1,0 +1,88 @@
+﻿@model _3F.Web.Models.Akce.EventDetailViewModel
+
+<div class="col-md-3" id="ParticipantsPart">
+    @if (User.Identity.IsAuthenticated && !Model.IsInPastOrDeleted && Model.State != (int)EventStateEnum.InWork)
+    {
+        <div class="box-content">
+            <h3>Přihlášení</h3>
+            <div class="progress">
+                <div class="progress-bar" style="width: @string.Format("{0}%", Model.Availability)"></div>
+            </div>
+            @Ajax.ActionLink("Přijdu", "Login", "Akce",
+                new _3F.Web.Controllers.API.Model.EventUserLog()
+                {
+                    IdEvent = Model.Id,
+                    StatusEnum = EventLoginEnum.Prijdu
+                },
+                new AjaxOptions()
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.ReplaceWith,
+                    UpdateTargetId = "ParticipantsPart",
+                    OnBegin = "ShowWaitDialog();",
+                    OnComplete = "HideWaitDialog();",
+                    OnFailure = "alert('chyba');"
+
+                },
+                new { @class=  "btn btn-block btn-lg " + (Model.UserEventLogin == (int)EventLoginEnum.Prijdu ? "btn-success" : "btn-success-empty")})
+
+            @if (Model.MayBeLogOn)
+            {
+                @Ajax.ActionLink("Možná", "Login", "Akce",
+                    new _3F.Web.Controllers.API.Model.EventUserLog()
+                    {
+                        IdEvent = Model.Id,
+                        StatusEnum = EventLoginEnum.Mozna
+                    },
+                    new AjaxOptions()
+                    {
+                        HttpMethod = "POST",
+                        InsertionMode = InsertionMode.ReplaceWith,
+                        UpdateTargetId = "ParticipantsPart",
+                        OnBegin = "ShowWaitDialog();",
+                        OnComplete = "HideWaitDialog();",
+
+                    },
+                    new { @class=  "btn btn-block btn-lg " + (Model.UserEventLogin == (int)EventLoginEnum.Mozna ? "btn-warning" : "btn-warning-empty") })
+            }
+
+            @Ajax.ActionLink("Nepřijdu", "Login", "Akce",
+                new _3F.Web.Controllers.API.Model.EventUserLog()
+                {
+                    IdEvent = Model.Id,
+                    StatusEnum = EventLoginEnum.Neprijdu
+                },
+                new AjaxOptions()
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.ReplaceWith,
+                    UpdateTargetId = "ParticipantsPart",
+                    OnBegin = "ShowWaitDialog();",
+                    OnComplete = "HideWaitDialog();",
+
+                },
+                new { @class=  "btn btn-block btn-lg " + (Model.UserEventLogin == (int)EventLoginEnum.Neprijdu ? "btn-danger" : "btn-danger-empty") })
+            <hr/>
+            @Html.ActionLink("Chci vzít kamarády","Externisti","Akce", new {id = @Model.HtmlName}, new {@class= "btn btn-block btn-lg" })
+        </div>
+    }
+
+    <div class="box-content">
+        @Html.Partial("~/Views/Akce/_Participants.cshtml", new _3F.Web.Models.Akce.ParticipantGroup(EventLoginEnum.Prijdu, Model.Participants, true))
+        @Html.Partial("~/Views/Akce/_Participants.cshtml", new _3F.Web.Models.Akce.ParticipantGroup(EventLoginEnum.Rezervace, Model.Participants))
+        @Html.Partial("~/Views/Akce/_Participants.cshtml", new _3F.Web.Models.Akce.ParticipantGroup(EventLoginEnum.NepotvrzenaRezervace, Model.Participants))
+        @Html.Partial("~/Views/Akce/_Participants.cshtml", new _3F.Web.Models.Akce.ParticipantGroup(EventLoginEnum.RezervacePropadla, Model.Participants))
+        @Html.Partial("~/Views/Akce/_Participants.cshtml", new _3F.Web.Models.Akce.ParticipantGroup(EventLoginEnum.Nahradnik, Model.Participants))
+        @if (!Model.IsInPastOrDeleted)
+        {
+            @Html.Partial("~/Views/Akce/_Participants.cshtml", new _3F.Web.Models.Akce.ParticipantGroup(EventLoginEnum.Mozna, Model.Participants, true))
+        }
+        @Html.Partial("~/Views/Akce/_Participants.cshtml", new _3F.Web.Models.Akce.ParticipantGroup(EventLoginEnum.Omluven, Model.Participants))
+        @Html.Partial("~/Views/Akce/_Participants.cshtml", new _3F.Web.Models.Akce.ParticipantGroup(EventLoginEnum.PoTerminu, Model.Participants))
+        @Html.Partial("~/Views/Akce/_Participants.cshtml", new _3F.Web.Models.Akce.ParticipantGroup(EventLoginEnum.Neomluven, Model.Participants))
+        @if (User.Identity.IsAuthenticated && !Model.IsInPastOrDeleted)
+        {
+            @Html.Partial("~/Views/Akce/_Participants.cshtml", new _3F.Web.Models.Akce.ParticipantGroup(EventLoginEnum.Neprijdu, Model.Participants, true))
+        }
+    </div>
+</div>

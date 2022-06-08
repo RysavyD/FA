@@ -1,0 +1,17 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    <div>
+        @Html.Label("Id alba, které bude aktualizováno:")
+        @Html.TextBox("albumId", 0, new { style = "width: 100px;", type = "number" })
+    </div>
+    <br />
+    <input type="submit" value="Aktualizovat" class="btn btn-danger" />
+}

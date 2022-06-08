@@ -1,0 +1,8 @@
+﻿@model IEnumerable<_3F.Web.Models.User>
+
+<div>
+    @foreach (var user in Model)
+    {
+       @Html.Partial("~/Views/Shared/_User.cshtml", user)
+    }
+</div>

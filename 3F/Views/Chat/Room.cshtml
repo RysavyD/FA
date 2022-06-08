@@ -1,0 +1,139 @@
+﻿@model _3F.Web.Models.ChatModel
+
+@{
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+<div class="row chat">
+    <div class="col-md-10">
+        <div class="box-content">
+            <div class="new-message" method="post" action="#" accept-charset="UTF-8" style="width: 100%; position: relative;">
+                <input class="form-control" id="newmessage_messagebody" onkeydown="if (event.keyCode === 13) sendNewMessage();" placeholder="Napiš svůj příspěvek ..." type="text" />
+                <button class="btn btn-inverse" type="submit" onclick="sendNewMessage()">
+                    <i class="icon-plus"></i>
+                </button>
+            </div>
+            <div id="chatarea" style="margin-top:15px; width: 100%;">
+                <span id="innerChatArea"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="box-content">
+            <div id="online" class=""></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        var onlineId;
+
+        $(document)
+            .ready(function() {
+                updateChatArea();
+                updateOnlineArea();
+
+                setInterval(
+                    "updateChatArea()",
+                    5000);
+
+                onlineId = setInterval(
+                    "updateOnlineArea()",
+                    10000);
+            });
+
+        var lastMessageDateTime = null;
+
+        function updateChatArea() {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: '@Url.Content("~/Api/Chat/Messages?room=" + Model.Room)',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(CreateQueryData()),
+                success: function(response) {
+                    var templateWithData = Mustache.to_html($("#chatAreaTemplate").html(), { RootTag: response.Items });
+                    if (response.NeedToClear) {
+                        $("#chatarea").html('<span id="innerChatArea"></span>');
+                        $("#innerChatArea").after(templateWithData);
+                        lastMessageDateTime = null;
+                    } else {
+                        $("#innerChatArea").after(templateWithData);
+                        if (response.Items.length > 0) {
+                            lastMessageDateTime = response.LastTime;
+                        }
+                    }
+                },
+                error: function(jqxhr, textStatus, error) {
+                    console.log(textStatus + ", " + error);
+                }
+            });
+        };
+
+        function CreateQueryData() {
+            return {
+                LastDateTime: lastMessageDateTime,
+                IsFirst: (lastMessageDateTime === null) ? true : false
+            };
+        };
+
+        function updateOnlineArea() {
+            $.getJSON('@Url.Content("~/Api/Chat/Users")', { room: '@Model.Room' })
+                .done(function(data) {
+                    if (data.length > 0) {
+                        var templateWithData = Mustache.to_html($("#onlineAreaTemplate").html(), { RootTag: data });
+                        $("#online").empty().html(templateWithData);
+                    }
+                })
+                .fail(function(jqxhr, textStatus, error) {
+                    console.log(textStatus + ", " + error);
+                });
+        }
+
+        function sendNewMessage() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Content("~/Api/Chat/AddMessage")',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify($("#newmessage_messagebody").val()),
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                },
+                success: function() {
+                    $("#newmessage_messagebody").val("");
+                    clearTimeout(onlineId);
+                    updateChatArea();
+                    onlineId = setInterval(
+                        "updateOnlineArea()",
+                        10000);
+                }
+            });
+        }
+    </script>
+
+    <script id="onlineAreaTemplate" type="text/html">
+        <div style="margin-bottom: 5px;">
+            Online({{RootTag.length}})
+        </div>
+        {{#RootTag}}
+        <span style="margin: 2px;">
+            <a href="/profil/Detail/{{htmlName}}">
+@* ReSharper disable once Html.PathError *@
+                <img src="/Images/Profile/{{ProfilePhoto}}" alt="{{name}}" title="{{name}}" class="profilePhoto" />
+            </a>
+        </span>
+        {{/RootTag}}
+    </script>
+
+    <script id="chatAreaTemplate" type="text/html">
+        {{#RootTag}}
+        @* ReSharper disable once Html.TagNotResolved *@
+        <p style="display: block; word-break: keep-all; color: {{Color}}; ">
+            <b>{{UserName}}</b>
+            <i>({{DateTimeStr}})</i> - {{{Text}}}
+        </p>
+        {{/RootTag}}
+    </script>
+}

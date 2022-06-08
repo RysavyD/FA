@@ -1,0 +1,33 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<_3F.Web.Models.Administration.PaymentViewModel>
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/Plugins/datatables/jquery.dataTables.min.css" />
+
+<table id="example" class="display" cellspacing="0"></table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            var oTable = $('#example').dataTable({
+                "iDisplayLength": 25,
+                "columns": [
+                    { "title": "Id", "width": "7%", "render": function ( data, type, row, meta ) { return row.Id } },
+                    { "title": "Uživatel", "width": "7%", "render": function (data, type, row, meta) { return row.UserName } },
+                    { "title": "Akce", "width": "21%", "render": function ( data, type, row, meta ) {
+                        return '<a href=@Url.Content("~/Akce/Detail/")'+ row.EventHtml +'>' + row.EventName + '</a>'; } },
+                    { "title": "Částka", "width": "6%", "render": function (data, type, row, meta) { return row.Amount } },
+                    { "title": "Poznámka", "width": "39%", "render": function (data, type, row, meta) { return row.Note } },
+                    { "title": "Vytvořeno", "width": "15%", "render": function (data, type, row, meta) { return row.CreateDate } },
+                    { "title": "", "width": "5%", "render": function ( data, type, row, meta ) {
+                        return '<a href=@Url.Content("~/Administrace/Zaplatit/")' + row.Id + '>Zaplatit</a>'; } },
+                ],
+                "data" : @Html.Raw(Json.Encode(Model.Entities)),
+            });
+        });
+</script>
+}

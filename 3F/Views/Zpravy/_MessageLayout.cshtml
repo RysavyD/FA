@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<div style="width: 100%; vertical-align: top; border: 1px solid #DDD;">
+    <form style="margin: 5px;" method="post" action='@Url.Content("~/Zpravy/Search")'>
+        <input type="text" placeholder=" Hledej ve zprávách..." style="width: 200px;" name="value" />
+    </form>
+    <hr/>
+    @RenderBody()
+</div>
+
+@Html.FormSubmitWaitDialog()
+@section scripts
+{
+    @RenderSection("scripts", false)
+}

@@ -1,0 +1,99 @@
+﻿.ItemNeeded {
+    color: #F00; 
+    font-size: 10px;
+}
+
+.ItemNotNeeded {
+    font-size: 10px;
+}
+
+.profilePhoto {
+    width: 60px;
+    height: 60px;
+    vertical-align: baseline;
+    cursor: pointer;
+}
+
+.eventPhoto {
+    width: 100px;
+    float:left;
+    margin-right: 10px;
+}
+
+@media (min-width: 992px) {
+    .toggle-nav.btn.pull-left { display: none; }
+}
+
+@media (max-width: 665px) {
+    a.navbar-brand {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .logButtons {
+        display: none;
+    }
+}
+
+.discussionItem a {
+    color: #428bca;
+}
+
+.box-statistic .col-md-8 a {
+    text-decoration: none;
+}
+
+.floatLeft {
+    float: left;
+}
+
+.floatRight {
+    float: right;
+}
+
+.chat ul>li.first, .chat ul>li.prev, .chat ul>li.page, .chat ul>li.next, .chat ul>li.last {
+    border-bottom: 0;
+}
+
+.users {
+    border:1px solid #808080; 
+    margin: 2px; 
+    text-align: center; 
+    width: 95px; 
+    height: 135px;
+}
+
+.borderTable, .borderTable tr, .borderTable td, .borderTable th {
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.tabmenu .active {
+    background-color: #DDD;
+}
+
+.messageRow:hover {
+    background-color: #ececec !important;
+}
+
+#messageList .Odd {
+    background-color: #F9F9F9;
+}
+
+.pull-left a:hover {
+    text-decoration: none;
+}
+
+#recipientsList ul {
+    width: 100% !important;
+}
+
+.roundCorners {
+    border-radius: 10px !important;
+    margin-bottom: 5px;
+}
+
+.picture img {
+    max-width: 250px;
+}

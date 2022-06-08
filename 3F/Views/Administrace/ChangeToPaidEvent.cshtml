@@ -1,0 +1,25 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<Tuple<string, string, int>>
+
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<h2>Vyber akci, kterou chceš převést</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Jméno akce</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ev in Model.Entities)
+        {
+            <tr>
+                <td>@Html.EventDetailLink(ev.Item1, ev.Item2)</td>
+                <td>@Html.ActionLink("Převést", "ChangeToPaidEventEdit", "Administrace", new { id = ev.Item3 }, new { @class = "btn btn-success"})</td>
+            </tr>
+        }
+    </tbody>
+</table>

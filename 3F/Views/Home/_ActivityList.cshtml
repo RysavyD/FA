@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ActivityModel>
+
+<div class="box">
+    <div class="box-header red-background">
+        <div class="title">
+            <div class="icon-eye-open"></div>
+            Poslední aktivity
+        </div>
+        <div class="actions">
+            <a class="btn box-collapse btn-xs btn-link" href="#">
+                <i></i>
+            </a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="box-content" style="background-color:#f4f4f4">
+        @foreach (var activity in Model)
+        {
+            <div class="box-content box-statistic">
+                <span style="float: left; padding-right: 5px;">@Html.Partial("~/Views/Shared/_ModelUser.cshtml", activity.User)</span>
+                <div style="font-size: 85%;">@activity.Time.ToString("ddd dd.MM HH:mm")</div>
+                <h5 class="title" style="font-family: Helvetica, Arial, sans-serif; line-height: 20px;">@Html.Raw(activity.Text)</h5>
+                <div class="clearfix"></div>
+            </div>
+        }
+    </div>
+ </div>

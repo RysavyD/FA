@@ -1,0 +1,41 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<_3F.BusinessEntities.Help>
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<div class="accordion accordion-sea-blue panel-group" id="accordion2" style="margin-bottom: 0;">
+    @{
+        int index = 0;
+        foreach (var entity in Model.Entities)
+        {
+            string entityId = "collapseaccordion" + index;
+            <div class="panel panel-default" id="@entity.Id">
+                <div class="panel-heading">
+                    <a class="accordion-toggle collapsed" data-parent="#accordion2" data-toggle="collapse" href="#@entityId">
+                        @entity.Question
+                    </a>
+                </div>
+                <div class="panel-collapse collapse" id="@entityId" style="height: 0;">
+                    <div class="panel-body">
+                        @Html.Raw(entity.Answer)
+                    </div>
+                </div>
+            </div>
+
+            index++;
+        }
+    }
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var hash = window.location.hash;
+            if (hash) {
+                var element = $(hash + " a")[0];
+                element.click();
+            };
+        });
+    </script>
+}

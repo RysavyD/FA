@@ -1,0 +1,96 @@
+﻿@model IEnumerable<_3F.Web.Models.TuristickeZnamkyModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Mapa</title>
+        <script src="http://api.mapy.cz/loader.js"></script>
+        <script>Loader.load()</script>
+        
+    </head>
+    <body>
+        <div id="mapa" style="height: 600px; width: 100%;"></div>
+        <table class="table">
+        <tr>
+            <th>
+                Číslo
+            </th>
+            <th>
+                Název
+            </th>
+            <th>
+                Popis
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <img src="@item.ImageUrl" style="height: 50px;"/>
+                </td>
+                <td>
+                    @item.Coordinates
+                </td>
+                <td>
+                    @item.AlreadyHaven
+                </td>
+            </tr>
+        }
+
+    </table>
+        
+        <script type="text/javascript">
+            var stred = SMap.Coords.fromWGS84(14.41, 50.08);
+            var mapa = new SMap(JAK.gel("mapa"), stred, 8);
+            mapa.addDefaultLayer(SMap.DEF_TURIST).enable();
+            mapa.addDefaultControls();
+
+            var layer = mapa.getLayer(SMap.DEF_TURIST);
+            layer.setTrail(true);
+
+            @foreach (var item in Model)
+            {
+                <text>
+                    var markLayer = new SMap.Layer.Marker();
+                    mapa.addLayer(markLayer);
+                    markLayer.enable();
+
+                    var pozice = SMap.Coords.fromWGS84(@item.Coordinates);
+                    var options = {
+                        url: '@(item.AlreadyHaven
+                                    ? "http://api4.mapy.cz/img/api/marker/drop-blue.png"
+                                    : "http://api4.mapy.cz/img/api/marker/drop-red.png")',
+                        title: '@item.ItemNumber - @Html.Raw(item.Name)',
+                    };
+
+                    var card = new SMap.Card();
+                    card.getHeader().innerHTML = '<strong>@item.ItemNumber - @Html.Raw(item.Name)</strong>';
+                    card.getBody().innerHTML = '<br/>@Html.Raw(item.Description)';
+
+                    var marker = new SMap.Marker(pozice, "myMarker", options);
+                    marker.decorate(SMap.Marker.Feature.Card, card);
+                    markLayer.addMarker(marker);
+                </text>
+            }
+        </script>
+    </body>
+</html>

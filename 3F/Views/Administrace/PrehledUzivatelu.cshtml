@@ -1,0 +1,31 @@
+﻿<link rel="stylesheet" href="~/Content/Plugins/datatables/jquery.dataTables.min.css" />
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<table id="example" class="display" cellspacing="0"></table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var oTable = $('#example').dataTable({
+                "iDisplayLength": 25,
+                "order": [[ 0, "desc" ]],
+                "ajax": '@Url.Content("~/Api/Administrace/Uzivatele")',
+                "columns": [
+                    { "title": "Id" },
+                    { "title": "Jméno" },
+                    { "title": "Email" },
+                    { "title": "Vytvořen", "class": "center", "type": "cz_datetime" },
+                    { "title": "Typ účtu" },
+                    { "title": "Id_Profil", "class": "center" },
+                    { "title": "Variabilní symbol", "class": "center" },
+                    { "title": "Aktivita", "class": "center", "type": "cz_datetime" }
+                ],
+            });
+        });
+    </script>
+}

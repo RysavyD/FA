@@ -1,0 +1,40 @@
+﻿@model _3F.Web.Models.EmptyBaseViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";   
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-info">
+            <h4>
+                <i class="icon-ok-sign"></i>
+                Blahopřejeme,
+            </h4>
+            Vaše registrace byla <b>úspěšně</b> dokončena!
+        </div>
+        <div class="alert alert-success">
+            <h4>
+                <i class="icon-info-sign"></i>
+                Možnosti,
+            </h4>
+            Nyní můžete využívat všech funkcí našich stránek, jako jsou například
+            <ul>
+                <li>přihlašovat se na akce</li>
+                <li>přispívat do diskuzí</li>
+                <li>zakládat vlastní diskuze</li>
+                <li>komunikovat s ostatními uživateli pomocí zpráv</li>
+            </ul>
+        </div>
+        <div class="alert alert-success">
+            <h4>
+                <i class="icon-exclamation-sign"></i>
+                Nastavení,
+            </h4>
+            Nyní pokračujte nastavením svého profilu, část z něj vidí jen přihlášení uživatelé
+            <a href="@Url.Content("~/Profil/Nastaveni")" class="btn btn-sm btn-primary">Nastavit profil</a>
+            <br/>
+            Veškeré informace jsou samozřejmě k dispozici i v <b><a href="@Url.Content("~/Help")">Nápovědě</a></b>
+        </div>    
+    </div>
+</div>

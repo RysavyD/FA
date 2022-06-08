@@ -1,0 +1,18 @@
+﻿@model _3F.Web.Models.Administration.NewsViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    <div>
+        @Html.LabelFor(m => m.News, "Text novinky:")
+        @Html.TextBoxFor(m => m.News, new { style = "width: 100%;" })
+    </div>
+    <br />
+    <input type="submit" value="Uložit" class="btn btn-danger" />
+}

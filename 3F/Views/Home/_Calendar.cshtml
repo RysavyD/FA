@@ -1,0 +1,137 @@
+﻿@section Scripts {
+    <link rel="stylesheet" href="~/Content/Plugins/Kendo/kendo.common.min.css" />
+    <link rel="stylesheet" href="~/Content/Plugins/Kendo/kendo.default.min.css" />
+    <script src="~/Scripts/plugins/kendo/kendo.ui.core.min.js"></script>
+    <script src="~/Scripts/plugins/kendo/kendo.calendar.min.js"></script>
+    <script src="~/Scripts/plugins/kendo/cultures/kendo.culture.cs-CZ.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            GetCalender();
+        });
+        function GetCalender() {
+            $("#calendarSpinner").show();
+            $("#calendarErrorMessage").hide();
+            var calendarEvents = [];
+            $.getJSON('@Url.Content("~/Api/Home/EventDates")')
+            .done(function (data) {
+                // On success, 'data' contains a list of datetimes.
+                $.each(data, function (index, value) {
+                    calendarEvents.push(+new Date(value.Year, value.Month, value.Day));
+                });
+                $("#calendarSpinner").hide();
+                $("#calendar").kendoCalendar({
+                    culture: "cs-CZ",
+                    value: new Date(),
+                    dates: calendarEvents,
+                    month: {
+                        // template for dates in month view
+                        content: '# if ($.inArray(+data.date, data.dates) != -1) { #' +
+                                '<div class="calendarEvent">#= data.value #</div>' +
+                                '# } else { #' +
+                                '#= data.value #' +
+                                '# } #'
+                    },
+                    footer: false,
+                    change: onChange,
+                });
+            }) 
+            .fail(function() {
+                $("#calendarSpinner").hide();
+                $("#calendarErrorMessage").show();
+            });
+        }
+        function onChange() {
+            document.location.href = '@Url.Content("/Home/EventDate/")' + kendo.toString(this.value(), 'yyyy-MM-dd');
+        }
+    </script>
+    <style scoped>
+        #calendar {
+            width: 100%;
+            text-align: center;
+        }
+
+        #calendar .k-content {
+            height: 300px;
+        }
+
+        #calendar,
+        #calendar .k-content,
+        #calendar .k-header,
+        #calendar th,
+        #calendar .k-link,
+        #calendar .k-state-hover,
+        #calendar .k-state-selected,
+        #calendar .k-state-focused {
+            background: transparent;
+            border-color: transparent;
+            box-shadow: none;
+        }
+
+         #calendar .k-content .k-state-hover,
+         #calendar .k-content .k-state-focused {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        #calendar .k-state-selected, #calendar .k-state-selected.k-state-focused {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #calendar .k-content .k-link {
+            padding: 0;
+            min-height: 40px;
+            line-height: 40px;
+        }
+
+        #calendar th {
+            padding-top: 20px;
+            color: #8cbabf;
+        }
+
+        #calendar th,
+        #calendar td {
+            text-align: center;
+        }
+
+        .calendarEvent {
+            width: 40px;
+            height: 40px;
+            margin: auto;
+            -webkit-border-radius: 100px;
+            -moz-border-radius: 100px;
+            border-radius: 50%;
+            line-height: 40px;
+        }
+
+        .calendarEvent {
+            background-color: #00ACEC;
+            color: #000;
+        }
+
+        .k-state-selected>.k-link {
+            color: #000;
+        }
+    </style>
+}
+
+<div class="box box-collapsed">
+    <div class="box-header blue-background">
+        <div class="title">
+            <div class="icon-calendar"></div>
+            Kalendář akcí
+        </div>
+        <div class="actions">
+            <a class="btn box-collapse btn-xs btn-link" href="#">
+                <i></i>
+            </a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="box-content" style="text-align: center;background-color:#f4f4f4">
+        <i id="calendarSpinner" class="icon-2x icon-spinner icon-spin"></i>
+        <div id="calendarErrorMessage" style="display: none">Kalendář se nepodařilo načíst. <button onclick="GetCalender()">Načíst znovu</button></div>
+        <div id="calendar" style="background-color: white"></div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿@model _3F.Web.Models.Collector.CollectorIndexViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<h3>Celkové statistiky</h3>
+<ul>
+    <li>
+        Celkový počet předmětů: <b>@Model.Count</b>
+    </li>
+    <li>
+        Počet různých nasbíraných předmětů: <b>@Model.DifferentCount</b> tj. @((Model.DifferentCount/(double) Model.Count).ToString("P")) z celkového počtu
+    </li>
+    <li>
+        Nejčastěji nasbíraná známka <b><a href='@(Request.Url + "/Detail/" + Model.MostItemId)'>@Model.MostItemId - @Model.MostItemName</a></b> nasbíraný <b>@(Model.MostItemIdCount)x</b>
+    </li>
+    <li>
+        Nejdelší souvislá řada nasbíraných předmětů <b><a href='@Url.Content("~/Profil/Detail/" + Model.MostItemInRowUser.htmlName)'>@Model.MostItemInRowUser.name</a></b> - <b>@Model.MostItemInRow</b> předmětů
+    </li>
+</ul>
+
+<h3>Nejpilnější sběratelé</h3>
+<ol>
+    @if (Model.Top1User != null)
+    {
+        <li>
+            <b><a href='@Url.Content("~/Profil/Detail/" + Model.Top1User.htmlName)'>@Model.Top1User.name</a></b> - počet nasbíraných předmětů <b>@Model.Top1UserCount</b>
+        </li>
+    }
+    @if (Model.Top2User != null)
+    {
+        <li>
+            <b><a href='@Url.Content("~/Profil/Detail/" + Model.Top2User.htmlName)'>@Model.Top2User.name</a></b> - počet nasbíraných předmětů <b>@Model.Top2UserCount</b>
+        </li>
+    }
+    @if (Model.Top3User != null)
+    {
+        <li>
+            <b><a href='@Url.Content("~/Profil/Detail/" + Model.Top3User.htmlName)'>@Model.Top3User.name</a></b> - počet nasbíraných předmětů <b>@Model.Top3UserCount</b>
+        </li>
+    }
+</ol>
+
+<h3>Nejvíce nasbírané předměty</h3>
+<ol>
+    @if (Model.Top1HaveItemCount != 0)
+    {
+        <li>
+            <b><a href='@(Request.Url + "/Detail/" + Model.Top1HaveItemId)'>@Model.Top1HaveItemId - @Model.Top1HaveItemName</a></b> - nasbíraná <b>@(Model.Top1HaveItemCount)x</b>
+        </li>
+    }
+    @if (Model.Top2HaveItemCount != 0)
+    {
+        <li>
+            <b><a href='@(Request.Url + "/Detail/" + Model.Top2HaveItemId)'>@Model.Top2HaveItemId - @Model.Top2HaveItemName</a></b> - nasbíraná <b>@(Model.Top2HaveItemCount)x</b>
+        </li>
+    }
+    @if (Model.Top3HaveItemCount != 0)
+    {
+        <li>
+            <b><a href='@(Request.Url + "/Detail/" + Model.Top3HaveItemId)'>@Model.Top3HaveItemId - @Model.Top3HaveItemName</a></b> - nasbíraná <b>@(Model.Top3HaveItemCount)x</b>
+        </li>
+    }
+</ol>
+
+<h3>Nejvíce žádané předměty</h3>
+<ol>
+    @if (Model.Top1HaveItemCount != 0)
+    {
+        <li>
+            <b><a href='@(Request.Url + "/Detail/" + Model.Top1WantItemId)'>@Model.Top1WantItemId - @Model.Top1WantItemName</a></b> - žádaná <b>@(Model.Top1WantItemCount)x</b>
+        </li>
+    }
+    @if (Model.Top2WantItemCount != 0)
+    {
+        <li>
+            <b><a href='@(Request.Url + "/Detail/" + Model.Top2WantItemId)'>@Model.Top2WantItemId - @Model.Top2WantItemName</a></b> - žádaná <b>@(Model.Top2WantItemCount)x</b>
+        </li>
+    }
+    @if (Model.Top3WantItemCount != 0)
+    {
+        <li>
+            <b><a href='@(Request.Url + "/Detail/" + Model.Top3WantItemId)'>@Model.Top3WantItemId - @Model.Top3WantItemName</a></b> - žádaná <b>@(Model.Top3WantItemCount)x</b>
+        </li>
+    }
+</ol>

@@ -1,0 +1,134 @@
+﻿@model _3F.Web.Models.Diskuze.DiscussionItemsPartialViewModel
+
+<div class="chat" id="chatarea">
+    <div class="col-md-12">
+        @if(User.Identity.IsAuthenticated)
+        {
+            using (Ajax.BeginForm("Add","Diskuze", new { id=Model.IdDiscussion }, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "chatarea",
+                OnBegin = "ShowWaitDialog();",
+                OnComplete = "$('#Mesb').val(''); HideWaitDialog();",
+                OnFailure = "alert('chyba');"
+            }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="new-message" method="post" action="#" accept-charset="UTF-8" id="new-message" style="width: 100%; position: relative">
+                    <input name="authenticity_token" type="hidden">
+                    <textarea class="form-control" id="Mesb" name="Message" placeholder="Napiš svůj příspěvek ..." type="text" ></textarea>
+                    <button class="btn btn-primary" type="submit">
+                        <i class="icon-plus"></i>
+                    </button>                               
+                </div>
+            }
+        }
+        <div class="scrollable" style="overflow: hidden; width: auto;">
+            <ul class="list-unstyled list-hover list-striped">
+                @foreach (var item in Model.Items)
+                {
+                    <li class="message">
+                        <div class="time pull-right">
+                            <small class="date pull-right text-muted">
+                                <span class="timeago fade has-tooltip in" data-placement="top" data-original-title="@item.DateTime">@item.DateTime</span>
+                                <i class="icon-time"></i>
+                            </small>
+                        </div>
+                        <div style="float: left; margin-right: 10px; width: 60px;">
+                            <div>
+                                <a href="@Url.Content("~/Profil/Detail")/@item.Author.HtmlName" title="@item.Author.UserName">
+                                    <img src="@Url.Content("~/Images/Profile")/@item.Author.ProfilePhoto" title="@item.Author.UserName" class="profilePhoto" />
+                                </a>
+                            </div>@item.Author.UserName
+                        </div>
+                        <div class="discussionItem">@Html.Raw(item.Text)</div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div>
+            <ul class="pagination" id="discussionPagination">
+                @if (Model.Page == 1)
+                {
+                    <li class="first disabled"><a href=""><i class="icon-double-angle-left"></i></a></li>
+                    <li class="prev disabled"><a href=""><i class="icon-angle-left"></i></a></li>
+                }
+                else
+                {
+                    <li class="first">
+                        @Ajax.RawActionLink("<i class=\"icon-double-angle-left\"></i>", "GetItems", "Diskuze",
+                            new {id = Model.IdDiscussion, page = 1},
+                            new AjaxOptions()
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "chatarea",
+                                OnBegin = "ShowWaitInElement($(this));",
+                                OnFailure = "HideWaitInElement($(this));",
+                            })
+                    </li>
+                    <li class="prev">
+                        @Ajax.RawActionLink("<i class=\"icon-angle-left\"></i>", "GetItems", "Diskuze",
+                            new {id = Model.IdDiscussion, page = Model.Page - 1},
+                            new AjaxOptions()
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "chatarea",
+                                OnBegin = "ShowWaitInElement($(this));",
+                                OnFailure = "HideWaitInElement($(this));",
+                            })
+                    </li>
+                }
+                @for (int i = Model.StartPage; i <= Model.EndPage; i++)
+                {
+                    <li class="first @(Model.Page == i ? "active" : "")">
+                        @Ajax.ActionLink(i.ToString(), "GetItems", "Diskuze",
+                            new {id = Model.IdDiscussion, page = i},
+                            new AjaxOptions()
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "chatarea",
+                                OnBegin = "ShowWaitInElement($(this));",
+                                OnFailure = "HideWaitInElement($(this));",
+                            })
+                    </li>
+                }
+                @if (Model.Page == Model.EndPage)
+                {
+                    <li class="next disabled"><a href="#"><i class="icon-angle-right"></i></a></li>
+                    <li class="last disabled"><a href="#"><i class="icon-double-angle-right"></i></a></li>
+                }
+                else
+                {
+                    <li class="next">
+                        @Ajax.RawActionLink("<i class=\"icon-angle-right\"></i>", "GetItems", "Diskuze",
+                            new {id = Model.IdDiscussion, page = Model.Page + 1},
+                            new AjaxOptions()
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "chatarea",
+                                OnBegin = "ShowWaitInElement($(this));",
+                                OnFailure = "HideWaitInElement($(this));",
+                            })
+                    </li>
+                    <li class="prev">
+                        @Ajax.RawActionLink("<i class=\"icon-double-angle-right\"></i>", "GetItems", "Diskuze",
+                            new {id = Model.IdDiscussion, page = Model.MaxPage},
+                            new AjaxOptions()
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "chatarea",
+                                OnBegin = "ShowWaitInElement($(this));",
+                                OnFailure = "HideWaitInElement($(this));",
+                            })
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

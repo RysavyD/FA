@@ -1,0 +1,143 @@
+@media (max-width: 767px) {
+  .text-center-xs {
+    text-align: center; } }
+
+@media (min-width: 768px) {
+  .img-responsive-sm {
+    display: block;
+    height: auto;
+    max-width: 100%; } }
+
+@media (max-width: 767px) {
+  .no-mg-t-xs {
+    margin-top: 0 !important; } }
+
+.no-mg-t {
+  margin-top: 0 !important; }
+
+.no-mg-b {
+  margin-bottom: 0 !important; }
+
+.center-block {
+  margin-left: auto;
+  margin-right: auto; }
+
+.contrast-green header .navbar {
+  background-color: #fff; }
+  .contrast-green header .navbar .toggle-nav {
+    background-color: #49bf67; }
+    .contrast-green header .navbar .toggle-nav:active, .contrast-green header .navbar .toggle-nav.active, .contrast-green header .navbar .toggle-nav:hover {
+      background-color: #379e51; }
+  .contrast-green header .navbar .navbar-form button {
+    color: #49bf67; }
+    .contrast-green header .navbar .navbar-form button:hover {
+      color: #246534; }
+  .contrast-green header .navbar .navbar-form input {
+    border-color: #379e51;
+    color: #246534; }
+    .contrast-green header .navbar .navbar-form input:-moz-placeholder {
+      color: #6fcc87; }
+    .contrast-green header .navbar .navbar-form input:-ms-input-placeholder {
+      color: #6fcc87; }
+    .contrast-green header .navbar .navbar-form input::-webkit-input-placeholder {
+      color: #6fcc87; }
+    .contrast-green header .navbar .navbar-form input:hover:-moz-placeholder {
+      color: #94daa6; }
+    .contrast-green header .navbar .navbar-form input:hover:-ms-input-placeholder {
+      color: #94daa6; }
+    .contrast-green header .navbar .navbar-form input:hover::-webkit-input-placeholder {
+      color: #94daa6; }
+    .contrast-green header .navbar .navbar-form input:focus {
+      border-color: #2a783e; }
+      .contrast-green header .navbar .navbar-form input:focus:-moz-placeholder {
+        color: #82d396; }
+      .contrast-green header .navbar .navbar-form input:focus:-ms-input-placeholder {
+        color: #82d396; }
+      .contrast-green header .navbar .navbar-form input:focus::-webkit-input-placeholder {
+        color: #82d396; }
+  .contrast-green header .navbar > .nav > li.light > a {
+    background: #379e51; }
+    .contrast-green header .navbar > .nav > li.light > a .label {
+      color: #379e51; }
+    .contrast-green header .navbar > .nav > li.light > a:hover, .contrast-green header .navbar > .nav > li.light > a:active, .contrast-green header .navbar > .nav > li.light > a:focus {
+      background-color: #2e8344; }
+  .contrast-green header .navbar > .nav > li.medium > a {
+    background: #2e8344; }
+    .contrast-green header .navbar > .nav > li.medium > a .label {
+      color: #2e8344; }
+    .contrast-green header .navbar > .nav > li.medium > a:hover > a, .contrast-green header .navbar > .nav > li.medium > a:active > a, .contrast-green header .navbar > .nav > li.medium > a:focus > a {
+      background-color: #2a783e; }
+  .contrast-green header .navbar > .nav > li.dark > a {
+    background: #27703a; }
+    .contrast-green header .navbar > .nav > li.dark > a .label {
+      color: #27703a; }
+    .contrast-green header .navbar > .nav > li.dark > a:hover > a, .contrast-green header .navbar > .nav > li.dark > a:active > a, .contrast-green header .navbar > .nav > li.dark > a:focus > a {
+      background-color: #246534; }
+  .contrast-green header .navbar .widget .dropdown-menu > li.widget-footer a:hover {
+    background-color: #49bf67; }
+.contrast-green header .navbar .nav li .label {
+  color: #49bf67; }
+.contrast-green .nav .caret, .contrast-green .nav a:hover .caret {
+  border-top-color: #49bf67;
+  border-bottom-color: #49bf67; }
+.contrast-green code {
+  background-color: #e2f1ea;
+  color: #58c474; }
+.contrast-green #main-nav .navigation > .nav > li > a.in [class^="icon-"], .contrast-green #main-nav .navigation > .nav > li > a.in [class*=" icon-"] {
+  color: #49bf67; }
+.contrast-green #main-nav .navigation > .nav > li:hover > a [class^="icon-"], .contrast-green #main-nav .navigation > .nav > li:hover > a [class*=" icon-"], .contrast-green #main-nav .navigation > .nav > li:focus > a [class^="icon-"], .contrast-green #main-nav .navigation > .nav > li:focus > a [class*=" icon-"], .contrast-green #main-nav .navigation > .nav > li.active > a [class^="icon-"], .contrast-green #main-nav .navigation > .nav > li.active > a [class*=" icon-"] {
+  color: #49bf67 !important; }
+.contrast-green #main-nav .navigation > .nav > li .nav > li.active > a [class^="icon-"], .contrast-green #main-nav .navigation > .nav > li .nav > li.active > a [class*=" icon-"] {
+  color: #49bf67; }
+.contrast-green #main-nav .navigation > .nav > li .nav > li > a:hover [class^="icon-"], .contrast-green #main-nav .navigation > .nav > li .nav > li > a:hover [class*=" icon-"], .contrast-green #main-nav .navigation > .nav > li .nav > li > a:focus [class^="icon-"], .contrast-green #main-nav .navigation > .nav > li .nav > li > a:focus [class*=" icon-"] {
+  color: #49bf67; }
+.contrast-green .box .box-header.contrast-background .actions .btn-link:hover {
+  color: #49bf67 !important; }
+.contrast-green.contrast-background, .contrast-green .contrast-background {
+  background: #49bf67 !important; }
+.contrast-green .text-contrast, .contrast-green .contrast {
+  color: #49bf67 !important; }
+.contrast-green .contrast-border {
+  border-color: #49bf67 !important; }
+.contrast-green .accordion.accordion-contrast .accordion-group {
+  border-color: #49bf67;
+  border-bottom-color: #94daa6; }
+.contrast-green .accordion.accordion-contrast .accordion-heading .accordion-toggle {
+  color: white;
+  background-color: #49bf67; }
+.contrast-green .box-quick-link.contrast-background a:active .header {
+  background: #379e51; }
+.contrast-green .box-quick-link.contrast-background:hover .header {
+  background: #3eb05b; }
+.contrast-green .box-statistic.contrast-background .title, .contrast-green .box-statistic.contrast-background small, .contrast-green .box-statistic.contrast-background [class*="icon-"] {
+  color: #49bf67 !important; }
+.contrast-green .breadcrumb li:first-child > a:hover {
+  color: #49bf67 !important; }
+.contrast-green h1 [class^="icon-"] {
+  color: #49bf67; }
+.contrast-green .dropdown-menu > .active > a, .contrast-green .dropdown-menu > .active > a:hover, .contrast-green .dropdown-menu > .active > a:focus, .contrast-green .dropdown-menu > li > a:hover, .contrast-green .dropdown-menu > li > a:focus, .contrast-green .dropdown-submenu:hover > a, .contrast-green .dropdown-submenu:focus > a {
+  background-color: #49bf67 !important; }
+.contrast-green .box .box-header .actions .btn-link:hover {
+  color: #49bf67; }
+.contrast-green .fuelux .wizard ul li.active {
+  background-color: #49bf67; }
+.contrast-green .fc-event .fc-event-inner {
+  border-color: #49bf67;
+  background-color: #49bf67; }
+.contrast-green .contrast-caret {
+  border-top-color: #49bf67 !important;
+  border-bottom-color: #49bf67 !important; }
+.contrast-green .select2-results .select2-highlighted {
+  background: #49bf67; }
+.contrast-green .daterangepicker .ranges li.active, .contrast-green .daterangepicker .ranges li:hover {
+  background: #49bf67; }
+.contrast-green .daterangepicker td.active, .contrast-green .daterangepicker td.active:hover {
+  background: #49bf67; }
+.contrast-green .datepicker td span.active:hover, .contrast-green .datepicker td span.active:hover:hover, .contrast-green .datepicker td span.active.disabled:hover, .contrast-green .datepicker td span.active.disabled:hover:hover, .contrast-green .datepicker td span.active:active, .contrast-green .datepicker td span.active:hover:active, .contrast-green .datepicker td span.active.disabled:active, .contrast-green .datepicker td span.active.disabled:hover:active, .contrast-green .datepicker td span.active.active, .contrast-green .datepicker td span.active:hover.active, .contrast-green .datepicker td span.active.disabled.active, .contrast-green .datepicker td span.active.disabled:hover.active, .contrast-green .datepicker td span.active.disabled, .contrast-green .datepicker td span.active:hover.disabled, .contrast-green .datepicker td span.active.disabled.disabled, .contrast-green .datepicker td span.active.disabled:hover.disabled, .contrast-green .datepicker td span.active[disabled], .contrast-green .datepicker td span.active:hover[disabled], .contrast-green .datepicker td span.active.disabled[disabled], .contrast-green .datepicker td span.active.disabled:hover[disabled], .contrast-green .datepicker td.active:hover, .contrast-green .datepicker td.active:hover:hover, .contrast-green .datepicker td.active.disabled:hover, .contrast-green .datepicker td.active.disabled:hover:hover, .contrast-green .datepicker td.active:active, .contrast-green .datepicker td.active:hover:active, .contrast-green .datepicker td.active.disabled:active, .contrast-green .datepicker td.active.disabled:hover:active, .contrast-green .datepicker td.active.active, .contrast-green .datepicker td.active:hover.active, .contrast-green .datepicker td.active.disabled.active, .contrast-green .datepicker td.active.disabled:hover.active, .contrast-green .datepicker td.active.disabled, .contrast-green .datepicker td.active:hover.disabled, .contrast-green .datepicker td.active.disabled.disabled, .contrast-green .datepicker td.active.disabled:hover.disabled, .contrast-green .datepicker td.active[disabled], .contrast-green .datepicker td.active:hover[disabled], .contrast-green .datepicker td.active.disabled[disabled], .contrast-green .datepicker td.active.disabled:hover[disabled] {
+  background: #49bf67; }
+.contrast-green .dropdown-menu > .active > a, .contrast-green .dropdown-menu > .active > a:hover, .contrast-green .dropdown-menu > .active > a:focus {
+  background: #49bf67; }
+.contrast-green .dd-handle:hover {
+  color: #49bf67; }
+.contrast-green .dd-placeholder {
+  border-color: #49bf67; }

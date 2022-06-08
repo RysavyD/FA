@@ -1,0 +1,36 @@
+﻿@model _3F.Web.Models.Discussion.DiscussionViewModel
+
+@{
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+<div class="box-content">
+    <div class="scrollable chat" style="overflow: hidden; width: auto;">
+        <ul class="list-unstyled list-hover">
+            <li class="message">
+                <div class="time pull-right">
+                    <small class="date pull-right text-muted">
+                        <span class="timeago fade has-tooltip in" data-placement="top" data-original-title="@Model.CreateDateString">@Model.CreateDateString</span>
+                        <i class="icon-time"></i>
+                    </small>
+                </div>
+                <div style="float: left; margin-right: 10px; width: 60px;">
+                    <div>
+                        <a href="@Url.Content("~/Profil/Detail")/@Model.Author.htmlName" title="@Model.Author.name">
+                            <img src="@Url.Content("~/Images/Profile")/@Model.Author.ProfilePhoto" title="@Model.Author.name" class="profilePhoto" />
+                        </a>
+                    </div>@Model.Author.name
+                </div>
+                <div class="discussionItem">@Html.Raw(Model.Perex)</div>
+            </li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="box-content">
+    @Html.Partial("~/Views/Shared/_DiscussionItems.cshtml")
+    <div class="clearfix"></div>
+</div>
+
+@section Scripts {
+    @Html.DiscussionScripts(Model.Id)
+}

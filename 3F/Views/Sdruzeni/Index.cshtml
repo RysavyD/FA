@@ -1,0 +1,24 @@
+﻿@model _3F.Web.Models.OrganisationViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@Html.Raw(Model.Text)
+<br/>
+<hr/>
+<b>Předseda spolku</b>
+    <div>@Html.Partial("_User", Model.Chief)</div>
+<br />
+<b>Rada spolku</b>
+    @Html.Partial("_Users", Model.Council)
+<br/>
+<b>Dozorčí komise spolku</b>
+    @Html.Partial("_Users", Model.Supervisors)
+<br />
+<b>Hlavní organizátoři</b>
+@Html.Partial("_Users", Model.CertifiedOrganisators)
+<br />
+<b>Členové spolku</b>
+    @Html.Partial("_Users", Model.Members)
+<br />

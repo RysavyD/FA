@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Test1";
+}
+<div>
+    <h2>Test1</h2>
+    <input type="text" id="inpText" value="index" />
+
+    <button class="btn btn-success" type="submit" id="Rooms" onclick="GetRooms()">
+        <i class="icon-plus"> Get rooms</i>
+    </button>
+    <button class="btn btn-success" type="submit" id="GetUSers" onclick="GetUsers()">
+        <i class="icon-plus"> Get Users</i>
+    </button>
+    <button class="btn btn-success" type="submit" id="getRooms" onclick="GetMessages()">
+        <i class="icon-plus"> Get messages</i>
+    </button>
+</div>
+
+<div>
+    <input type="text" id="inpText2" value="JPD" />
+    <button class="btn btn-success" type="submit" id="getRooms" onclick="CreateRoom()">
+        <i class="icon-plus"> Create room</i>
+    </button>
+    <button class="btn btn-success" type="submit" id="getRooms" onclick="DeleteRoom()">
+        <i class="icon-plus"> Delete room</i>
+    </button>
+    <button class="btn btn-success" type="submit" id="getRooms" onclick="AddMessage()">
+        <i class="icon-plus"> Add Message</i>
+    </button>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        function GetRooms() {
+            $.getJSON('@Url.Content("~/Api/Chat/Rooms")')
+                .done(function (data) {
+                    alert(data);
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    var err = textStatus + ", " + error;
+                    alert("Request Failed: " + err);
+                })
+        }
+        function GetUsers() {
+            $.getJSON('@Url.Content("~/Api/Chat/Users")', { room: $("#inpText").val() })
+                .done(function (data) {
+                    alert(data);
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    var err = textStatus + ", " + error;
+                    alert("Request Failed: " + err);
+                })
+        }
+        function GetMessages() {
+            $.getJSON('@Url.Content("~/Api/Chat/Messages")', { room: $("#inpText").val() })
+                    .done(function (data) {
+                        alert(data);
+                    })
+                    .fail(function (jqxhr, textStatus, error) {
+                        var err = textStatus + ", " + error;
+                        alert("Request Failed: " + err);
+                    })
+        };
+
+        function CreateRoom() {
+            MakePostCall('@Url.Content("~/Api/Chat/CreateRoom")', $("#inpText2").val());
+        };
+
+        function DeleteRoom() {
+            MakePostCall('@Url.Content("~/Api/Chat/DeleteRoom")', $("#inpText2").val());
+        };
+
+        function AddMessage() {
+            MakePostCall('@Url.Content("~/Api/Chat/AddMessage")', $("#inpText2").val());
+        };
+    </script>
+}

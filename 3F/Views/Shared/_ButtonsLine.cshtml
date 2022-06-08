@@ -1,0 +1,15 @@
+﻿@model IEnumerable<_3F.Web.Models.ActionButton>
+
+@if (Model.Any())
+{
+    <div class="box-content">
+        @foreach (var button in Model)
+        {
+            <a href="@button.Url" style="text-decoration: none;" id="@button.Id" class="@button.Class">
+                <div class="btn btn-success @ViewBag.ButtonsBackgroundColor" value="@button.Title" style="border-radius: 10px !important; margin-bottom: 5px;">
+                    <i class="@button.Icon"> </i> @button.Title
+                </div>
+            </a>
+        }
+    </div>
+}

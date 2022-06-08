@@ -1,0 +1,21 @@
+﻿@model _3F.Web.Models.SimpleEventModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<h3>Opravdu převést na akci - "@Model.Name"?</h3>
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <br />
+        <input type="submit" value="Převést" class="btn btn-danger" style="margin-left:10px; margin-right:10px;" />
+        <a href="@Url.Content("~/Akce/Detail/"+Model.HtmlName)" class="btn btn-primary">
+            Zpět na akci
+        </a>
+    }
+</div>
+
+@Html.FormSubmitWaitDialog()

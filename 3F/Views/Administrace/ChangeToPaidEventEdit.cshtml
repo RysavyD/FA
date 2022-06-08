@@ -1,0 +1,126 @@
+﻿@model _3F.Web.Models.Administration.ChangeToPaidEventViewModel
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            height: 400,
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste textcolor"
+            ],
+            toolbar1: "undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify |  styleselect formatselect fontselect fontsizeselect",
+            toolbar2: "bullist numlist outdent indent | link image media | forecolor backcolor | table | hr removeformat | subscript superscript | charmap emoticons | code preview",
+            language: "cs",
+            menubar: false,
+        });
+    </script>
+
+    <link rel="stylesheet" href="~/Content/Plugins/Kendo/kendo.common.min.css" />
+    <link rel="stylesheet" href="~/Content/Plugins/Kendo/kendo.default.min.css" />
+    <script src="~/Scripts/plugins/kendo/kendo.ui.core.min.js"></script>
+    <script src="~/Scripts/plugins/kendo/kendo.datetimepicker.min.js"></script>
+    <script src="~/Scripts/plugins/kendo/cultures/kendo.culture.cs-CZ.min.js"></script>
+
+    <script>
+            $(document).ready(function () {
+                kendo.culture("cs-CZ");
+                $("#LastPaidDate").kendoDateTimePicker({
+                    value: '@Model.LastPaidDate'
+                });
+            });
+    </script>
+}
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<style type="text/css">
+    textarea.form-control {
+        height: 400px;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-horizontal">
+        <h4>@Model.Title</h4>
+        <div>
+            Aby bylo převedení akce úspěšné, musí být vyplněny tyto položky
+            <ul>
+                <li>Čas posledního vrácení peněz</li>
+                <li>Kontakt na organizátora</li>
+                <li>Celkové náklady na akci</li>
+                <li>Popis nákladů</li>
+                <li>Odkaz na web</li>
+            </ul>
+        </div>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastPaidDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastPaidDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastPaidDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Contact, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Costs, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Costs, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Costs, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CostsDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.CostsDescription, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CostsDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Link, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Převést" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

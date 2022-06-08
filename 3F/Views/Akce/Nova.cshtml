@@ -1,0 +1,28 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<_3F.Web.Models.Akce.ChooseEventType>
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<div class="row">
+    @foreach (var eventType in Model.Entities)
+    {
+        <div class="col-md-3">
+            <a class="text-contrast" style="font-family: Helvetica,Arial; text-decoration: none;" href="@eventType.Url">
+                <div class="box-content box-statistic">
+                    <h3 class="text-contrast">
+                        @eventType.Name
+                    </h3>
+                    <ul>
+                        @foreach (var desc in eventType.Descriptions)
+                        {
+                            <li style="color: black;">@desc</li>
+                        }
+                    </ul>
+                        <div class="btn btn-success" style="margin-left: auto; margin-right: auto; display: block;">
+                            Vytvořit akci
+                        </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>

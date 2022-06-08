@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    <div>
+        @Html.Label("Html název akce, o které bude posláno info")
+        @Html.TextBox("htmlname", 0, new { style = "width: 100%;", type = "text" })
+    </div>
+    <br />
+    <input type="submit" value="Poslat info" class="btn btn-danger" />
+}

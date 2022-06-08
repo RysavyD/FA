@@ -1,0 +1,15 @@
+﻿@model string[]
+
+@{
+    ViewBag.Title = "LogDetail";
+}
+
+<div>
+    @{
+        foreach (var line in Model)
+        {
+            @Html.Raw(line)
+            <hr />
+        }
+    }
+</div>

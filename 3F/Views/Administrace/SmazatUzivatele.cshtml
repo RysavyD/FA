@@ -1,0 +1,40 @@
+﻿@model string
+
+@{
+    ViewBag.Title = "Smazání uživatele";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-nomargin">
+            <div class="box-header dark-background">
+                <i class="icon-trash"> </i>Smazání uživatele
+            </div>
+            <div class="box-content" style="background-color:#f4f4f4;">
+                <div class="box-content box-statistic">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+
+                            <div class="form-group">
+                                @Html.Label("Jméno uživatele ", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.Editor("userName", new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessage("userName", "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Smazat uživatele" class="btn btn-danger" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

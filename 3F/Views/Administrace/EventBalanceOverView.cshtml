@@ -1,0 +1,83 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<_3F.Web.Models.Administration.EventBalance>
+
+@{
+    ViewBag.Title = "Finanční bilance akcí";
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Název
+        </th>
+        <th>
+            Datum akce
+        </th>
+        <th>
+            Organizátoři
+        </th>
+        <th>
+            Cena akce
+        </th>
+        <th>
+            Kapacita
+        </th>
+        <th>
+            Celkové náklady
+        </th>
+        <th>
+            Dosud vybráno
+        </th>
+        <th>
+            Dosud nezaplaceno
+        </th>
+        <th>
+            Aktuální bilance
+        </th>
+        <th>
+            Výhledová bilance
+        </th>
+        <th>
+            Popis nákladů
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Entities)
+    {
+        <tr>
+            <td>
+                <a href='@Url.Content("~/Akce/Detail/" + item.HtmlName)' >@item.Name</a>
+            </td>
+            <td>
+                @item.StartDate
+            </td>
+            <td>
+                @item.Organisators
+            </td>
+            <td>
+                @item.Price
+            </td>
+            <td>
+                @item.Capacity
+            </td>
+            <td>
+                @item.Costs.ToString("C0")
+            </td>
+            <td>
+                @item.Paid.ToString("C0")
+            </td>
+            <td>
+                @item.WillBePaid.ToString("C0")
+            </td>
+            <td>
+                @((item.Paid - item.Costs).ToString("C0"))
+            </td>
+            <td>
+                @((item.Paid + item.WillBePaid - item.Costs).ToString("C0"))
+            </td>
+            <td>
+                @Html.Raw(item.CostsDescription)
+            </td>
+        </tr>
+    }
+</table>

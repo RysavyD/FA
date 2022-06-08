@@ -1,0 +1,54 @@
+﻿@model _3F.Web.Models.EventModels.EventWithExternParticipant
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+
+<h4>Vaši přihlášení externisté</h4>
+@foreach (var exter in Model.ExternParticipants)
+{
+    <div style="margin-bottom:10px;">
+        Externí účastník přidán dne @exter.Time, stav přihlášení <span style="margin-left:5px; margin-right: 15px;"><b>@exter.Status</b></span>
+        @if (exter.NeedConfirmation)
+        {
+            <a href="@Url.Content("~/Akce/PrihlasitExternistu/" + exter.Id)">
+                <span class="btn btn-success">Přihlásit Externistu</span>
+            </a>
+        }
+        @if (exter.IsActive)
+        { 
+            <a href="@Url.Content("~/Akce/OdebratExternistu/" + exter.Id)">
+                <span class="btn btn-danger">Odebrat Externistu</span>
+            </a>
+        }
+    </div>
+}
+<hr />
+<h4>Kolik chcete přidat externích účastníků?</h4>
+<div>Je možno přidat 1 - 10 externistů</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.Label("Počet nových externích účastníků", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Count, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Count, "", new { @class = "text-danger" })
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="form-group" style="margin-top:15px;">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Přihlásit externisty" class="btn btn-default" style="margin-left:10px; margin-right:10px;" />
+            <a href="@Url.Content("~/Akce/Detail/" + Model.HtmlName)" class="btn btn-default">
+                Zpět na akci
+            </a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+}
+
+@Html.FormSubmitWaitDialog()

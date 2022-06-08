@@ -1,0 +1,60 @@
+﻿@model _3F.Web.Models.Administration.NewPaymentModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    <div>
+        @Html.LabelFor(m => m.HtmlName, "Vyber akci:")
+        @Html.DropDownListFor(m => m.HtmlName, Model.Events)
+    </div>
+    <br />
+    <div>
+        @Html.LabelFor(m => m.UserName, "Vyber uživatele:")
+        @Html.DropDownListFor(m => m.UserName, Model.Users)
+    </div>
+    <br />
+    <div>
+        @Html.LabelFor(m => m.Type, "Vyber důvod:")
+        @Html.DropDownListFor(m => m.Type, Model.Types)
+    </div>
+    <br />
+    <div>
+        @Html.LabelFor(m => m.Price, "Zadej částku:")
+        @Html.EditorFor(m => m.Price)
+    </div>
+    <div>
+        Pokud částku strháváš (např. za účast na akci) uveď <b>zápornou</b> částku.
+        Pokud peníze připisuješ (např. refundace za akci) uveď <b>kladnou</b> částku
+    </div>
+    <br />
+    <div id="duvod" style="display: none;">
+        <div>
+            @Html.LabelFor(m => m.Reason, "Udej důvod vrácení:")
+            @Html.EditorFor(m => m.Reason)
+        </div>
+        <div>Důvod vyplň, jen pokud jsi předtím vybral "Jiný důvod vrácení".</div>
+    </div>
+    <br />
+
+    <input type="submit" value="Vložit platbu" />
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#Type").change(function () {
+                var duvod = $("#Type option:selected").val();
+                if (duvod === "jiny")
+                    $("#duvod").show();
+                else
+                    $("#duvod").hide();
+            });
+        })
+    </script>
+}

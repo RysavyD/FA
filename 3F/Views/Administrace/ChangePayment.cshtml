@@ -1,0 +1,57 @@
+﻿@model _3F.Web.Models.Administration.ChangePaymentViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+
+    <div>
+        @Html.Label("Uživatel:")
+        @Model.UserName
+    </div>
+    <br />
+    <div>
+        @Html.Label("Akce:")
+        @Model.EventName
+    </div>
+    <br />
+    <div>
+        @Html.Label("Vytvořeno:")
+        @Model.CreateDate
+    </div>
+    <br />
+    <div>
+        @Html.Label("Updatováno:")
+        @Model.UpdateDate
+    </div>
+    <br />
+
+
+    <div>
+        @Html.LabelFor(m => m.Status, "Stav platby:")
+        @Html.DropDownListFor(m => m.Status, Model.StatusList)
+
+    </div>
+    <br />
+    <div>
+        @Html.LabelFor(m => m.Amount, "Částka:")
+        @Html.EditorFor(m => m.Amount)
+    </div>
+    <div>
+        Pokud částku strháváš (např. za účast na akci) uveď <b>zápornou</b> částku.
+        Pokud peníze připisuješ (např. refundace za akci) uveď <b>kladnou</b> částku
+    </div>
+    <br />
+    <div>
+        @Html.LabelFor(m => m.Note, "Poznámka:")
+        @Html.EditorFor(m => m.Note, new { htmlAttributes = new { @style = "width:400px;" } })
+    </div>
+    <br />
+    <br />
+    <input type="submit" value="Uložit platbu" />
+}

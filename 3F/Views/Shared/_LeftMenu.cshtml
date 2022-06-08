@@ -1,0 +1,58 @@
+﻿<!-- Leve menu -->
+<div class='navigation'>
+    <ul class='nav nav-stacked in'>
+        <li class=''>
+            <a class="dropdown-collapse" href="#" id="ActionMenuItem">
+                <i class='icon-star'></i>
+                <span>Akce</span>
+                <i class='icon-angle-down angle-down'></i>
+            </a>
+
+            <ul class='nav nav-stacked in'>
+                @Html.MenuItem("Vypsané", "Home", "Index", "icon-star")
+                @Html.MenuItem("Nápady na akce", "Home", "Napady", "icon-lightbulb")
+                @if (User.Identity.IsAuthenticated)
+                {  <text>@Html.MenuItem("Přihlášené", "Home", "Prihlasene", "icon-check")</text> }
+                @Html.MenuItem("Uplynulé", "Home", "Uplynule", "icon-archive")
+                @if (User.Identity.IsAuthenticated)
+                {  <text>@Html.MenuItem("Organizované", "Home", "Organizovane", "icon-user-md")</text> 
+                   <text>@Html.MenuItem("Navštívené", "Home", "Navstivene", "icon-user")</text> }
+                @Html.MenuItem("Zápisky z akcí", "Zapis", "", "icon-pencil")
+                @if (User.Identity.IsAuthenticated)
+                {  <text>@Html.MenuItem("Vytvořit akci", "Akce", "Nova", "icon-edit")</text> }
+                @Html.MenuItem("Kalendář", "Kalendar", "", "icon-calendar")
+                @if (User.IsInRole(_3F.Web.Definitions.Strings.Administrator))
+                { <text>@Html.MenuItem("Smazané", "Home", "Smazane", "icon-trash")</text> }
+            </ul>
+        </li>
+        @Html.MenuItem("Diskuze", "Diskuze", "Index", "icon-comment-alt")
+        @Html.MenuItem("Fotky", "Fotky", "Index", "icon-picture")
+        @{ if (User.Identity.IsAuthenticated)
+         {
+            @Html.MenuItem("Uživatelé", "Uzivatele", "Index", "icon-group")
+            @Html.MenuItem("Zprávy", "Zpravy", "Index", "icon-envelope-alt", "menuMessages")
+            @Html.MenuItem("Profil", "Profil", "Detail", "icon-user")
+            @Html.MenuItem("Chat", "Chat", "Room/Main", "icon-comments-alt")
+            <li class=''>
+                <a class="dropdown-collapse" href="#" id="ActionMenuItem">
+                    <i class='icon-compass'></i>
+                    <span>Soutěže</span>
+                    <i class='icon-angle-down angle-down'></i>
+                </a>
+
+                <ul class='nav nav-stacked'>
+                    @Html.MenuItem("Badmintonové turnaje", "Badminton", "", "icon-rocket", "menuBadminton")
+                    @Html.MenuItem("Turistické známky", "TuristickeZnamky", "", "icon-circle")
+                    @Html.MenuItem("Turistické vizitky", "TuristickeVizitky", "", "icon-credit-card")
+                </ul>
+            </li>
+            @Html.MenuItem("Nápověda", "Help", "", "icon-question")
+         }
+        }
+        @Html.MenuItem("O nás", "Info", "Index", "icon-info")
+        @if (User.IsInRole(_3F.Web.Definitions.Strings.Administrator) 
+            || User.IsInRole(_3F.Web.Definitions.Strings.Council)
+            || User.IsInRole(_3F.Web.Definitions.Strings.Supervisor))
+        { <text>@Html.MenuItem("Administrace", "Administrace", "Index", "icon-cogs")</text> }
+    </ul>
+</div>

@@ -1,0 +1,106 @@
+﻿@model _3F.Web.Models.EventModels.DuplicateEvent
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <input type="hidden" id="DuplicationType" name="DuplicationType" value="" />
+        <input type="hidden" id="HtmlName" name="HtmlName" value="@Model.HtmlName" />
+        <h4>Zvolte název nové akce</h4>
+        <input type="text" name="Name" id="Name" value="@Model.Name" style="width: 100%;" />
+        <br /><br />
+        <div id="howForm">
+            <h5>Jakým způsobem chcete duplikovat akci @Model.Name ?</h5>
+            <br />
+            <div id="days" class="btn btn-info">Posunout o přesný počet dní</div>
+            <div id="date" class="btn btn-info">Duplikovat na přesné datum</div>
+        </div>
+
+        <div id="daysForm" style="display: none;">
+            <h4>O kolik dní chcete duplikovat akci?</h4>
+            <br />
+            <input type="number" id="Days" name="Days" value="7" />
+            <br /><br /><hr />
+            <h4>
+                <ul>
+                    <li>Pokud chcete editovat (název, popisek, ...) duplikované akce ještě před vyhlášením, klikněte na tlačítko <b>"Ještě editovat akci"</b></li>
+                    <li>Pokud chcete akci rovnou zduplikovat a klikněte na tlačítko <b>"Vyhlásit akci"</b>.</li>
+                </ul>
+            </h4>
+            <br />
+            <div id="daysBack" class="btn btn-info">Zpět</div>
+            <input type="submit" class="btn btn-warning" name="submitButton" value="Ještě editovat akci" />
+            <input type="submit" class="btn btn-success" name="submitButton" value="Vyhlásit akci" />
+        </div>
+
+        <div id="dateForm" style="display: none;">
+            <h4>Vyberte den začátku nové akce</h4>
+            <br />
+            <input type="text" id="NewStartDate" name="NewStartDate" value="@Model.NewStartDate" />
+            <br /><br /><hr />
+            <h4>
+                <ul>
+                    <li>Pokud chcete editovat (název, popisek, ...) duplikované akce ještě před vyhlášením, klikněte na tlačítko <b>"Ještě editovat akci"</b></li>
+                    <li>Pokud chcete akci rovnou zduplikovat a klikněte na tlačítko <b>"Vyhlásit akci"</b>.</li>
+                </ul>
+            </h4>
+            <br />
+            <div id="dateBack" class="btn btn-info">Zpět</div>
+            <input type="submit" class="btn btn-warning" name="submitButton" value="Ještě editovat akci" />
+            <input type="submit" class="btn btn-success" name="submitButton" value="Vyhlásit akci" />
+        </div>
+    </div>
+}
+
+@Html.FormSubmitWaitDialog()
+
+@section Scripts {
+    <link rel="stylesheet" href="~/Content/Plugins/Kendo/kendo.common.min.css" />
+    <link rel="stylesheet" href="~/Content/Plugins/Kendo/kendo.default.min.css" />
+    <script src="~/Scripts/plugins/kendo/kendo.ui.core.min.js"></script>
+    <script src="~/Scripts/plugins/kendo/kendo.datetimepicker.min.js"></script>
+    <script src="~/Scripts/plugins/kendo/cultures/kendo.culture.cs-CZ.min.js"></script>
+
+    <script type="text/javascript">
+        var duplicatedType;
+
+        $(document).ready(function() {
+            $("#days").click(function () {
+                duplicatedType = "days";
+                $("#DuplicationType").val("days");
+                MakeMove("#howForm", "#daysForm");
+            });
+            $("#date").click(function () {
+                duplicatedType = "date";
+                $("#DuplicationType").val("date");
+                MakeMove("#howForm", "#dateForm");
+            });
+            $("#daysBack").click(function() {
+                MakeMove("#daysForm", "#howForm", "rigth");
+            });
+            $("#dateBack").click(function() {
+                MakeMove("#dateForm", "#howForm", "rigth");
+            });
+
+            kendo.culture("cs-CZ");
+            $("#NewStartDate").kendoDateTimePicker({
+                value: '@Model.NewStartDate'
+            });
+        });
+
+        function MakeMove(firstSelector, secondSelector, direction) {
+            var firstDirection = (direction == undefined) ? "left" : direction;
+            var secondDirecton = (firstDirection === "left") ? "right" : "left";;
+
+            $(firstSelector).fadeOut("fast", function () {
+                $(secondSelector).fadeIn("fast");
+            });
+        }
+    </script>
+}

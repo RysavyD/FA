@@ -1,0 +1,38 @@
+﻿@model _3F.Web.Models.Collector.CollectorItemsOverview
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+<div class="box-content box-statistic">
+    <form class="form form-horizontal" style="margin-bottom: 0;" method="post" action="#" accept-charset="UTF-8">
+        <div class="form-group" style="margin-bottom: 0;">
+            <label class="col-md-2 control-label" for="inputText1">Hledání předmětu:</label>
+            <div class="col-md-5">
+                <input class="form-control" id="searchItem" placeholder="Číslo nebo název předmětu" type="text">
+            </div>
+        </div>
+    </form>
+</div>
+<div>
+    @foreach (var item in Model.Entities)
+    {
+        <a href="@(Model.BaseUrl + "/Detail/" + item.ItemNumber)" data-filter="@item.ItemNumber @item.Name.ToLower()" class="items">
+            <div class="floatLeft @item.Color" title="@item.Name - @item.Description"
+                 style="width:40px; height: 40px; border: 1px solid black; margin: 2px;
+                 text-align:center; padding: 10px 0 0 0;">
+                @item.ItemNumber
+            </div>
+        </a>
+    }
+</div>
+<div class="clearfix"></div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#searchItem").keyup(function () {
+                FilterItems($(this).val(), ".items");
+            });
+        });
+    </script>
+}

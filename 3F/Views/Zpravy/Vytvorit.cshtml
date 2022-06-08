@@ -1,0 +1,72 @@
+﻿@model _3F.Web.Models.ReplyMessageViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@section Scripts {
+    <link rel="stylesheet" href="~/Content/Plugins/TokenInput/token-input.css" type="text/css" />
+    <link rel="stylesheet" href="~/Content/Plugins/TokenInput/token-input-facebook.css" type="text/css" />
+    <script type="text/javascript" src="~/Scripts/plugins/TokenInput/jquery.tokeninput.js"></script>
+
+    <script>
+        var recipients = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(@Model.Recipients));
+        $("#Recipients").tokenInput('@Url.Content("~/Api/User/Find")', {
+            theme: "facebook",
+            minChars: 2,
+            prePopulate: recipients
+        });
+
+        $("form").submit(function () {
+            ShowWaitDialog();
+        });
+    </script>
+}
+
+
+@using (Html.BeginForm("Vytvorit", "Zpravy", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+        @Html.HiddenFor(model => model.ReplyId)
+
+        <div class="form-group">
+            @Html.Label("Příjemci:", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10" id="recipientsList">
+                @Html.TextBoxFor(model => model.RecipientNames, new {id = "Recipients" })
+                @Html.ValidationMessageFor(model => model.Recipients, "", new {@class = "text-danger"})
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Předmět zprávy:", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Subject, new {style = "width:100%"})
+                @Html.ValidationMessageFor(model => model.Subject, "", new {@class = "text-danger"})
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Text zprávy:", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Text, new { htmlAttributes = new {style = "width:100%; height: 150px;"}})
+                @Html.ValidationMessageFor(model => model.Text, "", new {@class = "text-danger"})
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Odeslat zprávu" class="btn btn-default">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+}
+
+@Html.Partial("~/Views/Zpravy/_MessageList.cshtml", Model.RepliesMessages)

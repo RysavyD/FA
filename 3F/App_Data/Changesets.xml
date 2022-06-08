@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ChangeSets>
+  <ChangeSet>
+    <Version>1</Version>
+    <Text>
+      Create Table VersionDB(
+      [Number] int Not Null,
+      [Date] datetime Not Null)
+    </Text>
+  </ChangeSet>
+</ChangeSets>

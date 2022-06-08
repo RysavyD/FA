@@ -1,0 +1,35 @@
+﻿@model IEnumerable<_3F.Web.Models.MessageViewModel>
+@if (Model.Any())
+{
+    foreach (var message in Model)
+    {
+        <div class="box-content box-statistic">
+            <div>Od: @Html.Partial("~/Views/Shared/_TextUser.cshtml", message.Sender) dne <b>@message.Time</b>
+            </div>
+            <div>
+                @if (message.Recipients != null && message.Recipients.Count > 0)
+                {
+                    <text><br/>Další příjemci: </text>
+                    foreach (var recipient in message.Recipients)
+                    {
+                        if (recipient.Unreaded)
+                        {
+                            <b>
+                                @Html.Partial("~/Views/Shared/_TextUser.cshtml", recipient)
+                            </b>
+                        }
+                        else
+                        {
+                            @Html.Partial("~/Views/Shared/_TextUser.cshtml", recipient)
+                        }
+                    }
+                }
+            </div>
+            <br/>
+            <div>Předmět: <b>@message.Subject</b>
+            </div>
+            <br/>
+            <div>@Html.Raw(message.Text)</div>
+        </div>
+    }
+}

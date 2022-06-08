@@ -1,0 +1,14 @@
+﻿@model _3F.Model.Service.Model.User
+
+<span>
+    @if (Model.IsDeleted)
+    {
+        <img src="@Url.Content("~/Images/Profile/" + Model.ProfilePhoto)" title="@Model.name" class="profilePhoto" />
+    }
+    else
+    {
+        <a href="@Url.Content("~/Profil/Detail/" + Model.htmlName)" title="@Model.name" style="text-decoration: none;">
+            <img src="@Url.Content("~/Images/Profile/" + Model.ProfilePhoto)" alt="@Model.name" title="@Model.name" class="profilePhoto" />
+        </a>
+    }
+</span>

@@ -1,0 +1,7 @@
+﻿@model IEnumerable<_3F.Web.Models.User>
+
+@{
+    var links = Model
+        .Select(i => "<a href=\"" + Url.Content("~/Profil/Detail/" + i.htmlName) + "\">" + i.name + "</a>");
+}
+@Html.Raw(string.Join(", ", links))

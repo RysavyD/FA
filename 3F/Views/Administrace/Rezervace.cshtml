@@ -1,0 +1,29 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<_3F.Web.Models.Administration.Reservation>
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<table class="borderTable">
+    <thead>
+        <tr>
+            <th>Uživatel</th>
+            <th>Akce</th>
+            <th>Datum</th>
+            <th>Stav rezervace</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model.Entities)
+        {
+            <tr>
+                <td><a href="@Url.Content("~/Profil/Detail/" + reservation.UserHtmlName)">@reservation.UserName</a></td>
+                <td><a href="@Url.Content("~/Akce/detail/" + reservation.EventHtmlName)">@reservation.EventName</a></td>
+                <td>@reservation.CreateDate</td>
+                <td>@reservation.Status</td>
+                <td><a href="@Url.Content("~/Administrace/SolveReservation/" + reservation.Id)">Zkontrolovat</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

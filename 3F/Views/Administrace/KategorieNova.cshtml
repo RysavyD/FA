@@ -1,0 +1,22 @@
+﻿@model _3F.Web.Models.Administration.CategoryEdit
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    <div>
+        @Html.LabelFor(m => m.Name, "Název nové kategorie:")
+        @Html.TextBoxFor(m => m.Name, new { style = "width: 100%;" })
+    </div>
+    <br />
+    <input type="submit" value="Uložit" class="btn btn-danger" />
+    <a href='@Url.Action("Kategorie", "Administrace")' class="btn btn-primary">
+        Zpět na seznam kategoríí
+    </a>
+}

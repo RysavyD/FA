@@ -1,0 +1,103 @@
+﻿@model _3F.Web.Models.Profil.EmailSettingsViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <h3>Zvolte, jaké informační emaily chcete dostávat</h3>
+        <div class="col-md-6">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.SendMessagesToMail)
+                @Html.ValidationMessageFor(model => model.SendMessagesToMail, "", new { @class = "text-danger" })
+                @Html.Label("Zasílat vzkazy do mailu", htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.SendMessagesFromAdminToMail)
+                @Html.ValidationMessageFor(model => model.SendMessagesFromAdminToMail, "", new { @class = "text-danger" })
+                @Html.Label("Zasílat zprávy od administrátorů", htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.SendMayBeEventNotice)
+                @Html.ValidationMessageFor(model => model.SendMayBeEventNotice, "", new { @class = "text-danger" })
+                @Html.Label("Zasílat upozornění na akci, pokud jste přihlášeni jako Možná přijdu", htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.SendNewAlbumsToMail)
+                @Html.ValidationMessageFor(model => model.SendNewAlbumsToMail, "", new { @class = "text-danger" })
+                @Html.Label("Zasílat upozornění na nové album u navštívené akce", htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.SendNewSummaryToMail)
+                @Html.ValidationMessageFor(model => model.SendNewSummaryToMail, "", new { @class = "text-danger" })
+                @Html.Label("Zasílat upozornění na zápisky u navštívené akce", htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row" style="margin-top:20px;">
+        <h3>Označte kategorie a podkategorie, u kterých chcete být informováni o nových akcích.</h3>
+        <h5>Zaškrtnutí hlavní kategorie je chození všech daných akcí. A podkategorie jen těch konkrétních. A nezaškrtnutí ničeho, nechození žádných emailů.</h5>
+        <h4 style="margin-top:25px;">Kategorie</h4>
+        <div class="col-md-12">
+            @foreach (var category in Model.MainCategories)
+            {
+                <div style="display:inline-block;">
+                    <input type="checkbox" name="MainCategoryIds" id="main-@category.Id"
+                           value="@category.Id" @(Html.Raw(category.IsAssigned ? "checked=\"checked\"" : "")) />
+                    <label for="main-@category.Id" style="margin-right: 15px; font-size: 16px;">@category.Name</label>
+                </div>
+            }
+            <div style="display:inline-block;">
+                @Html.CheckBoxFor(model => model.Stay)
+                @Html.LabelFor(model => model.Stay, "Pobyt", new { style = "margin-right: 15px; font-size: 16px;" })
+            </div>
+        </div>
+        <hr />
+        <div class="col-md-12">
+            <h4 style="margin-top:15px;">Podkategorie</h4>
+            @CategoryList(_3F.BusinessEntities.Enum.MainCategory.Sport, Model.Categories)
+            @CategoryList(_3F.BusinessEntities.Enum.MainCategory.Tourism, Model.Categories)
+            @CategoryList(_3F.BusinessEntities.Enum.MainCategory.Entertainment, Model.Categories)
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px;">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Zpět na profil", "Detail", null, new { @class = "btn btn-default" })
+                <input type="submit" value="Uložit" name="submit" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+@helper CategoryList(_3F.BusinessEntities.Enum.MainCategory mainCategory, IList<_3F.Web.Models.Profil.EmailCategory> eventCategories)
+{
+    <div>
+        <div>@mainCategory.GetDescription()</div>
+        @foreach (var category in eventCategories.Where(x => x.MainCategory == mainCategory))
+        {
+            <div style="display:inline-block;">
+                <input type="checkbox" name="CategoryIds" id="cat-@category.Id"
+                       value="@category.Id" @(Html.Raw(category.IsAssigned ? "checked=\"checked\"" : "")) />
+                <label for="cat-@category.Id" style="margin-right: 15px; font-weight:initial;">@category.Name</label>
+            </div>
+        }
+    </div>
+    <hr />
+}

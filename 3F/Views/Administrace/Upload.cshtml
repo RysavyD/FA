@@ -1,0 +1,43 @@
+﻿@model IEnumerable<string>
+@using System.IO;
+
+@{
+    ViewBag.Title = "List of content";
+}
+
+<div>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.Label("Vložte soubor", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="file" />
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Nahrát soubor" name="submit" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+</div>
+
+<div>
+
+    <ul>
+        @foreach (var filename in Model)
+        {
+            <li>
+                <b>
+                    <a href="@Url.Content("~/Administrace/Download/" + Path.GetFileNameWithoutExtension(filename).Replace(".","-"))">@filename</a>
+                </b>
+            </li>
+        }
+    </ul>
+</div>

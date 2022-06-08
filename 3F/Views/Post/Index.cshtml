@@ -1,0 +1,9 @@
+﻿@model _3F.Web.Models.GenericBaseViewModel<_3F.Web.Models.Administration.PostViewModel>
+
+
+@{
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+    ViewBag.Title = Model.Entity.Name;
+}
+
+@Html.Raw(Model.Entity.Content)

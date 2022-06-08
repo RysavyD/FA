@@ -1,0 +1,88 @@
+﻿@model _3F.Web.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Přihlášení";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+<div class='middle-container contrast-background' style="background-color: #ececd8 !important">
+    <div class='middle-row'>
+        <div class='middle-wrapper'>
+            <div class='login-container-header'>
+                <div class='container'>
+                    <div class='row'>
+                        <div class='col-sm-12'>
+                            <div class='text-center'>
+                                <a href='@Url.Content("~/")'>
+                                    <img src="~/Images/logo/logo.png" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='login-container'>
+                <div class='container'>
+                    <div class='row'>
+                        <div class='col-sm-4 col-sm-offset-4'>
+                            <h1 class='text-center title'>
+                                Přihlášení
+                            </h1>
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <div class='form-group'>
+                                    <div class='controls with-icon-over-input'>
+                                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Uživatelské jméno nebo email" })
+                                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                                        <i class='icon-user text-muted'></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="controls with-icon-over-input">
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Heslo" })
+                                        <i class='icon-lock text-muted'></i>
+                                     </div>
+                                </div>
+                                <button class='btn btn-block'>PŘIHLÁSIT SE</button>
+                            }
+                            <hr class='hr-normal'>
+                            @using (Html.BeginForm("ExternalLogin", "Account"))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button class="btn btn-block icon-facebook-sign" id="Facebook" name="provider" value="Facebook" title="Přihlášení pomocí Facebookového účtu"
+                                        style="width: 100%;color:#4e69a2;">
+                                    <b>PŘIHLÁSIT SE PŘES FACEBOOK</b>
+                                </button>
+                                <button class="btn btn-block icon-google-plus-sign" id="Google" name="provider" value="Google" title="Přihlášení pomocí Google účtu"
+                                        style="width: 100%;color:red;">
+                                    <b>PŘIHLÁSIT SE PŘES GOOGLE+</b>
+                                </button>
+                            }
+                            <div class='text-center'>
+                                <hr class='hr-normal'>
+                                <a href='@Url.Content("~/Account/ForgotPassword")'>Zapomněli jste heslo?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='login-container-footer'>
+                <div class='container'>
+                    <div class='row'>
+                        <div class='col-sm-12'>
+                            <div class='text-center' style="color: black">
+                                <a href='@Url.Content("~/Account/Register")'>
+                                    <i class='icon-user'></i>
+                                    Jste zde poprvé?
+                                    <strong>Registrace</strong>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

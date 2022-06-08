@@ -1,0 +1,79 @@
+﻿@model _3F.Web.Models.MainPageModel
+
+<div class="box">
+    <div class="box-header green-background">
+        <div class="title">
+            <div class="@ViewBag.DescriptionIcon"></div>
+            <span id="popis">@Model.GetDescription</span>
+        </div>
+        <div class="actions">
+            <a class="btn box-collapse btn-xs btn-link" href="#">
+                <i></i>
+            </a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="box-content" style="background-color:#f4f4f4">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="box-toolbox box-toolbox-top">
+                <div class="pull-left">
+                    <a href="@Url.Content("~/")" onmouseover="ShowTitle(this);" onmouseout="HideTitle(this);">
+                        <div class="btn btn-success" title="Vytvořené akce" style="border-radius: 10px !important; margin-bottom: 5px;">
+                            <i class="icon-star"> </i><span></span>
+                        </div>
+                    </a>
+                    <a href="@Url.Content("~/Home/Napady")" onmouseover="ShowTitle(this);" onmouseout="HideTitle(this);">
+                        <div class="btn btn-success" title="Nápady na akce" style="border-radius: 10px !important; margin-bottom: 5px;">
+                            <i class="icon-lightbulb"> </i><span></span>
+                        </div>
+                    </a>
+                    <a href="@Url.Content("~/Home/Prihlasene")" onmouseover="ShowTitle(this);" onmouseout="HideTitle(this);">
+                        <div class="btn btn-success" title="Přihlášené akce" style="border-radius: 10px !important; margin-bottom: 5px;">
+                            <i class="icon-check"> </i><span></span>
+                        </div>
+                    </a>
+                    <a href="@Url.Content("~/Home/Uplynule")" onmouseover="ShowTitle(this);" onmouseout="HideTitle(this);">
+                        <div class="btn btn-success" title="Uplynulé akce" style="border-radius: 10px !important; margin-bottom: 5px;">
+                            <i class="icon-archive"> </i><span></span>
+                        </div>
+                    </a>
+                    <a href="@Url.Content("~/Home/Organizovane")" onmouseover="ShowTitle(this);" onmouseout="HideTitle(this);">
+                        <div class="btn btn-success" title="Organizované akce" style="border-radius: 10px !important; margin-bottom: 5px;">
+                            <i class="icon-user-md"> </i><span></span>
+                        </div>
+                    </a>
+                    <a href="@Url.Content("~/Home/Navstivene")" onmouseover="ShowTitle(this);" onmouseout="HideTitle(this);">
+                        <div class="btn btn-success" title="Navštívené akce" style="border-radius: 10px !important; margin-bottom: 5px;">
+                            <i class="icon-user"> </i><span></span>
+                        </div>
+                    </a>
+                    <a href="@Url.Content("~/Nerozhodnute")" onmouseover="ShowTitle(this);" onmouseout="HideTitle(this);">
+                        <div class="btn btn-success" title="Nerozhodnuté akce" style="border-radius: 10px !important; margin-bottom: 5px;">
+                            <i class="icon-question"> </i><span></span>
+                        </div>
+                    </a>
+                    <a href="@Url.Content("~/Akce/Nova")">
+                        <div class="btn btn-success" value="Vytvořit akci" style="margin-left: 20px;border-radius: 10px !important; margin-bottom: 5px;">
+                            <i class="icon-edit"> </i>Vytvořit akci
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+
+        @Html.Raw(@ViewBag.Description)
+        
+        <div class="box-content" style="text-align: center" id="eventLoadBox">
+            <i id="eventSpinner" class="icon-2x icon-spinner icon-spin"></i>
+            <span id="eventErrorMessage" style="display: none">
+                Akce se nepodařilo načíst.<br />
+                <button onclick="LoadEventPage(eventPageNumber)" style="position: static">Načíst znovu</button>
+            </span>
+        </div>
+        <div id="eventList"></div>
+        <div>
+            <ul class="pagination" id="eventPagination"></ul>
+        </div>
+    </div>
+</div>

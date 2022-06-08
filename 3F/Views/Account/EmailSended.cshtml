@@ -1,0 +1,19 @@
+﻿@model _3F.Web.Models.EmailSendedViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<p>
+    <h3>DĚKUJEME za vaši registraci</h3>
+</p>
+<p>
+    Na uvedenou adresu <b>@Model.Email</b> byl zaslán potvrzovací email o vytvoření nového účtu.
+    <br />
+    Prosím klikněte na odkaz uvedený v emailu pro dokončení registrace
+</p>
+<p>
+    Pokud email nedorazí do dvou minut, prosím <b>zkontrolujte svoji spamovou schránku</b>, zda email nezapadl tam.
+    <br />
+    V případě problémů nás kontaktujte na mail <b>info(zavináč)fungujemeaktivne.cz</b>
+</p>

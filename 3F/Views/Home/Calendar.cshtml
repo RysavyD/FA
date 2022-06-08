@@ -1,0 +1,97 @@
+﻿@model _3F.Web.Models.BaseViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+<div id="calendar"></div>
+
+@section Scripts {
+    <link rel="stylesheet" href="~/Content/Plugins/calendar/fullcalendar.css" type="text/css" />
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/calendar/fullcalendar.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/calendar/locale/cs.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var date = new Date();
+            GetEvents(date.getFullYear(), date.getMonth());
+
+            $('.fc-prev-button').click(function () {
+                ReloadEvents();
+            });
+
+            $('.fc-next-button').click(function () {
+                ReloadEvents();
+            });
+
+            $('.fc-today-button').click(function () {
+                ReloadEvents();
+            });
+        });
+
+        function ReloadEvents()
+        {
+            var date = $('#calendar').fullCalendar('getDate')._d;
+            GetEvents(date.getFullYear(), date.getMonth());
+        }
+
+        function GetEvents(year, month) {
+            ShowWaitDialog();
+            $.getJSON('@Url.Content("~/Api/Event/CalendarEvents/")', { year: year, month: month+1 })
+                .done(function (data) {
+                    data.forEach(function (ev) {
+                        var newEvent = {
+                            title: ev.Name,
+                            start: new Date(ev.Start),
+                            end: new Date(ev.End),
+                            htmlName: ev.HtmlName,
+                            name: ev.Name,
+                            perex: ev.Perex,
+                        };
+
+                        $('#calendar').fullCalendar('renderEvent', newEvent);
+                    });
+
+                    HideWaitDialog();
+                });
+        };
+
+        (function () {
+            $('#calendar').fullCalendar({
+                selectable: false,
+                editable: true,
+                select: function (start, end, allDay) {
+                    return bootbox.prompt("Event title", function (title) {
+                        if (title !== null) {
+                            cal.fullCalendar("renderEvent", {
+                                title: title,
+                                start: start,
+                                end: end,                                
+                                allDay: allDay
+                            }, true);
+                            return cal.fullCalendar('unselect');
+                        }
+                    });
+                },
+                eventClick: function (calEvent, jsEvent, view) {
+                    return bootbox.dialog({
+                        message: $("<form class='form'><div><b>" + calEvent.title +"</b></div><i>" + calEvent.perex + "</i></form>"),
+                        buttons: {
+                            "Detaily": {
+                                label: "<a href='@Url.Content("~/Akce/Detail/")" + calEvent.htmlName + "' alt='" + calEvent.name + "' style='color:#fff'><i class='icon-eye-open'></i> Detaily</a>",
+                                className: "btn-success pull-left",
+                                callback: function () {
+                                    window.location.href = '@Url.Content("~/Akce/Detail/")' + calEvent.htmlName;
+                                }
+                            },
+                            close: {
+                                label: " Zavřít",
+                                className: ""
+                            }
+                        }
+                    });
+                },
+            });
+        }).call(this);
+    </script>
+}

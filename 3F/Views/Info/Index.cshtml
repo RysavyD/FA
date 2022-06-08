@@ -1,0 +1,90 @@
+﻿@model _3F.Web.Models.InfoViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+<style type="text/css">
+    .box-content {
+        background-color: #ffffff !important;
+    }
+</style>
+
+<div class="tabbable tabs-left" style="display: inline-flex;">
+    <ul class="nav nav-tabs">
+        <li class="active" style="width: 81px;">
+            <a data-toggle="tab" href="#lG">
+                O webu
+            </a>
+        </li>
+        <li class="">
+            <a data-toggle="tab" href="#lA">
+                Spolek
+            </a>
+        </li>
+        <li class="">
+            <a data-toggle="tab" href="#lF">
+                2016
+            </a>
+        </li>
+        <li class="">
+            <a data-toggle="tab" href="#lE">
+                2015
+            </a>
+        </li>
+        <li class="">
+            <a data-toggle="tab" href="#lB">
+                2014
+            </a>
+        </li>
+        <li class="">
+            <a data-toggle="tab" href="#lC">
+                2013
+            </a>
+        </li>
+        <li class="">
+            <a data-toggle="tab" href="#lD">
+                Autoři
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="lG">
+            @Html.Raw(Model.Spolek)
+        </div>
+        <div class="tab-pane" id="lA">
+            @Html.Raw(Model.Organisation.Text)
+            <br />
+            <hr />
+            <b>Předseda spolku</b>
+            <div>@Html.Partial("_User", Model.Organisation.Chief)</div>
+            <br />
+            <b>Rada spolku</b>
+            @Html.Partial("_Users", Model.Organisation.Council)
+            <br />
+            <b>Dozorčí komise spolku</b>
+            @Html.Partial("_Users", Model.Organisation.Supervisors)
+            <br />
+            <b>Hlavní organizátoři</b>
+            @Html.Partial("_Users", Model.Organisation.CertifiedOrganisators)
+            <br />
+            <b>Členové spolku</b>
+            @Html.Partial("_Users", Model.Organisation.Members)
+        </div>
+        <div class="tab-pane" id="lF">
+            @Html.Raw(Model.Year2016)
+        </div>
+        <div class="tab-pane" id="lE">
+            @Html.Raw(Model.Year2015)
+        </div>
+        <div class="tab-pane" id="lB">
+            @Html.Raw(Model.Year2014)
+        </div>
+        <div class="tab-pane" id="lC">
+            @Html.Raw(Model.Year2013)
+        </div>
+        <div class="tab-pane" id="lD">
+            @Html.Raw(Model.Authors)
+        </div>
+    </div>
+</div>

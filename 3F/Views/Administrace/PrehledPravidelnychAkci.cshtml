@@ -1,0 +1,39 @@
+﻿@model IEnumerable<string[]>
+
+<link rel="stylesheet" href="~/Content/Plugins/datatables/jquery.dataTables.min.css" />
+
+@{
+    ViewBag.Title = "Přehled pravidelných akcí";
+}
+
+<h2>Přehled Uživatelů</h2>
+<div class="col-sm-12">
+    <div class="box bordered-box orange-border" style="margin-bottom:0;">
+        <div class="box-content box-no-padding">
+            <div class="responsive-table">
+                <div class="scrollable-area">
+                    <table id="example" class="display" cellspacing="0"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var oTable = $('#example').dataTable({
+            "iDisplayLength": 25,
+            "columns": [
+                { "title": "Id" },
+                { "title": "Formule pro akci" },
+                { "title": "Perioda opakování" },
+                { "title": "Termín opakování" },
+            ],
+            "data" : @Html.Raw(Json.Encode(Model)),
+        });
+    });
+    </script>
+}

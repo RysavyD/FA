@@ -1,0 +1,99 @@
+﻿@model _3F.Web.Models.Collector.CollectorDetailViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<script src="https://api4.mapy.cz/loader.js"></script>
+<script>Loader.load()</script>
+
+<img src="@Model.ImageUrl" class="floatRight" />
+<h3>@Model.ItemId - @Model.Name</h3>
+<h4>@Model.Description</h4>
+<div>GPS: @Model.Latitude @Model.Longitude</div>
+<br />
+<div>
+    <div>Majitelé: <b>@Html.Partial("~/Views/Shared/_LinkUsers.cshtml", Model.HaveUser)</b></div>
+    <div>Navštívili místo, ale nemají známku: <b>@Html.Partial("~/Views/Shared/_LinkUsers.cshtml", Model.VisitUser)</b></div>
+    <div>Chtějí tuto známku: <b>@Html.Partial("~/Views/Shared/_LinkUsers.cshtml", Model.WantUser)</b></div>
+</div>
+<br />
+<div>
+    <a class="btn btn-default" data-toggle="modal" href="#modal-window" role="button">Zapsat předmět</a>
+</div>
+<br />
+<p>
+    <h4>Nejbližší známky</h4>
+    @foreach (var item in Model.NearestItems)
+    {
+        <div>
+            <a href="@(Model.BaseUrl + "/Detail/" + item.ItemNumber)">
+                @item.ItemNumber - <b>@item.Name</b>
+            </a>
+            - @((item.Distance / 1000).ToString("0.00")) km
+        </div>
+    }
+</p>
+<div>
+    <a href="@(Model.BaseUrl + "/Previous/" + Model.ItemId)">
+        <div class="btn btn-success">Předchozí</div>
+    </a>
+    <a href="@(Model.BaseUrl + "/Next/" + Model.ItemId)">
+        <div class="btn btn-success">Následující</div>
+    </a>
+</div>
+<br />
+
+<div id="mapa" style="width:100%; height:600px; border: 1px solid black;"></div>
+<script type="text/javascript">
+    var stred = SMap.Coords.fromWGS84(@Model.Longitude.ToString().Replace(",","."), @Model.Latitude.ToString().Replace(",", "."));
+
+    var mapa = new SMap(JAK.gel("mapa"), stred, 12);
+    mapa.addDefaultLayer(SMap.DEF_TURIST).enable();
+    mapa.addDefaultControls();
+
+    var layer = mapa.getLayer(SMap.DEF_TURIST);
+    layer.setTrail(true);
+
+    var markLayer = new SMap.Layer.Marker();
+    mapa.addLayer(markLayer);
+    markLayer.enable();
+
+    var options = { url: 'https://api4.mapy.cz/img/api/marker/drop-red.png' };
+    var marker = new SMap.Marker(stred, "myMarker", options);
+    markLayer.addMarker(marker);
+
+    mapa.addDefaultControls();
+</script>
+
+<div aria-hidden="true" style="display: none;" class="modal fade" id="modal-window" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button">×</button>
+                <h4 class="modal-title" id="myModalLabel">Zapsat předmět</h4>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="submit" name="type" class="btn btn-success" style="width:100%; padding: 15px; font-size: 18px;" value="Vlastním předmět" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="type" class="btn btn-warning" style="width:100%; padding: 15px; font-size: 18px;" value="Navštívil jsem, ale nemám" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="type" class="btn btn-inverse" style="width:100%; padding: 15px; font-size: 18px;" value="Nevlastním předmět" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="type" class="btn btn-info" style="width:100%; padding: 15px; font-size: 18px;" value="Rád bych získal" />
+                    </div>
+                </div>
+                <div class="modal-footer" style="margin-top:0;">
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Zavřít</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

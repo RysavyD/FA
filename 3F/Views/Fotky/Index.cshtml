@@ -1,0 +1,46 @@
+﻿@model IEnumerable<_3F.Web.Models.PhotoAlbumViewModel>
+
+@{
+    ViewBag.Title = "Seznam alb";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box">
+            <div class="box-header purple-background">
+                <div class="title">
+                    <div class="icon-picture"></div>
+                    <span id="popis">@string.Format("Fotoalba (Počet alb: {0})", Model.Count())</span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="box-content" style="background-color:#f4f4f4">
+                @foreach (var album in Model)
+                {
+                    <div class="box-content box-statistic">
+                        <div class="floatRight" style="margin-left: 10px;">
+                            @Html.Partial("~/Views/Shared/_User.cshtml", album.User)
+                        </div>
+                        <div class="floatRight">
+                            <div>Autor: <b>@album.User.name</b></div>
+                            <small>Počet fotek v albu: @album.PhotoCount</small>
+                        </div>
+                        <div style="float: left; margin-right: 10px;" class="picture">
+                            <a href="@Url.Content("~/Fotky/Album/" + album.Id)">
+                                <img src="@album.CoverPhotoLink"  />
+                            </a>
+                        </div>
+                        <div>
+                            <h3 class="title">
+                                Album k akci @album.EventName
+                            </h3>
+                            <div>Akce se konala @album.EventStart - @album.EventStop</div>
+                            <a href="@Url.Content("~/Akce/Detail/"+album.EventHtml)" style="text-decoration:none;">Odkaz na akci</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

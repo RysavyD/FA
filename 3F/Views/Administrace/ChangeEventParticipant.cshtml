@@ -1,0 +1,38 @@
+﻿@model _3F.Web.Models.Administration.ChangeEventParticipantModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div>
+        @Html.Label("Uživatel:")
+        @Model.UserName
+    </div>
+    <br />
+    <div>
+        @Html.Label("Akce:")
+        @Model.EventName
+    </div>
+    <br />
+    <div>
+        @Html.Label("Stav přihlášení:")
+        @Model.OldStatus
+    </div>
+    <br />
+
+
+    <div>
+        @Html.LabelFor(m => m.Status, "Nový stav přihlášení:")
+        @Html.DropDownListFor(m => m.Status, Model.StatusList)
+
+    </div>
+    <br />
+    <br />
+    <input class="btn btn-inverse" type="submit" value="Uložit" />
+}

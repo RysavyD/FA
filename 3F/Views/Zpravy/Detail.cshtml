@@ -1,0 +1,24 @@
+﻿@model _3F.Web.Models.MessageDetailViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<div class="box-content">
+    <a href='@Url.Content("~/Zpravy/Odpoved/" + Model.Id)'>
+        <div class="btn btn-success" value="Odpovědět" style="border-radius: 10px !important;">
+            <i class="icon-mail-reply"> </i> Odpovědět
+        </div>
+    </a>
+    @if (Model.ReplyAllAllowed)
+    {
+        <a href='@Url.Content("~/Zpravy/OdpovedVsem/" + Model.Id)'>
+            <div class="btn btn-success" value="Odpovědět" style="border-radius: 10px !important;">
+                <i class="icon-mail-reply"> </i> Odpovědět všem
+            </div>
+        </a>
+    }
+</div>
+
+
+@Html.Partial("~/Views/Zpravy/_MessageList.cshtml", Model.Entities)

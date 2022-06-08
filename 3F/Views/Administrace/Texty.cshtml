@@ -1,0 +1,27 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<Text>
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<table class="borderTable">
+    <thead>
+    <tr>
+        <th>Klíč</th>
+        <th>Titulek</th>
+        <th>Url k textu</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Entities)
+    {
+        <tr>
+            <td>@item.Key</td>
+            <td>@item.Title</td>
+            <td>@item.OriginalUrl</td>
+            <td><a href='@Url.Content("~/Text/Edit/"+item.Key)' class="btn btn-warning">Editovat</a></td>
+        </tr>
+    }
+    </tbody>
+</table>

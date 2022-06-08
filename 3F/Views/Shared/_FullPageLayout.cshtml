@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+<div class="box-content">
+    @RenderBody()
+    <div class="clearfix"></div>
+</div>
+
+@section scripts
+{
+    @RenderSection("scripts", false)
+}

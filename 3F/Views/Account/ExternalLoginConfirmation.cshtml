@@ -1,0 +1,41 @@
+﻿@model _3F.Web.Models.ExternalLoginConfirmationViewModel
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<h3>Propojení nového účtu s @ViewBag.LoginProvider účtem.</h3>
+
+@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <p class="text-info">
+        Vaše ověření přes <strong>@ViewBag.LoginProvider</strong> bylo úspěšné.<br />
+        Prosím vyplňte vaše uživatelské jméno pro tento web a <strong>dokončete registraci</strong> kliknutím na tlačítko <strong>'Zaregistrovat se'</strong>.
+    </p>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Zaregistrovat se" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

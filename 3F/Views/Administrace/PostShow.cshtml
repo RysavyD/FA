@@ -1,0 +1,14 @@
+﻿@model _3F.Web.Models.Administration.PostViewModel
+
+
+<div class="modal-header">  
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>  
+    <h4 class="modal-title" id="myModalLabel">@Model.Name</h4>  
+</div>
+<div class="box-content">
+    <div class="box-content box-statistic">
+        <div class="modal-body">
+            @Html.Raw(Model.Content)
+        </div>
+    </div>
+</div>

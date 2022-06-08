@@ -1,0 +1,61 @@
+﻿@model _3F.BusinessEntities.Help
+
+<script type="text/javascript" src="~/Scripts/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste textcolor"
+        ],
+        toolbar1: "undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify |  styleselect formatselect fontselect fontsizeselect",
+        toolbar2: "forecolor backcolor | bullist numlist outdent indent | link image media | forecolor backcolor | table | hr removeformat | subscript superscript | charmap emoticons | code preview",
+        language: "cs",
+        menubar: false,
+        height: "400",
+    });
+</script>
+
+<div class="modal-header">  
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>  
+    <h4 class="modal-title" id="myModalLabel">Editace nápovědy</h4>  
+</div>
+<div class="box-content">
+    <div class="box-content box-statistic">
+
+        @using (Html.BeginForm(null, null, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.HiddenFor(model => model.Id)
+                <div class="form-group">
+                    @Html.Label("Otázka nápovědy", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ItemNeeded()
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Text nápovědy", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Answer, new { htmlAttributes = new { @class = "form-control" } })
+                        <div>
+                            @Html.ItemNeeded()
+                            Pro vytvoření odkazu využijte tlačítko s ikonkou <i class="mce-ico mce-i-link"></i>
+                            ,pro zobrazení náhledu popisu využijte tlačítko s ikonkou <i class="mce-ico mce-i-preview"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Uložit" class="btn btn-default" />                        
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

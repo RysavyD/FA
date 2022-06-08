@@ -1,0 +1,29 @@
+﻿@model _3F.Web.Models.GenericBaseViewModel<_3F.Web.Models.Administration.AddPhotoAlbum>
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    <div>
+        @Html.Label("HtmlName", "Vyber akci:")
+        @Html.DropDownList("HtmlName", Model.Entity.Events)
+    </div>
+    <br />
+    <div>
+        @Html.Label("UserName", "Vyber uživatele:")
+        @Html.DropDownList("UserName", Model.Entity.Users)
+    </div>
+    <br />
+    <div>
+        @Html.Label("Link", "Odkaz na fotoalbum na rajceti:")
+        @Html.TextBox("Link", Model.Entity.Link)
+    </div>
+    <br />
+
+    <input type="submit" value="Vložit fotoalbum" />
+}

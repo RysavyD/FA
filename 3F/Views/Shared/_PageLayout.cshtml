@@ -1,0 +1,26 @@
+﻿@model _3F.Web.Models.BaseViewModel
+
+@{
+    Layout = "~/Views/Shared/_FlattyLayout.cshtml";
+    ViewBag.Title = Model.Title;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-nomargin">
+            <div class="box-header @Model.BackgroundColor">
+                <i class="@Model.Icon"> </i>@Model.Title
+            </div>
+            <div class="box-content" style="background-color:#f4f4f4;">
+                @Html.Partial("~/Views/Shared/_ButtonsLine.cshtml", Model.Buttons)
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+@Html.HtmlBlocks()
+@section scripts
+{
+    @RenderSection("scripts", false)
+}

@@ -1,0 +1,31 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<_3F.Web.Models.EventSummaryViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@foreach (var summary in Model.Entities)
+{
+    <div class="box-content box-statistic">
+        <div class="floatRight" style="margin-left: 10px;">
+            @Html.Partial("~/Views/Shared/_User.cshtml", summary.Author)
+        </div>
+        <div class="floatRight">
+            <div>Sepsal(a): <b>@summary.Author.name</b></div>
+        </div>
+        <div class="floatLeft">
+            <a href="@Url.Content("~/Zapis/Detail/" + summary.HtmlName)">
+                <h3 class="title">
+                    Zápisky k akci @summary.EventName
+                </h3>
+                <small class="discussionItem" style="color: black">@Html.Raw(summary.Perex)</small>
+            </a>
+            <div>
+                Akce se konala @summary.EventStart - @summary.EventStop
+            </div>
+            <a href="@Url.Content("~/Akce/Detail/" + summary.HtmlName)" style="text-decoration:none;">Odkaz na akci</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+}

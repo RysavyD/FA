@@ -1,0 +1,51 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<_3F.Web.Models.Discussion.DiscussionViewModel>
+
+@{
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <a href="@Url.Content("~/Diskuze/Nova")" class="header">
+        <div class="btn btn-primary" style="margin-bottom:10px;border-radius: 10px !important;">
+            <i class="icon-plus"></i>
+            Založit novou diskuzi
+        </div>
+    </a>
+}
+
+@foreach (var discussion in Model.Entities)
+{
+    <div class="box-content box-statistic">
+        <div class="floatRight" style="width: 271px;">
+            <div class="floatRight">
+                @Html.Partial("~/Views/Shared/_User.cshtml", discussion.Author)
+            </div>
+            <div>
+                Autor: <b><small><a href="@Url.Content("~/Profil/Detail/" + discussion.Author.htmlName)">@discussion.Author.name</a></small></b>
+            </div>
+            <div>
+                Počet příspěvků: <b>@discussion.ItemsCount</b>
+            </div>
+            @if (discussion.LastUpdateDate != discussion.CreateDate)
+            {
+                <div>
+                    Poslední příspěvek: <b>@discussion.LastUpdateDate</b>
+                </div>
+            }
+            <div>
+                Založeno: <b>@discussion.CreateDate</b>
+            </div>
+        </div>
+        <div>
+            <a href="@Url.Content("~/Diskuze/Detail/" + discussion.HtmlName)">
+                <div class="col-md-8">
+                    <h3 class="title">@discussion.Name</h3>
+                    <div class="discussionItem" style="color: black">@Html.Raw(discussion.Perex)</div>
+                </div>
+            </a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+}
+            

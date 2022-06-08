@@ -1,0 +1,114 @@
+﻿<!-- Horni lista -->
+<nav class='navbar navbar-default navbar-fixed-top'>
+    <a class='toggle-nav btn pull-left' href='#' style="margin-top: 25px; margin-left: -10px; margin-right: 5px;">
+        <i class='icon-reorder'></i>
+    </a>
+    <a class='navbar-brand' href='@Url.Content("~/")'>
+        <img src="~/Images/logo/logo.png" style="height:80%; margin-top: 10px;"/>
+    </a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <ul class='nav'>
+                <li class='dropdown dark user-menu'>
+                    <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+                        <span class='user-name'>@User.Identity.Name</span>
+                        <img src="@Url.Content("~/Images/Profile/" + Html.GetUserHtmlName() + "_prof.jpg")" />
+                        <b class='caret'></b>
+                    </a>
+                    <ul class='dropdown-menu'>
+                        <li>
+                            <a href='@Url.Content("~/Profil/Detail")'>
+                                <i class='icon-user'></i>
+                                Profil
+                            </a>
+                        </li>
+                        <li>
+                            <a href='@Url.Content("~/Profil/Nastaveni")'>
+                                <i class='icon-cog'></i>
+                                Nastavení
+                            </a>
+                        </li>
+                        <li>
+                            <a href='@Url.Content("~/Profil/Password")'>
+                                <i class='icon-key'></i>
+                                Změna hesla
+                            </a>
+                        </li>
+                        <li class='divider'></li>
+                        <li>
+                            <a href="javascript:document.getElementById('logoutForm').submit()">
+                                <i class='icon-signout'></i>
+                                Odhlásit
+                            </a>
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            { @Html.AntiForgeryToken() }
+                        </li>
+                    </ul>
+                </li>
+
+                <li class='dropdown medium only-icon widget'>
+                    <a class='dropdown-toggle' href='@Url.Content("~/Zpravy")' title="Zprávy">
+                        <i class='icon-envelope-alt'></i>
+                        <div class='label' id="divUnreadedMessages"></div>
+                    </a>
+                </li>
+                <li class='dropdown medium only-icon widget'>
+                    <a class='dropdown-toggle' href='@Url.Content("~/Nerozhodnute")' title="Nerozhodnuté akce">
+                        <i class='icon-question'></i>
+                        <div class='label' id="divEvents"></div>
+                    </a>
+                </li>
+
+            </ul>
+        }
+        else
+        {
+            <div style="float: right; padding: 4px; background-color:#49bf67!important; width: 296px; height: 80px;">
+                <table>
+                    <tr>
+                        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "loginTokenForm", style = "width:230px" }))
+                        {
+                            <td style="color: white;">
+
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="returnUrl" value="@Context.Request.Url.PathAndQuery" />
+
+                                <label for="loginUserName">Nick</label>
+                                <label for="loginPassword" style="margin-bottom:0;">Heslo</label>
+                            </td>
+                            <td style="width:160px;">
+                                <input type="text" id="loginUserName" name="UserName" tabindex="1" style="margin-bottom: 2px; width: 100%;" />
+                                <input type="password" id="loginPassword" name="Password" tabindex="2" style="width:100%;" />
+                            </td>
+                            <td>
+                                <button style="height: 54px; border-width: 2px;">
+                                    <i class="icon-signin"></i>
+                                </button>
+                            </td>
+                        }
+                        @using (Html.BeginForm("ExternalLogin", "Account", FormMethod.Post, new { id = "externalLoginTokenForm" }))
+                        {
+                            <td>
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="returnUrl" value="@Context.Request.Url.PathAndQuery" />
+                                <button style="height: 26px;" id="Facebook" name="provider" value="Facebook" title="Přihlášení pomocí Facebookového účtu">
+                                    <i class="icon-facebook-sign"></i>
+                                </button>
+                                <button style="height: 26px;" id="Google" name="provider" value="Google" title="Přihlášení pomocí Google účtu">
+                                    <i class="icon-google-plus-sign"></i>
+                                </button>
+                            </td>
+                        }
+                    </tr>
+                </table>
+                <div class="clearfix"></div>
+            </div>
+        }
+    <!-- TODO: předělat na form s antiforgety tokenem a url na vyhledavani -->
+    @*<form action='search_results.html' class='navbar-form navbar-right hidden-xs' method='get'>
+        <button class='btn btn-link icon-search' name='button' type='submit'></button>
+        <div class='form-group'>
+            <input value="" class="form-control" placeholder="Search..." autocomplete="off" id="q_header" name="q" type="text" />
+        </div>
+    </form>*@
+</nav>

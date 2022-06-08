@@ -1,0 +1,291 @@
+﻿@model _3F.Web.Models.EventModel
+
+<style type="text/css">
+    textarea.form-control {
+        height: 400px;
+    }
+
+    .col-md-11, .col-md-6 {
+        margin-bottom: 15px;
+    }
+</style>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.EventType)
+    @Html.HiddenFor(model => model.OldHtml)
+
+    <div class="row">
+        @Html.Label("Název", htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-md-11">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ItemNeeded()
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        @Html.Label("Krátký popis", htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-md-11">
+            @Html.EditorFor(model => model.Perex, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ItemNeeded()
+            @Html.ValidationMessageFor(model => model.Perex, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr class="hr-normal" />
+    <div class="row">
+        @Html.Label("Kategorie", htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-md-11">
+            <div>
+                @Html.Partial("_EnumRadioButton", Model.MainCategory)
+                @Html.CheckBoxFor(model => model.IsStay, new { htmlAttributes = new { @class = "form-control" } }) Pobyt
+            </div>
+            @Html.ValidationMessageFor(model => model.MainCategory, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <span class="control-label col-md-1">
+            @Html.Label("Podkategorie")
+            <i><a id="toggleSubCategories" href="#">Skrýt</a></i>
+        </span>
+        <div class="col-md-11" id="subCategories">
+            @CategoryList(Model.Categories, _3F.BusinessEntities.Enum.MainCategory.Sport)
+            @CategoryList(Model.Categories, _3F.BusinessEntities.Enum.MainCategory.Tourism)
+            @CategoryList(Model.Categories, _3F.BusinessEntities.Enum.MainCategory.Entertainment, false)
+        </div>
+    </div>
+    <hr class="hr-normal" />
+    <div class="row">
+        @Html.Label("Popis", htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-md-11">
+            @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            <div>
+                @Html.ItemNeeded()
+                <div>
+                    Pro vytvoření odkazu využijte tlačítko s ikonkou <i class="mce-ico mce-i-link"></i>
+                    ,pro zobrazení náhledu popisu využijte tlačítko s ikonkou <i class="mce-ico mce-i-preview"></i>
+                </div>
+            </div>
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr class="hr-normal" />
+    if (Model.EventType != EventTypeEnum.TipNaAkci)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                @Html.Label("Kapacita", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Capacity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ItemNeeded() 0 = akce má neomezenou kapacitu
+                    @Html.ValidationMessageFor(model => model.Capacity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                @Html.Label("Minimální počet účastníků", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.MinimumParticipants, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ItemNotNeeded() <div>0 = akce nemá minimální počet účastníků</div>
+                    @Html.ValidationMessageFor(model => model.MinimumParticipants, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    }
+    <div class="row">
+        @Html.Label("Místo", htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-md-11">
+            @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ItemNeeded()
+            @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr class="hr-normal" />
+    <div class="row">
+        <div class="col-md-6">
+            @Html.Label("Čas začátku", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Start, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ItemNeeded()
+                @Html.ValidationMessageFor(model => model.Start, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            @Html.Label("Čas skončení akce", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Stop, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ItemNeeded()
+                @Html.ValidationMessageFor(model => model.Stop, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @if (Model.EventType != EventTypeEnum.TipNaAkci)
+        {
+            <div class="col-md-6">
+                @Html.Label("Čas posledního odhlášení", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LastSignTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ItemIfNeeded(Model.EventType == EventTypeEnum.PlacenaSdruzenim)
+                    <div>Po tomto čase bude užival při odhlášení označen jako "Odhlášen po termínu"</div>
+                    @Html.ValidationMessageFor(model => model.LastSignTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            if (Model.EventType == EventTypeEnum.PlacenaSdruzenim)
+            {
+                <div class="col-md-6">
+                    @Html.Label("Čas posledního vrácení peněz", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.LastPaidTime, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ItemNeeded()
+                        <div>Při odhlášení po tomto čase nebudou uživateli automaticky vráceny peníze</div>
+                        @Html.ValidationMessageFor(model => model.LastPaidTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+
+            <div class="col-md-6">
+                @Html.Label("Čas srazu", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MeetTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ItemNeeded()
+                    @Html.ValidationMessageFor(model => model.MeetTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+    </div>
+    if (Model.EventType != EventTypeEnum.TipNaAkci)
+    {
+        <hr class="hr-normal" />
+        <div class="row">
+            @Html.Label("Místo srazu", htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-11">
+                @Html.EditorFor(model => model.MeetPlace, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ItemNeeded()
+                @Html.ValidationMessageFor(model => model.MeetPlace, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr class="hr-normal" />
+        <div class="row">
+            <div class="col-md-6">
+                @Html.Label("Organizátoři", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.OrganisatorNames, new { id = "Organisators" })
+                    @Html.ItemNeeded()
+                    @Html.ValidationMessageFor(model => model.Organisators, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @Html.Label("Kontakt na organizátora", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ItemIfNeeded(Model.EventType == EventTypeEnum.PlacenaSdruzenim)
+                    @Html.ValidationMessageFor(model => model.Contact, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    }
+    <hr class="hr-normal" />
+    <div class="row">
+        <div class="col-md-6">
+            @Html.Label("Cena", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ItemNeeded()
+                <div>Pokud zadáte 0, akce bude označena jako zdarma</div>
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @if (Model.EventType == EventTypeEnum.PlacenaSdruzenim)
+        {
+            <div class="col-md-6">
+                @Html.Label("Celkové náklady na akci", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Costs, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ItemNeeded()
+                    @Html.ValidationMessageFor(model => model.Costs, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                @Html.Label("Popis nákladů", htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="col-md-11">
+                    @Html.TextAreaFor(model => model.CostsDescription, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ItemNeeded()
+                    @Html.ValidationMessageFor(model => model.CostsDescription, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+    </div>
+    <hr class="hr-normal" />
+    <div class="row">
+        <div class="col-md-6">
+            @Html.Label("Odkaz na web", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ItemIfNeeded(Model.EventType == EventTypeEnum.PlacenaSdruzenim || Model.EventType == EventTypeEnum.OficialniSdruzeni)
+                @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            @Html.Label("Povolit přihlašování \"Možná přijdu\"", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MayBeAvalaible, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MayBeAvalaible, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            @Html.Label("Fotografie k akci", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="file" />
+            </div>
+            @if (Model.Image != null)
+            {<div><img class="eventPhoto" src="@Url.Content("~/Images/Events/" + Model.Image)" /></div>}
+        </div>
+    </div>
+    <hr class="hr-normal" />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-2 col-md-10">
+                @if (Model.EventEditMode == _3F.Web.Models.EventEditMode.Create)
+                {
+                    if (Model.EventType != EventTypeEnum.TipNaAkci)
+                    {
+                        <input type="submit" name="submitButton" value="Zveřejnit akci" class="btn btn-success" />
+                    }
+                    else
+                    {
+                        <input type="submit" name="submitButton" value="Zveřejnit tip" class="btn btn-success" />
+                    }
+
+                    <input type="submit" name="submitButton" value="Uložit jako koncept" class="btn btn-default" />
+                }
+                else
+                {
+                    <input type="submit" name="submitButton" value="Uložit" class="btn btn-success" />
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@helper CategoryList(IList<_3F.Web.Models.EventModels.Category> categories, _3F.BusinessEntities.Enum.MainCategory mainCategory, bool showDownLine = true)
+{
+    <div>
+        @mainCategory.GetDescription() <br />
+        @foreach (var category in categories.Where(x => x.MainCategory == mainCategory))
+        {
+            <input type="checkbox" name="CategoryIds"
+               value="@category.Id" @(Html.Raw(category.IsAssigned ? "checked=\"checked\"" : "")) />
+                @category.Name
+        }
+    </div>
+    if (showDownLine)
+    {
+        <hr />
+    }
+}

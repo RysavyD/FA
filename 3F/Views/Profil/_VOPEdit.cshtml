@@ -1,0 +1,15 @@
+﻿@model _3F.Web.Models.Profil.VopViewModel
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.LabelFor(model => model.Vop)
+    @Html.EditorFor(model => model.Vop)
+
+    @Html.LabelFor(model => model.Gdpr)
+    @Html.EditorFor(model => model.Gdpr)
+
+    <input type="submit" value="Uložit" class="btn btn-success" />
+}

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<_3F.Web.Models.Administration.LogName>
+
+@{
+    ViewBag.Title = "ProgramLog";
+}
+
+<div>
+    @{
+        foreach (var logName in Model)
+        {
+            <b>
+                <a href="@Url.Content("~/Administrace/Logy/" + logName.Name + "?typ=" + logName.Type)">@logName.FullName</a>
+            </b>
+            <br />
+        }
+    }
+</div>

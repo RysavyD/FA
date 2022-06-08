@@ -1,0 +1,13 @@
+﻿@model _3F.Web.Models.GenericBaseViewModel<_3F.Web.Models.Profil.VopViewModel>
+@{
+    ViewBag.Title = "VOP";
+}
+
+<h2>VOP</h2>
+
+@if (!Model.Entity.Vop)
+{
+    <h3>Pro používání webu je nutno souhlasit s VOP</h3>
+}
+
+@Html.Partial("_VOPEdit", Model.Entity)

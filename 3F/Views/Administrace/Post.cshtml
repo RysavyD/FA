@@ -1,0 +1,85 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<_3F.Web.Models.Administration.PostViewModel>
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<div class="row">
+    <div class="btn btn-success roundCorners" data-function="edit">
+        <i class="icon-plus"> </i> Nová položka
+    </div>
+</div>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Název</th>
+                    <th>Odkaz</th>
+                    <th>Práva na zobrazení</th>
+                    <th>Práva na editaci</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Entities)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td><a href='@Url.Content("~/Post/" + item.HtmlName)'>@item.HtmlName</a></td>
+                        <td>@item.ViewPermissions</td>
+                        <td>@item.EditPermissions</td>
+                        <td>
+                            <div data-id="@item.Id" data-function="show" class="btn btn-info roundCorners">Zobrazit</div>
+                        </td>
+                        <td>
+                            <div data-id="@item.Id" data-function="edit" class="btn btn-warning roundCorners">Editovat</div>
+                        </td>
+                        <td>
+                            <div data-id="@item.Id" data-function="access" class="btn btn- roundCorners">Nastavit práva</div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@Html.RenderModalPlaceHolder()
+
+@section Scripts {
+    <script type="text/javascript">
+        var showURL = '@Url.Content("~/Administrace/PostShow/")';
+        var editURL = '@Url.Content("~/Administrace/PostEdit/")';
+        var accessURL = '@Url.Content("~/Administrace/PostAccess/")';
+
+        $(function () {
+            $(".roundCorners").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var fce = $buttonClicked.data('function');
+                var url = fce === 'show' ? showURL : fce === 'edit' ? editURL : accessURL;
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+        });
+    </script>    
+}

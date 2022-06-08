@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "PhotoGallery";
+}
+
+<div class="row">
+    <h2>PhotoGallery</h2>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box">
+            <div class="box-content">
+                <div class="gallery">
+                    <ul class="list-unstyled list-inline">
+                        @Html.PictureItem("http://img12.rajce.idnes.cz/d1203/10/10812/10812485_f9bfe34557fa4acd45a140fc728b84b8/thumb/IMG_1171.jpg?ver=2", "http://img12.rajce.idnes.cz/d1203/10/10812/10812485_f9bfe34557fa4acd45a140fc728b84b8/images/IMG_1171.jpg")
+                        @Html.PictureItem("http://img12.rajce.idnes.cz/d1203/10/10812/10812485_f9bfe34557fa4acd45a140fc728b84b8/thumb/IMG_1172.jpg?ver=2", "http://img12.rajce.idnes.cz/d1203/10/10812/10812485_f9bfe34557fa4acd45a140fc728b84b8/images/IMG_1172.jpg")
+                        @Html.PictureItem("http://img12.rajce.idnes.cz/d1203/10/10812/10812485_f9bfe34557fa4acd45a140fc728b84b8/thumb/IMG_1174.jpg?ver=2", "http://img12.rajce.idnes.cz/d1203/10/10812/10812485_f9bfe34557fa4acd45a140fc728b84b8/images/IMG_1174.jpg")
+                        @Html.PictureItem("http://img12.rajce.idnes.cz/d1203/10/10812/10812485_f9bfe34557fa4acd45a140fc728b84b8/thumb/IMG_1175.jpg?ver=2", "http://img12.rajce.idnes.cz/d1203/10/10812/10812485_f9bfe34557fa4acd45a140fc728b84b8/images/IMG_1175.jpg")
+                        @Html.PictureItem("http://img12.rajce.idnes.cz/d1203/10/10812/10812485_f9bfe34557fa4acd45a140fc728b84b8/thumb/IMG_1176.jpg?ver=2", "http://img12.rajce.idnes.cz/d1203/10/10812/10812485_f9bfe34557fa4acd45a140fc728b84b8/images/IMG_1176.jpg")
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="lightboxOverlay" class="lightboxOverlay" style="display: none;"></div>
+<div id="lightbox" class="lightbox" style="display: none;">
+    <div class="lb-outerContainer">
+        <div class="lb-container">
+            <img class="lb-image" src="">
+            <div class="lb-nav">
+                <a class="lb-prev" href=""></a>
+                <a class="lb-next" href=""></a>
+            </div>
+            <div class="lb-loader">
+                <a class="lb-cancel"></a>
+            </div>
+        </div>
+    </div>
+    <div class="lb-dataContainer">
+        <div class="lb-data">
+            <div class="lb-details">
+                <span class="lb-caption"></span>
+                <span class="lb-number"></span>
+            </div>
+            <div class="lb-closeContainer">
+                <a class="lb-close"></a>
+            </div>
+        </div>
+    </div>
+</div>

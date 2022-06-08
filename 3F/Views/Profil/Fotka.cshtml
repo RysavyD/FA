@@ -1,0 +1,38 @@
+﻿@model _3F.Web.Models.Profil.ProfilPhotoViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Vložte svoji novou profilovou fotografii</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.Label("Profilová fotografie", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="file" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                &nbsp;
+            </div>
+            <div class="col-md-10">
+                POZOR: Po vybrání souboru s fotkou je ještě nutno kliknout na tlačítko "Vložit fotku", aby došlo k nahrání fotky!
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Zpět na profil", "Detail", null, new { @class = "btn btn-default" })
+                <input type="submit" value="Vložit fotku" name="submit" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}

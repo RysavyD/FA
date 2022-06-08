@@ -1,0 +1,47 @@
+﻿<div class="chat">
+    <div class="col-md-12">
+        <div class="box-content" style="text-align: center" id="discussionLoadBox">
+            <i id="discussionSpinner" class="icon-2x icon-spinner icon-spin"></i>
+            <span id="discussionErrorMessage" style="display: none">
+                Diskuzi se nepodařilo načíst.<br />
+                <button onclick="LoadPage(pageNumber)" style="position: static">Načíst znovu</button></span>
+        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="new-message" method="post" action="#" accept-charset="UTF-8" id="new-message" style="width: 100%; position: relative">
+                <input name="authenticity_token" type="hidden">
+                <textarea class="form-control" id="message_body" name="message[body]" placeholder="Napiš svůj příspěvek ..." type="text" ></textarea>
+                <button class="btn btn-primary" type="submit" id="sendNewMessage">
+                    <i class="icon-plus"></i>
+                </button>
+            </div>
+        }
+        <div class="scrollable" style="overflow: hidden; width: auto;">
+            <ul class="list-unstyled list-hover list-striped" id="discussion"></ul>
+        </div>
+        <div>
+            <ul class="pagination" id="discussionPagination"></ul>
+        </div>
+    </div>
+</div>
+
+<script id="discussionItemTemplate" type="text/html">
+    {{#Items}}
+        <li class="message">
+            <div class="time pull-right">
+                <small class="date pull-right text-muted">
+                    <span class="timeago fade has-tooltip in" data-placement="top" data-original-title="{{DateTime}}">{{DateTime}}</span>
+                    <i class="icon-time"></i>
+                </small>
+            </div>
+            <div style="float: left; margin-right: 10px; width: 60px;">
+                <div>
+                    <a href="@Url.Content("~/Profil/Detail")/{{Author.htmlName}}" title="{{Author.name}}">
+                        <img src="@Url.Content("~/Images/Profile")/{{Author.ProfilePhoto}}" title="{{Author.name}}" class="profilePhoto" />
+                    </a>
+                </div>{{Author.name}}
+            </div>
+            <div class="discussionItem">{{{Text}}}</div>
+        </li>
+    {{/Items}}
+</script>

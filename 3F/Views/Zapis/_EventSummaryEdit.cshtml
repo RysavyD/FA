@@ -1,0 +1,94 @@
+﻿@model _3F.Web.Models.EventSummaryViewModel
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<script type="text/javascript" src="~/Scripts/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+    "advlist autolink lists link image charmap print preview anchor",
+    "searchreplace visualblocks code fullscreen",
+    "insertdatetime media table contextmenu paste textcolor"
+        ],
+        toolbar1: "undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify |  styleselect formatselect fontselect fontsizeselect",
+        toolbar2: "forecolor backcolor | bullist numlist outdent indent | link image media | forecolor backcolor | table | hr removeformat | subscript superscript | charmap emoticons | code preview",
+        language: "cs",
+        menubar: false,
+        height: "400",
+    });
+</script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header sea-blue-background">
+                <div class="title">
+                    <div class="icon-pencil"></div>
+                    <span id="popis">@Html.DisplayFor(model => model.Name)</span>
+                </div>
+                <div class="actions">
+                    <a class="btn box-collapse btn-xs btn-link" href="#">
+                        <i></i>
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            @Html.Partial("~/Views/Shared/_Buttons.cshtml", Model.Buttons)
+
+            <div class="box-content" style="background-color:#f4f4f4">
+                <div class="box-content box-statistic">
+
+                    @using (Html.BeginForm(null, null, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.HtmlName)
+
+                            <div class="form-group">
+                                @Html.Label("Název zápisků", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ItemNeeded()
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Krátký popis", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Perex, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ItemNeeded()
+                                    @Html.ValidationMessageFor(model => model.Perex, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Zápisky z akce", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                    <div>
+                                        @Html.ItemNeeded()
+                                        Pro vytvoření odkazu využijte tlačítko s ikonkou <i class="mce-ico mce-i-link"></i>
+                                        ,pro zobrazení náhledu popisu využijte tlačítko s ikonkou <i class="mce-ico mce-i-preview"></i>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Uložit" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

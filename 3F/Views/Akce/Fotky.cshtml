@@ -1,0 +1,31 @@
+﻿@model _3F.Web.Models.CreatePhotoAlbum
+
+@{
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Vložte odkaz na album na rajce.net</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.Label("Odkaz:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Vložit album" name="submit" class="btn btn-default" />
+                <input type="submit" value="Zpět na akci" name="submit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

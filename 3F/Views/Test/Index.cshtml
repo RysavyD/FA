@@ -1,0 +1,22 @@
+﻿@using _3F.Model
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div id="example">
+    <div>Datetime.Now @DateTime.Now</div>
+    <div>Datetime.UtcNow @DateTime.UtcNow</div>
+    <div>Info.CentralEuropeNow @Info.CentralEuropeNow</div>
+    <div>TimeZone.CurrentTimeZone @TimeZone.CurrentTimeZone.StandardName</div>
+    <div>"Central Europe Standard Time" @TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "Central Europe Standard Time")</div>
+    <div>"Tokyo Standard Time" @TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "Tokyo Standard Time")</div>
+</div>
+<hr/>
+<div>
+    @AppDomain.CurrentDomain.BaseDirectory
+</div>
+<hr/>
+Text: '@ViewBag.Text'

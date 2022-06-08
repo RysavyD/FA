@@ -1,0 +1,333 @@
+﻿@model _3F.Web.Models.GenericBaseViewModel<_3F.Web.Models.Akce.EventDetailViewModel>
+
+@{
+    ViewBag.Title = Model.Entity.Name;
+    Layout = "~/Views/Shared/_FlattyLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-nomargin">
+            <div class="box-header green-background">
+                <div class="title">
+                    <div class="icon-star"></div>
+                    <span id="popis" @if (Model.Entity.IsDeleted) { <text> style="text-decoration: line-through" </text> }>@Html.DisplayFor(model => model.Entity.Name)</span>
+                </div>
+                <div class="actions dropdown">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="@Url.Content("~/Akce/Calendar/" + Model.Entity.HtmlName)" title="Stáhnout do kalendáře jako .ics" class="btn btn-link"><i class="icon-calendar-empty"></i></a>
+                        <a href="@Model.Entity.GoogleCalendarUrl" title="Vložit do Google kalendáře" target="_blank" class="btn btn-link"><i class="icon-calendar"></i></a>
+                    }
+                    <a href="#" title="Sdílet" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-share"></i></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A//www.fungujemeaktivne.cz/akce/detail/@Model.Entity.HtmlName"><i class="icon-facebook"></i> Facebook</a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://twitter.com/home?status=http%3A//www.fungujemeaktivne.cz/akce/detail/@Model.Entity.HtmlName"><i class="icon-twitter"></i> Twitter</a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://plus.google.com/share?url=http%3A//www.fungujemeaktivne.cz/akce/detail/@Model.Entity.HtmlName"><i class="icon-google-plus"></i> Google+</a>
+                        </li>
+                    </ul>
+                    <a class="btn box-collapse btn-xs btn-link" href="#">
+                        <i></i>
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="box-content" style="background-color:#f4f4f4">
+                <div class="col-md-12">
+                    @Html.Partial("~/Views/Shared/_ButtonsLine.cshtml", Model.Buttons)
+                </div>
+                @if (Model.Entity.IsInPastOrDeleted && (Model.Entity.HasSummary || Model.Entity.HasPhoto || User.Identity.IsAuthenticated))
+                {
+                    <div class="box-toolbox">
+                        @if (Model.Entity.Summary != null || User.Identity.IsAuthenticated)
+                        {
+                            <div class="col-md-6">
+                                <div class="box-content box-statistic">
+                                    @if (Model.Entity.HasSummary)
+                                    {
+                                        <div class="floatRight" style="margin-left: 10px;">
+                                            @Html.Partial("~/Views/Shared/_UserB.cshtml", Model.Entity.Summary.Author)
+                                        </div>
+                                        <div class="floatRight">
+                                            <div>Sepsal(a): <b>@Model.Entity.Summary.Author.UserName</b></div>
+                                        </div>
+                                        <div class="floatLeft" style="width: 35px;">
+                                            <div class="icon-pencil sea-blue-background" style="color:white; padding: 5px; font-size: 20px;"></div>
+                                        </div>
+                                        <div>
+                                            <a href="@Url.Content("~/Zapis/Detail/" + Model.Entity.HtmlName)">
+                                                <h3 class="title">
+                                                    @Model.Entity.Summary.Name
+                                                </h3>
+                                                <small class="discussionItem" style="color: black">@Html.Raw(Model.Entity.Summary.Perex)</small>
+                                            </a>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    }
+                                    else if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="floatLeft" style="width: 35px;">
+                                            <div class="icon-pencil sea-blue-background" style="color:white; padding: 5px; font-size: 20px;"></div>
+                                        </div>
+                                        <div>
+                                            <a href="@Url.Content("~/Zapis/Vytvorit/" + Model.Entity.HtmlName)" style="text-decoration: none;">
+                                                <h3 class="title">
+                                                    Zápisky k akci
+                                                </h3>
+                                                <small class="discussionItem" style="color: black">
+                                                    Napiš zápisky k této akci <i class="icon-pencil" style="font-size: 85%;"></i>
+                                                </small>
+                                            </a>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (Model.Entity.HasPhoto || User.Identity.IsAuthenticated)
+                        {
+                            <div class="col-md-6">
+                                <div class="box-content box-statistic">
+                                    @if (Model.Entity.HasPhoto)
+                                    {
+                                        <div class="floatRight">
+                                            @foreach (var album in Model.Entity.PhotoAlbums)
+                                            {
+                                                <div style="margin-bottom:10px;">
+                                                    <div class="floatRight" style="margin-left: 10px;">
+                                                        @Html.Partial("~/Views/Shared/_UserB.cshtml", album.Author)
+                                                    </div>
+                                                    <div class="floatLeft picture" style="margin-right: 10px;">
+                                                        <a href="@Url.Content("~/Fotky/Album/" + album.Id)">
+                                                            <img src="@album.CoverPhotoLink" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="floatLeft">
+                                                        <div>Autor: <b>@album.Author.UserName</b></div>
+                                                        <small>Počet fotek v albu: @album.PhotoCount</small>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="floatLeft" style="width: 40px;">
+                                            <div class="icon-picture purple-background" style="color:white; padding: 5px; font-size: 20px;"></div>
+                                        </div>
+                                        <h3 class="title">Album k akci</h3>
+                                        <div class="clearfix"></div>
+                                    }
+                                    else if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="floatLeft" style="width: 40px;">
+                                            <div class="icon-picture purple-background" style="color:white; padding: 5px; font-size: 20px;"></div>
+                                        </div>
+                                        <div>
+                                            <a href="@Url.Content("~/Akce/Fotky/" + Model.Entity.HtmlName)" style="text-decoration: none;">
+                                                <h3 class="title">
+                                                    Album k akci
+                                                </h3>
+                                                <small class="discussionItem" style="color: black">
+                                                    Nahraj fotky z této akce <i class="icon-picture" style="font-size: 85%;"></i>
+                                                </small>
+                                            </a>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <hr />
+                }
+               
+                <div class="box-toolbox">
+                    <div class="col-md-6">
+                        <div class="box-content">
+                            @if (Model.Entity.Photo != null)
+                            { <div><img class="eventPhoto" src="@Url.Content("~/Images/Events/" + Model.Entity.Photo)" /></div> }
+                            @if (Model.Entity.IsDeleted)
+                            {
+                                <h2>
+                                    AKCE ZRUŠENA <span style="text-decoration: line-through">
+                                        @Model.Entity.Name
+                                    </span>
+                                </h2>
+                            }
+                            else
+                            {
+                                <h2>@Model.Entity.Name</h2>
+                            }
+                            <i>
+                                @Html.DisplayFor(model => model.Entity.Perex)
+                            </i>
+                            <div style="word-break: break-word;">
+                                @Html.Raw(Model.Entity.Description)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="box-content" style="word-break: break-word;">
+                            <div>
+                                <b>Začátek akce: </b>
+                                @Model.Entity.Start.ToDayDateTimeString()
+                            </div>
+
+                            <div>
+                                <b>Konec akce: </b>
+                                @Model.Entity.Stop.ToDayDateTimeString()
+                            </div>
+                            @if(Model.Entity.Categories.Any())
+                            {
+                                <div>
+                                    <b>Kategorie: </b>
+                                    @{
+                                        var last = Model.Entity.Categories.Last();
+                                        foreach(var cat in Model.Entity.Categories)
+                                        {
+                                            if (cat != last)
+                                            {
+                                                <b><a href='@Url.Action(cat.HtmlName, "Kategorie")'>@cat.Name</a>,</b>
+                                            }
+                                            else
+                                            {
+                                                <b><a href='@Url.Action(cat.HtmlName, "Kategorie")'>@cat.Name</a></b>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            }
+                            <br/>
+                            <div>
+                                <b>Místo akce: </b>
+                                @Model.Entity.Place
+                            </div>
+                            <div>
+                                <b>Sraz: </b>
+                                @Model.Entity.MeetTime.ToDayDateTimeString()
+                            </div>
+                            <div>
+                                <b>Místo srazu: </b>
+                                @Model.Entity.MeetPlace
+                            </div>
+                            @if (!string.IsNullOrEmpty(Model.Entity.Link))
+                            {
+                                <div>
+                                    <b>Odkaz na web: </b>
+                                    @Html.Raw(Model.Entity.Link)
+                                </div>
+                            }
+                            <br/>
+                            <b>Organizuje: </b>@string.Join(", ", Model.Entity.Organisators.Select(o => o.UserName))
+                            @Html.Partial("~/Views/Shared/_UsersB.cshtml", Model.Entity.Organisators)
+                            @if (User.Identity.IsAuthenticated && !Model.Entity.IsInPastOrDeleted)
+                            {
+                                <div>
+                                    <b>Kontakt: </b>
+                                    @Model.Entity.Contact
+                                </div>
+                            }
+                            <br/>
+                            <div>
+                                <b>Kapacita: </b>
+                                @Model.Entity.CapacityString
+                            </div>
+                            @if (Model.Entity.MinimumParticipants > 0)
+                            {
+                                <div>
+                                    <b>Minimální počet účastníků: </b>
+                                    @Model.Entity.MinimumParticipants
+                                </div>
+                            }
+                            <br/>
+                            <div>
+                                @if (Model.Entity.EventType == (int)EventTypeEnum.PlacenaSdruzenim)
+                                {
+                                    <div><b>Akce je hrazená předem</b>
+                                    </div>
+                                }
+                                <b>Cena: </b>
+                                @Model.Entity.PriceString
+                            </div>
+                            <br/>
+                            @if (Model.Entity.EventType == (int)EventTypeEnum.PlacenaSdruzenim)
+                            {
+                                <div>
+                                    <b>Čas posledního vrácení peněz: </b>
+                                </div>
+                                <div>
+                                    @Html.DisplayFor(model => model.Entity.LastPaid)
+                                </div>
+                                <br/>
+                            }
+                            @if (Model.Entity.ShowAccountSymbol)
+                            {
+                                <div>
+                                    <b>Identifikační číslo akce: </b>
+                                </div>
+                                <div>
+                                    @Html.DisplayFor(model => model.Entity.AccountSymbol)
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    @Html.Partial("_ParticipantsPart", Model.Entity)                        
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Entity.State != (int)EventStateEnum.InWork)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box" id="box">
+                <div class="box-header blue-background">
+                    <div class="title">
+                        <div class="icon-comment-alt"></div>
+                        <span id="popis">Diskuze k akci @Html.DisplayFor(model => model.Entity.Name)</span>
+                    </div>
+                    <div class="actions">
+                        <a class="btn box-collapse btn-xs btn-link" href="#">
+                            <i></i>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="box-content" id="discussionContent">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Content("~/Diskuze/GetItems/" + Model.Entity.IdDiscussion+"?t="+DateTime.Now.ToLongTimeString())',
+                success: function (page) {
+                    $("#discussionContent").html(page);
+                }
+            });
+        });
+
+        function ShowWaitInElement(selector) {
+            var parent = selector.closest('.chat');
+            parent.append('<div class="overlayWindow" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;opacity: 0.6;background-color: #000000;"></div>');
+        }
+
+        function HideWaitInElement(selector) {
+            var parent = selector.closest('.chat');
+            parent.getElementsByClassName('overlayWindow')[0].remove();
+        }
+    </script>    
+}

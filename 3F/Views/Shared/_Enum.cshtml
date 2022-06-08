@@ -1,0 +1,10 @@
+﻿@model Type
+
+@using _3F.Model.Extensions;
+
+<select style="width:100%;" name="@ViewBag.EnumName">
+@foreach (var val in Enum.GetValues(Model))
+{
+    <option value="@((int)val)">@(((Enum)val).GetDescription())</option>
+}
+</select>

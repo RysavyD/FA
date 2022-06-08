@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+<header>
+    @Html.Partial("_TopMenu")
+    <hr style="margin:0" />
+</header>
+<div id='wrapper'>
+    <div id='main-nav-bg'></div>
+    <nav id='main-nav'>
+        @Html.Partial("_LeftMenu")
+    </nav>
+    <section id='content'>
+        <div class='container'>
+            @if (ViewBag.News != null)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="text-align:center; margin: 10px;">
+                            @Html.Raw(ViewBag.News)
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-header" style="margin-left:0; margin-right:0;">
+                            <div class="pull-right">
+                                <a href="@Url.Content("~/Account/Register/")" style="height: 60px;">
+                                    <div class="btn btn-success btn-lg">
+                                        <h2 style="color: white">
+                                            <i class="icon-plus-sign"> </i>
+                                            Nová registrace
+                                        </h2>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <ul style="margin-top: 27px;">
+                                <li style="font-family: Helvetica, Arial, sans-serif" class="text-blue">
+                                    <h3 style="font-family: Helvetica, Arial, sans-serif; padding-bottom: 5px;" class="text-blue">
+                                        Tyto stránky všem umožňují trávit svůj volný čas aktivně.
+                                    </h3>
+                                </li>
+                                <li style="font-family: Helvetica, Arial, sans-serif" class="text-green"><h3 style="font-family: Helvetica, Arial, sans-serif; padding-bottom: 5px;" class="text-green">Chceš-li sportovat, vyrazit do divadla nebo si jen skočit na skleničku a nemáš s kým, tak jsi na správném místě.</h3></li>
+                                <li style="font-family: Helvetica, Arial, sans-serif" class="text-banana"><h3 style="font-family: Helvetica, Arial, sans-serif; padding-bottom: 5px;" class="text-banana">Vyber si některou z plánovaných akcí nebo přijď s vlastní, jsi tu vítán.</h3></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class='row' id='content-wrapper'>
+                <div class='col-md-12'>
+                    @RenderBody()
+                    <hr />
+                </div>
+            </div>
+            <footer id="footer">
+                @Html.Partial("_Footer")
+            </footer>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script type="text/javascript">
+            $(document).ready(function() {
+                updateMessages();
+                undecidedEvents();
+                setInterval("updateMessages()", 30000);
+            });
+
+            function updateMessages() {
+                $.getJSON(
+                        "@Url.Content("~/Api/Message/UnreadedCount/")",
+                        { page: 1 }
+                        )
+                    .done(function (data) {
+                        if (data.Message) { // 401 is returned as Json object with Message property
+                            location.reload();
+                            return;
+                        }
+                        if (data === 0) {
+                            $("#menuMessages").html('Zprávy');
+                        } else {
+                            $("#menuMessages").html('<b>Zprávy (' + data + ')</b>');
+                        }
+                        $("#divUnreadedMessages").html(data);
+                    });
+            }
+
+            function undecidedEvents() {
+                $.getJSON(
+                    "@Url.Content("~/Api/Event/UndecidedEvents/")",
+                    null,
+                    function(data) {
+                        //$("#divEvents").html(data.TotalItems);
+                        $("#divEvents").html(data);
+                    });
+            }
+        </script>
+    }
+
+    @RenderSection("scripts", false)
+}

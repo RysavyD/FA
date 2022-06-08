@@ -1,0 +1,78 @@
+﻿@model _3F.Web.Models.EventSummaryViewModel
+
+@{
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@if (Model.HasPhoto)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box-content box-statistic">
+                <div class="floatRight">
+                    @foreach (var album in Model.Photos)
+                    {
+                        <div style="margin-bottom:10px;">
+                            <div class="floatRight" style="margin-left: 10px;">
+                                @Html.Partial("~/Views/Shared/_User.cshtml", album.User)
+                            </div>
+                            <div class="floatLeft" style="margin-right: 10px;">
+                                <a href="@Url.Content("~/Fotky/Album/" + album.Id)">
+                                    <img src="@album.CoverPhotoLink" />
+                                </a>
+                            </div>
+                            <div class="floatLeft">
+                                <div>Autor: <b>@album.User.name</b></div>
+                                <small>Počet fotek v albu: @album.PhotoCount</small>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    }
+                </div>
+                <div class="floatLeft" style="width: 40px;">
+                    <div class="icon-picture purple-background" style="color:white; padding: 5px; font-size: 20px;"></div>
+                </div>
+                <h3 class="title">Album k akci</h3>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="box-content">
+    @Html.Raw(Model.Perex)
+</div>
+<div class="box-content">
+    @Html.Raw(Model.Description)
+    <div class="clearfix"></div>
+</div>
+
+@using (Html.BeginHtmlBlocks())
+{
+    <!-- Discussion -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header blue-background">
+                    <div class="title">
+                        <div class="icon-comment-alt"></div>
+                        <span id="popis">Diskuze k zápiskům @Model.Name</span>
+                    </div>
+                    <div class="actions">
+                        <a class="btn box-collapse btn-xs btn-link" href="#">
+                            <i></i>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="box-content">
+                    @Html.Partial("~/Views/Shared/_DiscussionItems.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Html.DiscussionScripts(Model.Id_Discussion)
+}

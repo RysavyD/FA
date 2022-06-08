@@ -1,0 +1,26 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<Tuple<string, string, int, DateTime>>
+
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id akce</th>
+            <th>Jméno akce</th>
+            <th>Začátek akce</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ev in Model.Entities)
+        {
+            <tr>
+                <td>@ev.Item3</td>
+                <td>@Html.EventDetailLink(ev.Item1, ev.Item2)</td>
+                <td>@ev.Item4</td>
+            </tr>
+        }
+    </tbody>
+</table>

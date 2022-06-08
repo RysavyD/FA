@@ -1,0 +1,13 @@
+﻿@model _3F.Web.Models.Akce.ParticipantGroup
+@{
+    var list = Model.Participants.Where(p => p.LoginStatus == (int) Model.EventLogin).ToArray();
+    
+    if (Model.AlwaysShow || list.Any())
+    { 
+        <div>
+            <h3>@Model.EventLogin.GetDescription() (@list.Length)</h3>
+            @Html.Partial("~/Views/Shared/_UsersB.cshtml", list.Select(s => s.User))
+            <hr />
+        </div>
+    }
+}

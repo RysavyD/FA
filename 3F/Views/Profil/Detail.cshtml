@@ -1,0 +1,122 @@
+﻿@model _3F.Web.Models.Profil.ProfilViewModel
+@using Microsoft.Owin.Security
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+@if (Model.CanEdit)
+{
+    <div class="box-content box-statistic">
+        <div style="font-style: italic; text-align: center; margin-bottom: 10px;">- Soukromé informace -</div>
+        <div class="col-md-6" style="font-size: 16px;">
+            <div>Kontaktní email: @Model.Email</div>
+        </div>
+        <div class="col-md-6" style="font-size: 16px;">
+            <div>Variabilní symbol: @Model.VariableSymbol</div>
+            <div>Číslo účtu spolku: 2800132182/2010 (FIO Banka)</div>
+            <br />
+            <div>Na účtě: @Model.Money</div>
+            <a href="@Url.Content("~/Profil/Transakce/")">Historie transakcí</a>
+            <br />
+            <br />
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="box-content box-statistic">
+        <div style="font-style: italic; text-align: center; margin-bottom: 10px;">- Přihlašování přes sociální sítě -</div>
+        <div>
+            @if (Model.CurrentLogins.Any())
+            {
+                <h4>Připojené sociální služby</h4>
+                <table class="table">
+                    <tbody>
+                        @foreach (var account in Model.CurrentLogins)
+                        {
+                            <tr>
+                                <td>@account.LoginProvider</td>
+                                <td>
+                                    @using (Html.BeginForm("RemoveLogin", "Manage"))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div>
+                                            @Html.Hidden("loginProvider", account.LoginProvider)
+                                            @Html.Hidden("providerKey", account.ProviderKey)
+                                            <input type="submit" class="btn btn-default" value="Odebrat" title="Odebrat tuto službu z vašeho účtu" />
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            @if (Model.OtherLogins.Any())
+            {
+                <h4>Sociální služby k dispozici</h4>
+                using (Html.BeginForm("LinkLogin", "Manage"))
+                {
+                    @Html.AntiForgeryToken()
+                    <div id="socialLoginList">
+                        <p>
+                            @foreach (AuthenticationDescription p in Model.OtherLogins)
+                            {
+                                <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Přihlásit pomocí @p.Caption">
+                                    @p.AuthenticationType
+                                </button>
+                            }
+                        </p>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+
+<div class="box-content box-statistic">
+    <div style="font-style: italic; text-align:center; margin-bottom: 10px;">- Veřejné informace -</div>
+    <div class="col-md-6" style="font-size: 16px;">
+        <div>Jméno: @Model.Name @Html.GetSexIcon(Model.Sex)</div>
+        <div>Rok narození: @Model.BirhtYear</div>
+        <div>Místo výskytu: @Model.City</div>
+        <div>Moje motto: @Model.Motto</div>
+        <div>Co mě baví: @Model.Hobbies</div>
+        <div>Odkaz: <a href="@Model.Link" target="_blank">@Model.Link</a></div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <br />
+            <br />
+            <div>Stav: @Model.Status.GetDescription()</div>
+            <div>Datum registrace: @Model.RegistrationDate</div>
+            <div>Počet navštívených akcí: @Model.HistoryEvents.Count</div>
+            <div>Počet neomluvených akcí: @Model.EventMissedCount</div>
+            <div>Počet zorganizovaných akcí: @Model.EventOrganisedCount</div>
+        }
+    </div>
+    <div class="col-md-6" style="font-size: 16px;">
+        <img src="@Url.Content("~/Images/Profile/" + Model.Image)" style="width: 100%" />
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    @EventList("Přihlášené akce", Model.FutureEvents)
+    @EventList("Organizované akce", Model.OrganisedEvents)
+    @EventList("Navštívené akce", Model.HistoryEvents)
+}
+
+@Html.FormSubmitWaitDialog()
+
+@helper EventList(string title, List<_3F.Web.Models.SimpleEventModel> events)
+{
+    <div class="box-content box-statistic">
+        <div style="font-style: italic; text-align: center; margin-bottom: 10px;">- @title (@events.Count) -</div>
+        @foreach (var simpleEvent in events)
+        {
+            <div>
+                <a href="@Url.Content("~/Akce/Detail/" + simpleEvent.HtmlName)">@simpleEvent.Name</a>
+            </div>
+        }
+    </div>
+}

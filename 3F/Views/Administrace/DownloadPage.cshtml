@@ -1,0 +1,33 @@
+﻿@model _3F.Web.Models.GenericBaseViewModel<Tuple<bool, string>>
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<h2>DownloadPage</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <label for="urlToDownload">Kterou url chceš stáhnout</label>
+            <input id="urlToDownload" name="urlToDownload" type="text" style="width: 100%" />
+            <br />
+            <button class="btn btn-success">Stáhnout</button>
+        </div>
+    </div>
+}
+
+<div>
+    @Model.Entity.Item1
+</div>
+
+@if (Model.Entity.Item1)
+{
+    <iframe src="@Model.Entity.Item2" style="border: none; width: 100%;"></iframe>
+}
+else
+{
+    <div style="color: red;">@Model.Entity.Item2</div>
+}
+

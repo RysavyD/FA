@@ -1,0 +1,22 @@
+﻿@model IEnumerable<_3F.Web.Models.ActionButton>
+
+@if (Model.Any())
+{
+    <div class="btn-group" style="margin-right:10px;">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" style="margin-bottom:5px; background-color: transparent; color: white;" >
+            Další
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu pull-right">
+            @foreach (var button in Model)
+            {
+                <li>
+                    <a href="@button.Url">
+                        <i class="@button.Icon"></i>
+                        <span>@button.Title</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}

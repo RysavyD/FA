@@ -1,0 +1,88 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<_3F.Web.Models.Administration.FileUploadInfoViewModel>
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<div class="row">
+    <div data-function="edit" class="btn btn-success roundCorners fceUpload">
+        <i class="icon-plus"> </i> Nahrát nový soubor
+    </div>
+</div>
+
+<div class="row">
+    <table class="borderTable">
+        <thead>
+            <tr>
+                <th>Jméno</th>
+                <th>Velikost</th>
+                <th>Popis</th>
+                <th>Datum nahrání</th>
+                <th>Odkaz</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fileInfo in Model.Entities)
+            {
+                <tr>
+                    <td><b>@fileInfo.Name</b></td>
+                    <td>@fileInfo.Length kB</td>
+                    <td>@fileInfo.Description</td>
+                    <td>@fileInfo.CreationDate</td>
+                    <td><a href='@Url.Content("~/File/Download/" + fileInfo.Id)'>@Url.Content("~/File/Download/" + fileInfo.Id)</a></td>
+                    <td><div data-id="@fileInfo.Id" data-function="delete" class="btn btn-danger roundCorners fceDelete">Smazat</div></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@Html.RenderModalPlaceHolder()
+
+@section Scripts {
+    <script type="text/javascript">
+        var UploadPostBackURL = '@Url.Content("~/Administrace/PostFileManagerUpload/")';
+        var DeletePostBackURL = '@Url.Content("~/Administrace/PostFileManagerDelete/")';
+        $(function () {
+            $(".fceUpload").click(function () {
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: UploadPostBackURL,
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+            $(".fceDelete").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: DeletePostBackURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,79 @@
+﻿@model _3F.Web.Models.EventModel
+
+@{
+    ViewBag.Title = "Editace akce " + Model.Name;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-nomargin">
+            <div class="box-header green-background">
+                <i class="icon-edit"> </i>Editace akce @Model.Name
+            </div>
+            <div class="box-content" style="background-color:#f4f4f4;">
+                <div class="box-content box-statistic">
+                    @Html.Partial("~/Views/Akce/_EventEdit.cshtml", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            height: 400,
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste textcolor"
+            ],
+            toolbar1: "undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify |  styleselect formatselect fontselect fontsizeselect",
+            toolbar2: "bullist numlist outdent indent | link image media | forecolor backcolor | table | hr removeformat | subscript superscript | charmap emoticons | code preview",
+            language: "cs",
+            menubar: false,
+        });
+    </script>
+
+    <link rel="stylesheet" href="~/Content/Plugins/Kendo/kendo.common.min.css" />
+    <link rel="stylesheet" href="~/Content/Plugins/Kendo/kendo.default.min.css" />
+    <script src="~/Scripts/plugins/kendo/kendo.ui.core.min.js"></script>
+    <script src="~/Scripts/plugins/kendo/kendo.datetimepicker.min.js"></script>
+    <script src="~/Scripts/plugins/kendo/cultures/kendo.culture.cs-CZ.min.js"></script>
+
+    <link rel="stylesheet" href="~/Content/Plugins/TokenInput/token-input.css" type="text/css" />
+    <link rel="stylesheet" href="~/Content/Plugins/TokenInput/token-input-facebook.css" type="text/css" />
+    <script type="text/javascript" src="~/Scripts/plugins/TokenInput/jquery.tokeninput.js"></script>
+
+    <script>
+            $(document).ready(function () {
+                kendo.culture("cs-CZ");
+                $("#Start").kendoDateTimePicker({
+                    value: '@Model.Start'
+                });
+                $("#Stop").kendoDateTimePicker({
+                    value: '@Model.Stop'
+                });
+                $("#MeetTime").kendoDateTimePicker({
+                    value: '@Model.MeetTime'
+                });
+                $("#LastSignTime").kendoDateTimePicker({
+                    value: '@Model.LastSignTime'
+                });
+                $("#LastPaidTime").kendoDateTimePicker({
+                    value: '@Model.LastPaidTime'
+                });
+            });
+            var recipients = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(@Model.Organisators));
+            $("#Organisators").tokenInput('@Url.Content("~/Api/User/Find")', {
+                theme: "facebook",
+                minChars: 2,
+                prePopulate: recipients
+            });
+    </script>
+
+    <script type="text/javascript" src="~/Scripts/Partials/EventEdit.js"></script>
+}

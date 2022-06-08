@@ -1,0 +1,65 @@
+﻿@model _3F.Web.Models.EmptyBaseViewModel
+
+<link rel="stylesheet" href="~/Content/Plugins/datatables/jquery.dataTables.min.css" />
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<table id="example" class="display" cellspacing="0"></table>
+@Html.RenderModalPlaceHolder()
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#example').dataTable({
+                "iDisplayLength": 25,
+                "ajax": '@Url.Content("~/Api/Administrace/Akce")',
+                "columns": [
+                    { "title": "Id" },
+                    {
+                        "title": "Jméno",
+                        "render": function(data, type, row) {
+                            return '<a target="_blank" href=@Url.Content("~/Akce/Detail/")' + row[5] + '>'+ data + '</a>';
+                        }
+                    },
+                    { "title": "Začátek akce", "type": "cz_datetime" },
+                    { "title": "Typ akce" },
+                    { "title": "Stav akce" },
+                    {
+                        "title": "",
+                        "render": function(data) {
+                            return '<div onclick="EditEvent(\''+data+'\');" class="btn btn-warning roundCorners">Upravit</div>';
+                        }
+                    }
+                ],
+                "data": @Html.Raw(Json.Encode(Model)),
+                "order": [[ 0, "desc" ]]
+            });
+        });
+    </script>
+    
+    <script type="text/javascript">
+        var editUrl = '@Url.Content("~/Administrace/PrehledAkciEdit/")';
+        function EditEvent(id) {
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: editUrl,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            };
+    </script>
+}

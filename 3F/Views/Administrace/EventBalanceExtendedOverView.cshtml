@@ -1,0 +1,99 @@
+﻿@model _3F.Web.Models.EmptyBaseViewModel
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<div>
+    Vyber rok:
+    
+    <select id="yearSelect">
+        @for (int y = 2013; y < DateTime.Now.Year; y++)
+        {
+            <option>@y</option>
+        }
+        <option selected="selected">@DateTime.Now.Year</option>
+    </select>
+</div>
+<hr/>
+
+<link rel="stylesheet" href="~/Content/Plugins/datatables/jquery.dataTables.min.css" />
+
+<table id="example" class="display" cellspacing="0"></table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatables")
+
+    <script type="text/javascript">
+        var oTable;
+        $(document).ready(function() {
+            oTable = $('#example')
+                .dataTable({
+                    "iDisplayLength": 25,
+                    "scrollX": true,
+                    "columns": [
+                        {
+                            "title": "Id",
+                            "render": function(data, type, row) {
+                                return '<span data-accounting=' + row[15] + ' class="accounting">' + data + '</span>';
+                            }
+                        },
+                        {
+                            "title": "Název",
+                            "render": function(data, type, row) {
+                                return '<a target="_blank" href=@Url.Content("~/Akce/Detail/")' +
+                                    row[14] +
+                                    '>' +
+                                    data +
+                                    '</a>';
+                            }
+                        },
+                        { "Title": "Organizátoři" },
+                        { "title": "Datum", "type": "cz_datetime" },
+                        { "title": "Počet přihlášených" },
+                        { "title": "Kapacita" },
+                        { "title": "Cena" },
+                        { "title": "Příjmy" },
+                        { "title": "Výdaje" },
+                        { "title": "Rozdíl" },
+                        { "title": "Příjmy-výdaje kasa"},
+                        { "title": "Uzavřeno" },
+                        { "title": "Výhled" },
+                        { "title": "Popis nákladů" },
+                    ],
+                    "ajax": '@Url.Content("~/Administrace/EventBalanceExtendedOverviewData/" + DateTime.Now.Year)',
+                    "drawCallback": function() {
+                        LoadAccountingData();
+                    }
+                });
+        });
+
+        $("#yearSelect").on("change",
+            function() {
+                oTable.api().ajax.url('/Administrace/EventBalanceExtendedOverviewData/' + $("#yearSelect").val());
+                oTable.api().ajax.reload();
+            });
+
+        function LoadAccountingData() {
+            var sources = $(".accounting");
+            console.log(sources.length);
+            sources.each(function () {
+                var span = $(this);
+                var accountNumber = span.data("accounting");
+                console.log(accountNumber);
+                $.ajax({
+                    type: "GET",
+                    url: '/Accounting/GetCosts/'+accountNumber,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        console.log(accountNumber + ' - ' + data.suma);
+                        var row = span.parent().parent();
+                        var costTd = row.children('td').eq(10);
+                        costTd.text(data.suma);
+                    }
+                });
+                
+            });
+        }
+    </script>
+}

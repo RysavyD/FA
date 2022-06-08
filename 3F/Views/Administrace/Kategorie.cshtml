@@ -1,0 +1,72 @@
+﻿@model _3F.Web.Models.GenericBaseViewModel<IEnumerable<_3F.BusinessEntities.EventCategory>>
+
+@{
+    ViewBag.Title = "Kategorie";
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+<div class="row">
+    <div data-function="edit" class="btn btn-success roundCorners">
+        <i class="icon-plus"> </i> Nová položka
+    </div>
+</div>
+<div class="row">
+    <table class="borderTable">
+        <tr>
+            <th>
+                Název
+            </th>
+            <th>
+                Url
+            </th>
+            <th>
+                NadKategorie
+            </th>
+            <th>
+                Počet akcí
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Entity.OrderBy(e => e.Name)) {
+            <tr>
+                <td><a href='@Url.Content("~/Kategorie/" + item.HtmlName)'>@item.Name</a></td>
+                <td>@item.HtmlName</td>
+                <td>@item.MainCategory.GetDescription()</td>
+                <td>@item.EventCount</td>
+                <td><div data-id="@item.Id" data-function="edit" class="btn btn-warning roundCorners">Upravit</div></td>
+                <td><div data-id="@item.Id" data-function="delete" class="btn btn-danger roundCorners">Smazat</div></td>
+            </tr>
+        }
+    </table>
+</div>
+@Html.RenderModalPlaceHolder()
+
+@section Scripts {
+    <script type="text/javascript">
+        var editURL = '@Url.Content("~/Administrace/KategorieEdit/")';
+        var deleteURL = '@Url.Content("~/Administrace/KategorieDelete/")';
+        $(function () {
+            $(".roundCorners").click(function () {
+                var options = { "backdrop": "static", keyboard: true };
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.data('id');
+                var fce = $buttonClicked.data('function');
+                $.ajax({
+                    type: "GET",
+                    url: fce==='edit'? editURL : deleteURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+        });
+    </script>
+}

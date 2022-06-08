@@ -1,0 +1,59 @@
+﻿@model IEnumerable<_3F.Web.Models.ActivityUser>
+
+@{
+    ViewBag.Title = "Uživatelé";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header fb-background">
+                <div class="title">
+                    <div class="icon-user"></div>
+                    <span>Uživatelé (Počet uživatelů: <span id="userCount">@Model.Count()</span>)</span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="box-content" style="background-color:#f4f4f4">
+                @if (User.Identity.IsAuthenticated)
+                {
+                <div class="box-content box-statistic">
+                    <form class="form form-horizontal" style="margin-bottom: 0;" method="post" action="#" accept-charset="UTF-8">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="col-md-2 control-label" for="inputText1">Hledání uživatele:</label>
+                            <div class="col-md-5">
+                                <input class="form-control" id="searchUser" placeholder="Jméno uživatele" type="text">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                }
+                <div class="box-content box-statistic">
+                    @{foreach (var user in Model)
+                    {
+                        <a href="@Url.Content("~/Profil/Detail/" + user.htmlName)"
+                           title="@user.name" class="users floatLeft" data-filter="@user.name.ToLower()">
+                            <div style="margin-top: 5px;">
+                                <img src="@Url.Content("~/Images/Profile/" + user.ProfilePhoto)" title="@user.name" class="profilePhoto" />
+                            </div>
+                            <div>@user.name</div>
+                            @if (User.Identity.IsAuthenticated)
+                            { <small>@user.LastActivity</small> }
+                        </a>
+                    }
+                    }
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#searchUser").keyup(function () {
+                FilterItems($(this).val(), ".users", "#userCount");
+            });
+        });
+    </script>
+}

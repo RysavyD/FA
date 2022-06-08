@@ -1,0 +1,129 @@
+﻿@model _3F.Web.Models.MessagesViewModel
+
+@{
+    Layout = "~/Views/Zpravy/_MessageLayout.cshtml";
+}
+
+<div class="box-content" style="text-align: center" id="messageListLoadBox">
+    <i id="messageListSpinner" class="icon-2x icon-spinner icon-spin"></i>
+    <span id="messageListErrorMessage" style="display: none">
+        Zprávy se nepodařilo načíst.<br />
+        <button onclick="" style="position: static">Načíst znovu</button>
+    </span>
+</div>
+<div id="messageList"></div>
+<div>
+    <ul class="pagination" id="messageListPagination"></ul>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        var apiUrl = '@Url.Content(Model.Url)';
+        var hash = document.location.hash.replace('#', '');
+        var start = (hash) ? parseFloat(hash) : 1;
+
+        $(document)
+            .ready(function() {
+                MakeGetCall("#messageList", apiUrl, start, CreatePage);
+
+                $("#deleteMessages")
+                    .click(function(e) {
+                        e.preventDefault();
+                        DeleteMessages();
+                    });
+            });
+
+        function GetData(page) {
+            document.location.hash = page;
+            start = page;
+            MakeGetCall("#messageList", apiUrl, page);
+        }
+
+        function CreatePage(data) {
+            console.log(data);
+            GeneratePagination("#messageListPagination", GetData, data.TotalItems, start, data.PageSize);
+        }
+
+        function TickAllmessages(sender) {
+            $(".mesageListCheckbox")
+                .each(function() {
+                    $(this).prop("checked", sender.checked);
+                });
+        }
+
+        function DeleteMessages() {
+            ShowWaitDialog();
+            var data = [];
+            $("input:checked.mesageListCheckbox")
+                .each(function() {
+                    data.push(this.value);
+                });
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Content("~/Api/Message/DeleteMessages")',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(data),
+                success: function(result) {
+                    if (result === null) {
+                        location.reload(true);
+                    } else {
+                        HideWaitDialog();
+                        alert(result);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    HideWaitDialog();
+                    alert("Nastala chyba \n\n" + xhr.responseText);
+                }
+            });
+        }
+    </script>
+
+    <script id="messageListTemplate" type="text/html">
+        <div style="padding: 10px;" class="messageRow row">
+            <div class="col-md-3">
+                <input type="checkbox" class="floatLeft" onclick="TickAllmessages(this)"  style="margin-right: 5px;" />
+                <b>
+                    {{#ShowSenderText}}Odesílatel{{/ShowSenderText}}
+                    {{^ShowSenderText}}Příjemce{{/ShowSenderText}}
+                </b>
+            </div>
+            <div class="col-md-6">
+                <b>Předmět</b>
+            </div>
+            <div class="col-md-3">
+                <b>Čas</b>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <hr style="margin: 1px 0 1px 0; border-bottom: none;" />
+        {{#Items}}
+        <a href="@Url.Content("~/Zpravy/Detail")/{{Id}}" title="{{Text}}" style="text-decoration: none;">
+            <div style="padding: 10px;" class="messageRow row {{Class}}">
+                <div class="col-md-3">
+                    <input type="checkbox" class="floatLeft mesageListCheckbox" value="{{Id}}" style="margin-right: 5px;" />
+                    {{{Sender}}}
+                </div>
+                <div class="col-md-6">
+                    {{#Unreaded}}<b>
+                        {{/Unreaded}}
+                        <span style="text-decoration: none;">{{Subject}}</span>
+                        {{#Unreaded}}
+                    </b>{{/Unreaded}}
+                </div>
+                <div class="col-md-3">
+                    {{#Unreaded}}<b>
+                        {{/Unreaded}}
+                        {{Time}}
+                        {{#Unreaded}}
+                    </b>{{/Unreaded}}
+                </div>
+            </div>
+        </a>
+        <div class="clearfix"></div>
+        <hr style="margin: 1px 0 1px 0; border-bottom: none;"/>
+        {{/Items}}
+    </script>
+}

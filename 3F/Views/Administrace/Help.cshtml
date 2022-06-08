@@ -1,0 +1,64 @@
+﻿@model _3F.Web.Models.EnumerableBaseViewModel<_3F.BusinessEntities.Help>
+
+@{
+    Layout = "~/Views/Shared/_FullPageLayout.cshtml";
+}
+
+<div class="row">
+    <div class="btn btn-success roundCorners">
+        <i class="icon-plus"> </i> Nová položka
+    </div>
+</div>
+<div class="row">
+    <table class="borderTable">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Otázka</th>
+            <th>Text</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Entities)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Question</td>
+                <td>@Html.Raw(item.Answer)</td>
+                <td><div data-id="@item.Id" class="btn btn-warning roundCorners">Editovat</div></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@Html.RenderModalPlaceHolder()
+
+@section Scripts {
+    <script type="text/javascript">
+        var TeamDetailPostBackURL = '@Url.Content("~/Administrace/HelpEdit/")';
+        $(function () {
+            $(".roundCorners").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: TeamDetailPostBackURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+        });
+    </script>    
+}
